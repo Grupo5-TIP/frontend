@@ -5,6 +5,7 @@ import MenuQr from './views/MenuQr';
 import Header from './views/Header';
 import Footer from './views/Footer';
 import Home from './views/Home';
+import ButtonBase from './components/ButtonBase';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <BrowserRouter>
           <Switch>     
             <Route path="/menu/:tableid" component={MenuQr} />
+            <Route path="/boton" component={ButtonBase} />
             <Route path="/" component={Home} />
           </Switch>
       </BrowserRouter>
