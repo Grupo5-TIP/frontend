@@ -1,4 +1,4 @@
-import { Stack, Button, Text, Image, Heading } from "@chakra-ui/react"
+import { Stack, Text, Image } from "@chakra-ui/react"
 import {parseCurrency} from "../utils/currency";
 
 const Product = (product) => {
