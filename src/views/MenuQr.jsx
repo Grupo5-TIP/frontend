@@ -11,8 +11,8 @@ const MenuQr = () => {
     useEffect(() => {    
         const fetchData = async () => {
           setLoading(true);
-          const products = await productService.allProducts();
-          setProducts(products)
+          const products = await productService.getAllProducts();
+          setProducts(products.data);
           setLoading(false);
         }
 
