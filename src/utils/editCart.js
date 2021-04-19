@@ -12,6 +12,10 @@ export const editCart = (product, action) => {
             }
 
             switch (action) {
+                case "add": {
+                    return acc.concat({..._product, amount: _product.amount + 1});                
+                }
+
                 case "delete": {
                     return acc;
                 }
