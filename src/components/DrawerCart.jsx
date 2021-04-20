@@ -58,16 +58,17 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, ...props
                                     :
                                     <p>No items...</p>}
                             </Flex>
-                            <Text
-                                color="theme.100"
-                                as="samp"
-                                fontSize="lg"
+                        </DrawerBody>
+                        
+                        <Text
+                            color="theme.100"
+                            as="samp"
+                            fontSize="lg"
+                            align="center"
                             >
                                 Total: {parseCurrency(total)}
-                            </Text>
-                        </DrawerBody>
-
-                        <DrawerFooter>
+                        </Text>
+                        <DrawerFooter>                               
                             <Button mr={2} bg="gray.100" color="theme.100" variant="outline" onClick={onClose}>Cancel</Button>
                             <Button onClick= {() => dispatchCreateCart()} bg="theme.300" color="theme.100">Confirmar</Button>
                         </DrawerFooter>
