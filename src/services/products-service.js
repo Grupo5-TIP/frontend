@@ -13,7 +13,10 @@ class ProductService{
         ];
         return data;
     }
-    
+
+    async getAllProducts(){
+        return axios.get(API_URL);
+    }    
 }
 
 export default new ProductService();
