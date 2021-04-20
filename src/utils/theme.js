@@ -1,5 +1,5 @@
 import { extendTheme } from "@chakra-ui/react"
-import { PRIMARY, PRIMARY_DARK, PRIMARY_LIGTH, SECONDARY, SECONDARY_DARK } from './utils/colors';
+import { PRIMARY, PRIMARY_DARK, PRIMARY_LIGTH, SECONDARY, SECONDARY_DARK } from './colors';
 
 const theme = extendTheme({
   fonts: {

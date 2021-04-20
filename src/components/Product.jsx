@@ -1,4 +1,4 @@
-import { Stack, Text, Heading, Image, Alert, AlertIcon, ChakraProvider} from "@chakra-ui/react"
+import { Stack, Text, Heading, Image, Alert, AlertIcon} from "@chakra-ui/react"
 import {parseCurrency} from "../utils/currency";
 import {useState} from 'react';
 

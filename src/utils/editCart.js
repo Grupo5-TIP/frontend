@@ -1,29 +1,32 @@
 export const editCart = (product, action) => {
     return (cart) => {
-        const isInCart = cart.some((item) => item.id === product.id);
+        const item = cart.find((item) => item.product.id === product.id);
 
-        if (!isInCart) {
-            return cart.concat({ ...product, amount: 1 });
+        if (!item) {
+            const newItem = {
+                product:product,
+                amount: 1
+            }
+            cart.push(newItem);
+            return cart;
         }
+        
+        switch (action) {
+            case "add": 
+                cart = cart.filter( _item => _item.product.id !== item.product.id);
+                item.amount = item.amount + 1;
+                cart.push(item)
+                break;           
+            
+            case "delete": 
+                return cart.filter( _item => _item.product.id !== item.product.id);
+            
+            default:
+                break;
+            
+            
+        }
+        return cart
 
-        return cart.reduce((acc, _product) => { 
-            if (product.id !== _product.id) {
-                return acc.concat(_product);
-            }
-
-            switch (action) {
-                case "add": {
-                    return acc.concat({..._product, amount: _product.amount + 1});                
-                }
-
-                case "delete": {
-                    return acc;
-                }
-
-                default: {
-                    return acc.concat(_product);
-                }
-            }
-        }, []);
     };
 }

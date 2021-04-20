@@ -6,7 +6,7 @@ import { Flex, Icon, Tooltip, Button, Box, Stack } from '@chakra-ui/react';
 import { editCart } from '../utils/editCart';
 import { GrCart } from 'react-icons/gr'
 
-const MenuQr = () => {
+const MenuQr = ({...props}) => {
 
     const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
@@ -54,6 +54,7 @@ const MenuQr = () => {
                             onClose={() => setDrawerOpen(false)}
                             isOpen={isDrawerOpen}
                             onDeleteProduct={(product) => handleEditCart(product, "delete")}
+                            tableId= {props.match.url.substring(props.match.url.lastIndexOf('/') + 1)}
                         />
                     </Flex>
                 </Stack>

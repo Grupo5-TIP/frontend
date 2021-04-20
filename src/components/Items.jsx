@@ -4,9 +4,9 @@ import Item from './Item';
 const Items = ({items, onDeleteProduct}) =>{
     return(
         <Stack divider={<Divider />} spacing={4}>
-            {items.map((product) => (
-                  <Item key = {product.id}
-                    item = {product}
+            {items.map((item) => (
+                  <Item key = {item.product.id}
+                    item = {item}
                     onDeleteProduct = {onDeleteProduct}
                   />
                 ))}
