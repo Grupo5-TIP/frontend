@@ -8,15 +8,13 @@ export const editCart = (product, action) => {
                 amount: 1
             }
             cart.push(newItem);
-            return cart;
+            return cart.map((item) => item);
         }
         
         switch (action) {
             case "add": 
-                cart = cart.filter( _item => _item.product.id !== item.product.id);
                 item.amount = item.amount + 1;
-                cart.push(item)
-                break;           
+                return cart.map((item) => item);
             
             case "delete": 
                 return cart.filter( _item => _item.product.id !== item.product.id);
