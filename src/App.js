@@ -9,20 +9,7 @@ import Home from './views/Home';
 function App() {
   return (
     <div>
-      {/*HEADER - LLeva el quizas nombre de aplicacion.*/}
-      
       <Header/>
-
-      {/*CONTENT - basicamente es el router de todas las views.
-            = Vista login para admin
-              - Vista de informes
-            = Vista login cajero
-              - Vista de las mesas
-                  - Ver cada mesa particular
-            - Vista principal para el menu
-                - Ver el pedido actual
-            - Vista para el detalle del pedido     
-      */}
 
       <BrowserRouter>
           <Switch>     
@@ -31,9 +18,9 @@ function App() {
           </Switch>
       </BrowserRouter>
 
-      {/*FOOTER - vemos que le pondriamos.*/}
-      <Footer/>
+      {/*<Footer/> */}
     </div>
+    
   );
 }
 

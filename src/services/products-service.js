@@ -7,13 +7,16 @@ class ProductService{
     async allProducts(){
         //const { data } = await axios.get(API_URL);
         const data =  [
-            {id:1, name:"Coca-Cola", description:"Coca-Cola 500ml", price:120.00, img:"https://www.pasosonline.com.ar/wp-content/uploads/2018/08/coca-cola-225L-almacen-gaseosas-casa-segal-mendoza-600x600-1.jpg"},
-            {id:2, name:"Milanesa con papas", description:"Milanesa de ternera con papas fritas o españolas", price:450.00, img:"https://media-cdn.tripadvisor.com/media/photo-s/05/63/ac/3d/milanesa-con-papas-fritas.jpg"},
-            {id:3, name:"Copa de vino", description:"Vino del día", price:120.00, img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/A_glass_of_red_wine.jpg/1200px-A_glass_of_red_wine.jpg"},
+            {id:1, name:"Coca-Cola", description:"Coca-Cola 500ml", price:120.00, img:"https://assets.entrepreneur.com/content/3x2/2000/20200122182134-Depositphotos-147827697-l-2015.jpeg?width=700&crop=2:1"},
+            {id:2, name:"Milanesa con papas", description:"Milanesa de ternera con papas fritas o españolas", price:450.00, img:"https://www.pngkey.com/png/detail/346-3464387_imgenes-de-papas-fritas-milanesa-de-pollo-con.png"},
+            {id:3, name:"Tiramisu", description:"Verdadero tiramisu italiano", price:120.00, img:"https://vod-hogarmania.atresmedia.com/cocinatis/images/images01/2020/09/01/5f4e2a588bf27b0001846f11/1239x697.jpg"},
         ];
         return data;
     }
-    
+
+    async getAllProducts(){
+        return axios.get(API_URL);
+    }    
 }
 
 export default new ProductService();

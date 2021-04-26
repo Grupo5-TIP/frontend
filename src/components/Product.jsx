@@ -1,44 +1,61 @@
-import { Stack, Button, Text, Image, Box } from "@chakra-ui/react"
+import { Stack, Text, Heading, Image, Alert, AlertIcon} from "@chakra-ui/react"
 import {parseCurrency} from "../utils/currency";
+import {useState} from 'react';
 
-const Product = (product) => {
-    const {id, name, description, price, img} = product.product;
+const Product = ({product, onAddProduct}) => {
+    const [isAdded, setIsAdded] = useState(false);
+    const onClose = () => setTimeout(() => setIsAdded(false), 2000);
+    const {id, name, description, price, image} = product;
 
+    const addProduct = (product) =>{
+        setIsAdded(true);
+        onAddProduct(product);
+    }
+    function renderProductAddedCheck() {
+        onClose();
+        return (
+            <Alert status="success" variant="solid" justifyContent="center" textAlign="center">
+                <AlertIcon />
+                El producto se agregó correctamente al carrito!
+            </Alert>
+        )
+    }
     return (
         <Stack
             key={id}
-            borderColor="gray.100"
+            borderColor="theme.300"
             borderRadius="md"
-            borderWidth={1}
             justifyContent="space-between"
-            spacing={2}
-            marginBottom={5}
+            spacing={1}
+            marginBottom={3}
             sm="30em"
             shadow="md"
-            onClick= {() => console.log("agregar...")}
-        >
-            <Stack direction="row" padding={1}>
+            backgroundAttachment={image}
+            onClick= {() => addProduct(product)}
+            as="button"
+            alignItems={"center"} 
+        >            
+            <Stack  direction="column" padding={0} >
+                <Heading fontSize="50px" color="theme.100">{name}</Heading>
                 <Image
-                    src={img}
+                    src={image}
                     backgroundColor="white"
-                    borderRadius="full"
-                    boxSize= "150px"
+                    borderRadius="none"
                     loading="lazy"
                     alt={name}
                 />
-                <Stack justifyContent="space-between" spacing={1}>
-                    
-                        <Stack spacing={1}>
-                            <Text fontWeight="500">{name}</Text>
-                            <Text color="red.500" fontSize="sm" >{description}</Text>
-                        </Stack>
-                        <Stack alignItems="flex-end" direction="row" justifyContent="space-between">
-                            <Text color="red.500" fontSize="sm" fontWeight="500"> {parseCurrency(price)} </Text>
-                        </Stack>
+                <Stack justifyContent="space-between" spacing={1}>                    
+                    <Stack spacing={1}>                        
+                        <Text color="theme.200" fontSize="xl" >{description}</Text>
+                    </Stack>
+                    <Stack justifyContent="space-between">
+                        <Text color="theme.500" fontSize="sm" fontWeight="700"> {parseCurrency(price)} </Text>
+                    </Stack>
                 </Stack>
+            {isAdded ? renderProductAddedCheck() : null}          
             </Stack>
         </Stack>
     );
 }
 
-export default Product
+export default Product;
