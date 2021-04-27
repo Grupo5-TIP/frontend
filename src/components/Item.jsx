@@ -27,14 +27,6 @@ const Item = ({ item, onDeleteProduct }) => {
                     </Button>
                 </Stack>
                 <Stack direction="row">
-                    {/*<Button
-                        borderRadius={5}
-                        color="theme.100"
-                        size="xs"
-                        onClick={() => console.log("agregando...")}//onClick={() => onDecrement(product)}
-                    >
-                        -
-                    </Button>*/}
                     <Text fontWeight="500">
                         Cant: {amount}
                     </Text>
