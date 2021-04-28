@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Products from '../components/Products';
 import DrawerCart from '../components/DrawerCart'
 import productService from '../services/products-service';
-import { Flex, Icon, Tooltip, Button, Box, Stack, Text } from '@chakra-ui/react';
+import { Flex, Button, Stack, Text } from '@chakra-ui/react';
 import { editCart } from '../utils/editCart';
 import { GrCart } from 'react-icons/gr'
 
