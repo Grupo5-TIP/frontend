@@ -34,7 +34,7 @@ const MenuQr = ({...props}) => {
     }
 
     return (
-        <Flex justifyContent={"center"} height="100vh">
+        <Flex justifyContent={"center"} minHeight="80vh">
             { error !== '' ? <Text color="gray.400">Error al traer del server...</Text>
             : 
                 loading ? <Text color="gray.400"> Cargando... </Text> :
