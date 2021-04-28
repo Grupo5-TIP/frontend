@@ -69,10 +69,12 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, ...props
 
                         <DrawerBody >
                             <Flex height="90%">
-                                {items.length ?
-                                    <Items items={items} onDeleteProduct={onDeleteProduct}></Items>
+                                {
+                                    items.length ?
+                                        <Items items={items} onDeleteProduct={onDeleteProduct}></Items>
                                     :
-                                    <p>No items...</p>}
+                                        <Text color="gray.400">No hay elementos en tu carrito</Text>
+                                }
                             </Flex>
                         </DrawerBody>
                         
