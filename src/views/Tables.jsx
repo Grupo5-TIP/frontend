@@ -13,9 +13,9 @@ const Tables = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await tablesService.getTables()
+            tablesService.getTables()
                 .then(resp => {
-                    setTables(resp);
+                    setTables(resp.data);
                 })
                 .catch(err => {
                     setError(err);
@@ -24,6 +24,7 @@ const Tables = () => {
         }
 
         fetchData();
+        console.log(tables);
     }, []);
 
     return (
