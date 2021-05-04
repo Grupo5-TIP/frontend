@@ -1,6 +1,6 @@
 export const editCart = (product, action) => {
     return (cart) => {
-        const item = cart.find((item) => item.product.id === product.id);
+        const item = product.id !==undefined ? cart.find((item) => item.product.id === product.id) : true ;
 
         if (!item) {
             const newItem = {
@@ -18,6 +18,9 @@ export const editCart = (product, action) => {
             
             case "delete": 
                 return cart.filter( _item => _item.product.id !== item.product.id);
+            
+            case "deleteAll": 
+                return [];                
             
             default:
                 break;
