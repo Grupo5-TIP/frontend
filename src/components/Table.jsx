@@ -7,6 +7,7 @@ const Table = ({ table }) => {
     const [bgColor, setBgColor] = useState("theme.200");
     const [positionX, setPositionX] = useState("");
     const [positionY, setPositionY] = useState("");
+    const [width, setWidth] = useState("");
 
     const isEmpty = useCallback(() => {
         //i need do this way because useEffect Hook change on every render.
@@ -21,6 +22,7 @@ const Table = ({ table }) => {
         calculateBgColor();
         const x = `${table.x}px` ;
         const y = `${table.y}px` ;
+        setWidth(`${ (1+table.size * 10 /100) * 150}px` )
         setPositionX(x);
         setPositionY(y);
     }, [isEmpty, table]);
@@ -29,7 +31,7 @@ const Table = ({ table }) => {
     const viewLargerDevices = () => {
         return (
             <Box 
-                width="300px" 
+                width={width} 
                 height="20vh"
                 margin={"10"} 
                 borderWidth="1px" 
