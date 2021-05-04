@@ -7,7 +7,7 @@ import AlertDisplay from './AlertDisplay';
 import { parseCurrency } from "../utils/currency";
 
 
-const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, ...props }) => {
+const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfirm, ...props }) => {
     const [total, setTotal] = useState(0)
     //Order confirmation
     const [isAdded, setIsAdded] = useState(false);
@@ -29,7 +29,8 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, ...props
             orderedItems:items
         }
         OrderService.confirmOrder(orderDTO);
-        setIsAdded(true);    
+        setIsAdded(true);
+        onConfirm();
     }
 
     function renderOrderConfirmationCheck() {

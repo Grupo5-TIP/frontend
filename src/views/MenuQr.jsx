@@ -62,6 +62,7 @@ const MenuQr = ({...props}) => {
                             isOpen={isDrawerOpen}
                             onDeleteProduct={(product) => handleEditCart(product, "delete")}
                             tableId= {props.match.url.substring(props.match.url.lastIndexOf('/') + 1)}
+                            onConfirm = {() =>handleEditCart({}, "deleteAll")}
                         />
                     </Flex>
                 </Stack>
