@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, Button, Text, Alert, AlertIcon } from '@chakra-ui/react';
+import { Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, Button, Text } from '@chakra-ui/react';
 import { Flex } from "@chakra-ui/layout";
 import OrderService from '../services/orders-service';
 import Items from './Items';
+import AlertDisplay from './AlertDisplay';
 import { parseCurrency } from "../utils/currency";
 
 
-const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, ...props }) => {
+const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfirm, ...props }) => {
     const [total, setTotal] = useState(0)
     //Order confirmation
     const [isAdded, setIsAdded] = useState(false);
@@ -28,18 +29,14 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, ...props
             orderedItems:items
         }
         OrderService.confirmOrder(orderDTO);
-        setIsAdded(true);    
+        setIsAdded(true);
+        onConfirm();
     }
 
     function renderOrderConfirmationCheck() {
         confirmationAlert();
         setTimeout(() => onClose(), 2000)
-        return (
-            <Alert status="success" variant="solid" justifyContent="center" textAlign="center">
-                <AlertIcon />
-                El pedido fue confirmado!
-            </Alert>
-        )
+        return <AlertDisplay status={"success"} message={"El pedido fue confirmado!"}/>
     }
 
     return (

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Products from '../components/Products';
 import DrawerCart from '../components/DrawerCart'
 import productService from '../services/products-service';
-import { Flex, Icon, Tooltip, Button, Box, Stack, Text } from '@chakra-ui/react';
+import { Flex, Button, Stack, Text } from '@chakra-ui/react';
 import { editCart } from '../utils/editCart';
 import { GrCart } from 'react-icons/gr'
 
@@ -34,7 +34,7 @@ const MenuQr = ({...props}) => {
     }
 
     return (
-        <Flex justifyContent={"center"} height="100vh">
+        <Flex justifyContent={"center"} minHeight="80vh">
             { error !== '' ? <Text color="gray.400">Error al traer del server...</Text>
             : 
                 loading ? <Text color="gray.400"> Cargando... </Text> :
@@ -62,6 +62,7 @@ const MenuQr = ({...props}) => {
                             isOpen={isDrawerOpen}
                             onDeleteProduct={(product) => handleEditCart(product, "delete")}
                             tableId= {props.match.url.substring(props.match.url.lastIndexOf('/') + 1)}
+                            onConfirm = {() =>handleEditCart({}, "deleteAll")}
                         />
                     </Flex>
                 </Stack>

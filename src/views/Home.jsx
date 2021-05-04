@@ -1,6 +1,10 @@
+import { Flex } from "@chakra-ui/layout";
+
 const Home = () => {
     return(
-        <p>Home</p>
+        <Flex justifyContent={"center"} minHeight="80vh">
+            Home...
+        </Flex>
     )
 }
 

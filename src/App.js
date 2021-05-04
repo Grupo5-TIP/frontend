@@ -5,6 +5,7 @@ import MenuQr from './views/MenuQr';
 import Header from './views/Header';
 import Footer from './views/Footer';
 import Home from './views/Home';
+import Tables from './views/Tables'
 
 function App() {
   return (
@@ -14,11 +15,12 @@ function App() {
       <BrowserRouter>
           <Switch>     
             <Route path="/menu/:tableid" component={MenuQr} />
+            <Route path="/tables" component={Tables} />
             <Route path="/" component={Home} />
           </Switch>
       </BrowserRouter>
 
-      {/*<Footer/> */}
+      <Footer/>
     </div>
     
   );

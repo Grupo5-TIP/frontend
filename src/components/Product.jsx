@@ -1,6 +1,7 @@
-import { Stack, Text, Heading, Image, Alert, AlertIcon} from "@chakra-ui/react"
+import { Stack, Text, Heading, Image } from "@chakra-ui/react"
 import {parseCurrency} from "../utils/currency";
 import {useState} from 'react';
+import AlertDisplay from './AlertDisplay';
 
 const Product = ({product, onAddProduct}) => {
     const [isAdded, setIsAdded] = useState(false);
@@ -13,12 +14,7 @@ const Product = ({product, onAddProduct}) => {
     }
     function renderProductAddedCheck() {
         onClose();
-        return (
-            <Alert status="success" variant="solid" justifyContent="center" textAlign="center">
-                <AlertIcon />
-                El producto se agregó correctamente al carrito!
-            </Alert>
-        )
+        return <AlertDisplay status={"success"} message={"El producto se agregó correctamente al carrito!"}/>
     }
     return (
         <Stack
