@@ -7,6 +7,10 @@ class OrderService{
     confirmOrder(token){
         axios.post(API_URL, token);
     }
+
+    getOrderByTableId(tableId){
+        return axios.get(API_URL+"/"+tableId);
+    }
 }
 
 export default new OrderService();
