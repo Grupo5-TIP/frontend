@@ -4,8 +4,7 @@ import { Text, useMediaQuery, Stack } from '@chakra-ui/react';
 import Table from '../components/Table';
 import CashierCart from '../components/CashierCart';
 import tablesService from '../services/tables-service';
-import ordersService from '../services/orders-service';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter } from "@chakra-ui/react";
+import productService from '../services/products-service';
 import { ModalBody, ModalCloseButton, useDisclosure, Button } from "@chakra-ui/react";
 
 const Tables = () => {
@@ -14,44 +13,24 @@ const Tables = () => {
     const [error, setError] = useState('');
     const [isLarger] = useMediaQuery("(min-width: 380px)");
     const [actualTableId, setTableId] = useState(0);
-    const [orders, setOrders] = useState([]);
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    
-    //HARDCODE LISTA DE ITEMS
-    const itemsPrueba = [
-        {
-            amount:2,
-            product: {
-                description: "Coca Cola 2 lts",
-                id: 1,
-                image: "https://bit.ly/2Qx0RML",
-                name: "Coca Cola",
-                price: 200
-            }
-        },
-        {
-            amount:1,
-            product: {
-                description: "Tiramisu",
-                id: 2,
-                image: "https://bit.ly/2Qx0RML",
-                name: "Tiramisu",
-                price: 300
-            }
-        }
-    ]
-
+    const [products, setProducts] = useState([]);
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [items, setItemsFromTable] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             tablesService.getTables()
                 .then(resp => {
-                    setTables(resp.data);
+                    if (resp.status !== 400) {
+                        setTables(resp.data);
+                    } else {
+                        setTables([]);
+                    }
                 })
                 .catch(err => {
                     setError(err);
-                });
+                });            
             setLoading(false);
         }
 
@@ -60,14 +39,21 @@ const Tables = () => {
 
     const openTable = (tableId) => {
         setTableId(tableId);
-        ordersService.getOrderByTableId(tableId)
+        productService.getAllProducts()
             .then(resp => {
-                setOrders(resp.data)
+                setProducts(resp.data);
+                
             })
             .catch(err => {
                 setError(err);
             });
-
+        tablesService.getItemsFromTable(tableId)
+            .then(resp => {
+                setItemsFromTable(resp.data);
+            })
+            .catch(err => {
+                setError(err);
+            });
         onOpen();
     }
 
@@ -116,36 +102,16 @@ const Tables = () => {
                     </Flex>
             }
         </Flex>
-            <CashierCart 
-                onClose={onClose} 
-                isOpen={isOpen}
-                onOpen={onOpen}
-                items={itemsPrueba}                           
-                onDeleteProduct={()=>(console.log())}
-                tableId={actualTableId}   
-            ></CashierCart>
-        )
-        
-        </>
-        /*<Flex   
-            //flexWrap="wrap" // delete when we use the xy values
-            //justifyContent="center"
-            //minHeight="90vh"
-            flexDirection={"column"}
-            >
-
-            { error !== '' ? <Text color="gray.400">Error al traer mesas del server...</Text>
-                :
-                loading ? <Text color="gray.400"> Cargando... </Text>
-                    :
-                    tables.map(table =>
-                        <Table
-                            key={table.id}
-                            table={table}
-                        />
-                    )
-            }
-        </Flex>*/
+        <CashierCart 
+            onClose={onClose} 
+            isOpen={isOpen}
+            onOpen={onOpen}
+            items={items}
+            products={products}                          
+            onDeleteProduct={()=>(console.log())}
+            tableId={actualTableId}
+        ></CashierCart>
+        </>        
     )
 }
 

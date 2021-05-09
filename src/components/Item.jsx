@@ -2,7 +2,6 @@ import { Stack, Button, Text } from '@chakra-ui/react';
 import {parseCurrency} from "../utils/currency";
 
 const Item = ({ item, onDeleteProduct }) => {
-    console.log(item);
     const product = item.product;
     const amount = item.amount;
 

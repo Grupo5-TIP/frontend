@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import Items from '../components/Items';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter } from "@chakra-ui/react";
 import { ModalBody, ModalCloseButton, Button, Grid, Box } from "@chakra-ui/react";
-import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tfoot, Tr, Th, Td } from "@chakra-ui/react";
 import { Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from "@chakra-ui/react";
 
-const CashierCart = ({ items, onDeleteProduct, tableId, onClose, isOpen, onOpen, ...props }) => {
+const CashierCart = ({ items, products, onDeleteProduct, tableId, onClose, isOpen, onOpen, ...props }) => {
     const [total, setTotal] = useState(0)
     //Order confirmation
     const [isAdded, setIsAdded] = useState(false);
@@ -13,7 +12,7 @@ const CashierCart = ({ items, onDeleteProduct, tableId, onClose, isOpen, onOpen,
 
     useEffect(() => {
         const calculate = () => {
-            const red = items.reduce((total, item) => total + item.product.price * item.amount, 0 );
+            const red = items.reduce((total, item) => total + item.product.price * item.amount, 0);
             setTotal(red);
         }
 
@@ -50,9 +49,11 @@ const CashierCart = ({ items, onDeleteProduct, tableId, onClose, isOpen, onOpen,
                     }                                          
                 </Tbody>
                 <Tfoot>
-                    <Th>                          
-                        TOTAL PRICE: {items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}
-                    </Th>                          
+                    <Tr>
+                        <Th>                          
+                            TOTAL PRICE: {items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}
+                        </Th>
+                    </Tr>                          
                 </Tfoot>
                 </Table>
                 <Accordion allowToggle>
@@ -68,9 +69,9 @@ const CashierCart = ({ items, onDeleteProduct, tableId, onClose, isOpen, onOpen,
                         <AccordionPanel pb={4}>
                             <Grid templateColumns="repeat(5, 1fr)" gap={2}>
                                 {
-                                    items.map((item)=> ( 
+                                    products.map((product)=> ( 
                                         <Button colorScheme="teal" variant="outline">
-                                            {item.product.name}
+                                            {product.name}
                                         </Button>
                                     ))
                                 }
