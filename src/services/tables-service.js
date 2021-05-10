@@ -17,7 +17,7 @@ class TablesService{
         return tables;*/
         
     }
-    async getItemsFromTable(actualTableId){
+    getItemsFromTable(actualTableId){
         return axios.get(API_URL+"/"+actualTableId);
     }
 }

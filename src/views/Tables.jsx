@@ -20,6 +20,7 @@ const Tables = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
+
             tablesService.getTables()
                 .then(resp => {
                     if (resp.status !== 400) {
@@ -41,15 +42,14 @@ const Tables = () => {
         setTableId(tableId);
         productService.getAllProducts()
             .then(resp => {
-                setProducts(resp.data);
-                
+                setProducts(resp.data);                
             })
             .catch(err => {
                 setError(err);
             });
         tablesService.getItemsFromTable(tableId)
             .then(resp => {
-                setItemsFromTable(resp.data);
+                setItemsFromTable([...resp.data]);
             })
             .catch(err => {
                 setError(err);
