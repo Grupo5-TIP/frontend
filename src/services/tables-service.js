@@ -17,6 +17,9 @@ class TablesService{
         return tables;*/
         
     }
+    getItemsFromTable(actualTableId){
+        return axios.get(API_URL+"/"+actualTableId);
+    }
 }
 
 export default new TablesService();

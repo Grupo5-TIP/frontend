@@ -43,6 +43,7 @@ const Table = ({ table }) => {
             >
                 <Box d="flex" alignItems="baseline">
                     <Badge borderRadius="full" fontSize="xl" px="2" colorScheme="gray.400" color={bgColor}>
+                        {table.id}.
                         {table.state}
                     </Badge>
                     <Box
