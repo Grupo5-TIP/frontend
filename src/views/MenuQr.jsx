@@ -17,7 +17,7 @@ import { GrCart } from 'react-icons/gr'
 const MenuQr = ({ ...props }) => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState({});
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [cartItems, setCartItems] = useState([]);
 
@@ -44,7 +44,7 @@ const MenuQr = ({ ...props }) => {
     const DisplayCategory = ({categoryName, productCategory }) => {
         return (
             <Accordion allowToggle>
-                <AccordionItem >
+                <AccordionItem>
                     <h2>
                         <AccordionButton
                             justifyContent="space-between"
@@ -52,7 +52,7 @@ const MenuQr = ({ ...props }) => {
                             maxWidth="100%"
                             _expanded={{ bg: "theme.100", color: "white" }}>
 
-                            <Box flex="1">
+                            <Box flex="1" width={200} padding={3}>
                                 {categoryName}
                             </Box>
                             <AccordionIcon />
@@ -122,36 +122,6 @@ const MenuQr = ({ ...props }) => {
                     </Stack>
 
             }
-
-            {/*loading ? <p> Cargando... </p> :
-                <Stack>
-                    <Flex justifyContent="flex-end" position="fixed" right="2%">
-
-                        <Button as= {GrCart} 
-                            boxSize="50px"
-                            bg="theme.200" 
-                            padding={2}
-                            margin={1}
-                            onClick = {() => setDrawerOpen(true)}
-                            >
-                        </Button>                        
-                    </Flex>
-                    <Flex>
-                        <Products
-                            products={products}
-                            loading={loading}
-                            onAddProduct={(product) => handleEditCart(product, "add")}
-                        />
-                        <DrawerCart
-                            items={cartItems}
-                            onClose={() => setDrawerOpen(false)}
-                            isOpen={isDrawerOpen}
-                            onDeleteProduct={(product) => handleEditCart(product, "delete")}
-                            tableId= {props.match.url.substring(props.match.url.lastIndexOf('/') + 1)}
-                        />
-                    </Flex>
-                </Stack>
-            */}
         </Flex>
     );
 
