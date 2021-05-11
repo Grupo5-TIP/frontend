@@ -1,10 +1,11 @@
 import { Flex } from "@chakra-ui/layout";
 import Product from './Product';
 
-const Products = ({products, loading, onAddProduct}) => {
+const Products = ({ products, loading, onAddProduct }) => {
     return (
-        <Flex flexDirection={"column"}> 
-            {!loading ?  
+        <Flex flexDirection={"column"}>
+
+            {!loading && products ?  
                 products.map( product =>
                 <Product
                     key = {product.id}
@@ -12,8 +13,12 @@ const Products = ({products, loading, onAddProduct}) => {
                     onAddProduct ={onAddProduct}
                 />
                 )
-            : <p>Loading...</p>}
+                : <p>Loading...</p>
+
+            }
         </Flex>
+
+
     )
 }
 
