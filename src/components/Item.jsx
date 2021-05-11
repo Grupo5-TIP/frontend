@@ -28,7 +28,7 @@ const Item = ({ item, onDeleteProduct }) => {
                 </Stack>
                 <Stack direction="row">
                     <Text fontWeight="500">
-                        Cant: {amount}
+                        Cantidad: {amount}
                     </Text>
                 </Stack>
             </Stack>
