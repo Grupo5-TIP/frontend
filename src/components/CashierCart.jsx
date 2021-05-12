@@ -14,10 +14,10 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpen, onOpen, ...pro
     const [items, setItemsFromTable] = useState([]);
 
     const addItem = (product) => {
-        console.log("agregado", product)
         let tempItem = items.find(item => (item.product.name === product.name));
         if (tempItem !== undefined) {
             tempItem.amount = tempItem.amount + 1;
+            setItemsFromTable(items.map((item)=> (item)))
         } else {
             product['new'] = 1;
             const item = {
@@ -129,7 +129,6 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpen, onOpen, ...pro
                                                 </h2>
                                                 <AccordionPanel width="100%">
                                                     {
-
                                                         products[category].map((product) => (
                                                             <Button margin={2} colorScheme="teal" variant="outline" onClick={() => addItem(product)}>
                                                                 {product.name}
