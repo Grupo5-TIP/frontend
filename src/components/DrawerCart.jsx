@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, Button, Text } from '@chakra-ui/react';
-import { Flex } from "@chakra-ui/layout";
+import { Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, Button, Text, Image } from '@chakra-ui/react';
+import { Flex, Box } from "@chakra-ui/layout";
 import OrderService from '../services/orders-service';
 import Items from './Items';
 import AlertDisplay from './AlertDisplay';
@@ -50,18 +50,28 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfir
             >
                 <DrawerOverlay>
                     <DrawerContent>
-                        <DrawerCloseButton />
+                        <DrawerCloseButton 
+                            color="whiteAlpha.900"
+                        />
                         <DrawerHeader
-                            bg="theme.200"
+                            h="100px"
+                            bg="gray.800"
                             color="theme.100"
                             size="xs"
                             shadow="md"
-                        >
-                            <Text
-                                fontSize="2xl"
+                        >                            
+                            <Box 
+                                w="100%"
+                                h="100%"
+                                bg="gray.200"
+                                shadow="md"
                             >
-                                Orden
-                            </Text>
+                                <Image
+                                    w="100%"
+                                    h="100%"                            
+                                    src="https://bit.ly/3y3yaIh"
+                                />
+                            </Box>
                         </DrawerHeader>
 
                         <DrawerBody >

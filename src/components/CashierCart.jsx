@@ -1,16 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter } from "@chakra-ui/react";
 import { ModalBody, ModalCloseButton, Button, Box } from "@chakra-ui/react";
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td } from "@chakra-ui/react";
 import { Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from "@chakra-ui/react";
+import tablesService from '../services/tables-service';
+import productService from '../services/products-service';
 
-const CashierCart = ({ items, products, onDeleteProduct, tableId, onClose, isOpen, onOpen, ...props }) => {
-    const [itemsOfTable, setItemList] = useState(items);
+const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpen, onOpen, ...props }) => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [actualTableId, setTableId] = useState(tableId);
+    const [products, setProducts] = useState({});
+    const [items, setItemsFromTable] = useState([]);
 
     const addItem = (product) => {
-        let tempItem = itemsOfTable.find(item => (item.product.name === product.name));
+        let tempItem = items.find(item => (item.product.name === product.name));
         if (tempItem !== undefined) {
             tempItem.amount = tempItem.amount + 1;
+            setItemsFromTable(items.map((item)=> (item)))
         } else {
             product['new'] = 1;
             const item = {
@@ -18,12 +25,38 @@ const CashierCart = ({ items, products, onDeleteProduct, tableId, onClose, isOpe
                 amount: 1,
                 product: product
             }
-            itemsOfTable.push(item);
+            items.push(item);
+            setItemsFromTable(items.map((item)=> (item)));
         }
-        setItemList([...itemsOfTable]);
     }
 
     const categories = Object.getOwnPropertyNames(products);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            if (actualTableId !==0) {
+
+                productService.getAllProducts()
+                    .then(resp => {
+                        setProducts(resp.data);
+                    })
+                    .catch(err => {
+                        setError(err);
+                    });
+    
+                tablesService.getItemsFromTable(actualTableId)
+                    .then(resp => {
+                        setItemsFromTable(resp.data);
+                    })
+                    .catch(err => {
+                        setError(err);
+                    });
+            }
+            setLoading(false);
+        }
+        fetchData();
+    }, [actualTableId]);
 
     return (
 
@@ -45,7 +78,7 @@ const CashierCart = ({ items, products, onDeleteProduct, tableId, onClose, isOpe
                             </Thead>
                             <Tbody>
                                 {
-                                    itemsOfTable.map(
+                                    items.map(
                                         (item) => (
                                             <Tr>
                                                 <Td>{item.product.name}</Td>
@@ -60,7 +93,7 @@ const CashierCart = ({ items, products, onDeleteProduct, tableId, onClose, isOpe
                             <Tfoot>
                                 <Tr>
                                     <Th>
-                                        TOTAL PRICE: {itemsOfTable.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}
+                                        TOTAL PRICE: {items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}
                                     </Th>
                                 </Tr>
                             </Tfoot>
@@ -77,7 +110,7 @@ const CashierCart = ({ items, products, onDeleteProduct, tableId, onClose, isOpe
                                 </AccordionButton>
                             </h2>
                             <AccordionPanel>
-                                {
+                                {   
                                     categories.map((category) =>
                                         <Accordion allowToggle >
                                             <AccordionItem key={category}>
@@ -96,7 +129,6 @@ const CashierCart = ({ items, products, onDeleteProduct, tableId, onClose, isOpe
                                                 </h2>
                                                 <AccordionPanel width="100%">
                                                     {
-
                                                         products[category].map((product) => (
                                                             <Button margin={2} colorScheme="teal" variant="outline" onClick={() => addItem(product)}>
                                                                 {product.name}
