@@ -13,7 +13,7 @@ const Header = () => {
             >
                 <Image
                     borderRadius="full"
-                    boxSize="100px"
+                    boxSize="100px" 
                     objectFit="cover"
                     src="https://bit.ly/3eErw3N"
                 />

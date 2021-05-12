@@ -1,21 +1,13 @@
 import { Stack, Text, Heading, Image } from "@chakra-ui/react"
 import {parseCurrency} from "../utils/currency";
-import {useState} from 'react';
-import AlertDisplay from './AlertDisplay';
 
 const Product = ({product, onAddProduct}) => {
-    const [isAdded, setIsAdded] = useState(false);
-    const onClose = () => setTimeout(() => setIsAdded(false), 2000);
     const {id, name, description, price, image} = product;
 
     const addProduct = (product) =>{
-        setIsAdded(true);
         onAddProduct(product);
     }
-    function renderProductAddedCheck() {
-        onClose();
-        return <AlertDisplay status={"success"} message={"El producto se agregó correctamente al carrito!"}/>
-    }
+
     return (
         <Stack
             key={id}
@@ -32,13 +24,16 @@ const Product = ({product, onAddProduct}) => {
             alignItems={"center"} 
         >            
             <Stack  direction="column" padding={0} >
-                <Heading fontSize="50px" color="theme.100">{name}</Heading>
+                <Heading fontSize="30px" color="theme.100">{name}</Heading>
                 <Image
                     src={image}
                     backgroundColor="white"
                     borderRadius="none"
                     loading="lazy"
                     alt={name}
+                    width="80%"
+                    height="60%"
+                    alignSelf="center"
                 />
                 <Stack justifyContent="space-between" spacing={1}>                    
                     <Stack spacing={1}>                        
@@ -47,8 +42,7 @@ const Product = ({product, onAddProduct}) => {
                     <Stack justifyContent="space-between">
                         <Text color="theme.500" fontSize="sm" fontWeight="700"> {parseCurrency(price)} </Text>
                     </Stack>
-                </Stack>
-            {isAdded ? renderProductAddedCheck() : null}          
+                </Stack>        
             </Stack>
         </Stack>
     );
