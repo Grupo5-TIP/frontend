@@ -10,6 +10,7 @@ import {
     AccordionPanel,
     AccordionIcon,
     Box,
+    Image
 } from '@chakra-ui/react';
 import { editCart } from '../utils/editCart';
 import { GrCart } from 'react-icons/gr'
@@ -103,6 +104,7 @@ const MenuQr = ({ ...props }) => {
                                 margin={1}
                                 onClick={() => setDrawerOpen(true)}
                             >
+
                             </Button>
                         </Flex>
                         <Flex>

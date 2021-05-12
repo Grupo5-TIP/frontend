@@ -1,16 +1,37 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Image} from "@chakra-ui/react";
 
 const Header = () => {
     return(
         <Flex>
             <Box 
-                w="100%"
-                h="80px"
-                /*bgGradient="linear(to-r,theme.500,theme.400,theme.500)"*/
-                bg="theme.200"
+                w="20%"
+                h="100px"
+                bg="gray.900"
                 marginBottom={4}
                 shadow="md"
+                alignItems="end"
             >
+                <Image
+                    borderRadius="full"
+                    boxSize="100px"
+                    objectFit="cover"
+                    src="https://bit.ly/3eErw3N"
+                />
+            </Box>
+            <Box 
+                w="80%"
+                h="100px"
+                bg="gray.200"
+                marginBottom={4}
+                shadow="md"
+                alignItems="end"
+            >
+                <Image
+                    w="100%"
+                    h="100px"
+                    objectFit="cover"
+                    src="https://bit.ly/3wcGMuL"
+                />
             </Box>
         </Flex>
     )

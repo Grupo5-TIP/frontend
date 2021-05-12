@@ -4,7 +4,6 @@ import { Text, Stack } from '@chakra-ui/react';
 import Table from '../components/Table';
 import CashierCart from '../components/CashierCart';
 import tablesService from '../services/tables-service';
-import productService from '../services/products-service';
 import { useDisclosure } from "@chakra-ui/react";
 
 const Tables = () => {
@@ -12,9 +11,7 @@ const Tables = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [actualTableId, setTableId] = useState(0);
-    const [products, setProducts] = useState({});
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [items, setItemsFromTable] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,24 +25,6 @@ const Tables = () => {
                     setError(err);
                 });
 
-            if (actualTableId !==0) {
-
-                productService.getAllProducts()
-                    .then(resp => {
-                        setProducts(resp.data);
-                    })
-                    .catch(err => {
-                        setError(err);
-                    });
-
-                tablesService.getItemsFromTable(actualTableId)
-                    .then(resp => {
-                        setItemsFromTable(resp.data);
-                    })
-                    .catch(err => {
-                        setError(err);
-                    });
-            }
             setLoading(false);
         }
 
@@ -53,8 +32,8 @@ const Tables = () => {
     }, [actualTableId]);
 
     const openTable = (tableId) => {
-        setTableId(tableId);
-        setError("")
+        setTableId(tableId);        
+        setError("")        
         onOpen();
     }
 
@@ -93,8 +72,6 @@ const Tables = () => {
                 onClose={onClose}
                 isOpen={isOpen}
                 onOpen={onOpen}
-                items={items}
-                products={products}
                 onDeleteProduct={() => (console.log())}
                 tableId={actualTableId}
             />
