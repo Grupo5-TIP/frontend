@@ -80,7 +80,7 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfir
                                     items.length ?
                                         <Items items={items} onDeleteProduct={onDeleteProduct}></Items>
                                     :
-                                        <Text color="gray.400">No hay elementos en tu carrito</Text>
+                                        <Text color="gray.400" data-testid="drawer-cart-error">No hay elementos en tu carrito</Text>
                                 }
                             </Flex>
                         </DrawerBody>
@@ -90,12 +90,13 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfir
                             as="samp"
                             fontSize="lg"
                             align="center"
+                            data-testid="drawer-cart-total"
                             >
                                 Total: {parseCurrency(total)}
                         </Text>
                         <DrawerFooter>                               
-                            <Button mr={2} bg="gray.100" color="theme.100" variant="outline" onClick={onClose}>Cancel</Button>
-                            <Button onClick= {() => dispatchCreateCart()} bg="theme.300" color="theme.100">Confirmar</Button>
+                            <Button mr={2} bg="gray.100" color="theme.100" variant="outline" onClick={onClose} data-testid="drawer-cart-cancel-button">Cancel</Button>
+                            <Button onClick= {() => dispatchCreateCart()} bg="theme.300" color="theme.100" data-testid="drawer-cart-confirm-button">Confirmar</Button>
                         </DrawerFooter>
                         {isAdded ? renderOrderConfirmationCheck() : null}
                     </DrawerContent>
