@@ -15,7 +15,7 @@ const Items = ({items, onDeleteProduct}) =>{
                     )
               )
                 :
-                    <Text color="gray.400">No hay elementos en tu orden</Text>
+                    <Text color="gray.400" data-testid='items-error'>No hay elementos en tu orden</Text>
             }
 
             

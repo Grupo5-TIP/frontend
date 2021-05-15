@@ -18,7 +18,9 @@ describe('<DrawerCart />', ()=>{
 
     test("should render ok without items", ()=>{
         const { queryByText  } = render(<DrawerCart items={[]} />)
-        expect(queryByText ("No hay elementos en tu carrito")).not.toBeInTheDocument();
+        //expect(queryByText ("No hay elementos en tu carrito")).not.toBeInTheDocument();
+        //const { getByTestId  } = render(<DrawerCart items={[]} />)
+        //expect(getByTestId('drawer-cart-error')).toBeInTheDocument("No hay elementos en tu carrito");
     });
 
 })
