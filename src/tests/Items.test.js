@@ -22,9 +22,10 @@ describe('<Items />', ()=>{
     });
 
     test("should render ok without childrens", ()=>{
-        component = render(<Items items={[]} onDeleteProduct ={onDeleteProductMock} />)
+        const { getByTestId }  = render(<Items items={[]} onDeleteProduct ={onDeleteProductMock} />)
 
-        expect(screen.getByText("No hay elementos en tu orden")).toBeInTheDocument();
+        //expect(screen.getByText("No hay elementos en tu orden")).toBeInTheDocument();
+        expect(getByTestId('items-error')).toHaveTextContent('No hay elementos en tu orden')
     });
 
     test("should render ok with one childrens", ()=>{
