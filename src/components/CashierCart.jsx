@@ -92,7 +92,7 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpen, onOpen, ...pro
                             </Tbody>
                             <Tfoot>
                                 <Tr>
-                                    <Th>
+                                    <Th data-testid="cashier-cart-total">
                                         TOTAL PRICE: {items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}
                                     </Th>
                                 </Tr>
@@ -103,7 +103,7 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpen, onOpen, ...pro
                         <AccordionItem>
                             <h2>
                                 <AccordionButton>
-                                    <Box flex="1" textAlign="center">
+                                    <Box flex="1" textAlign="center" data-testid="cashier-cart-available">
                                         Available products
                                     </Box>
                                     <AccordionIcon />
@@ -146,7 +146,7 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpen, onOpen, ...pro
                     </Accordion>
                 </ModalBody>
                 <ModalFooter>
-                    <Button onClick={onClose}>Close</Button>
+                    <Button onClick={onClose} data-testid="cashier-cart-button-close">Close</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

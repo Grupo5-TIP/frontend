@@ -24,7 +24,7 @@ const Product = ({product, onAddProduct}) => {
             alignItems={"center"} 
         >            
             <Stack  direction="column" padding={0} >
-                <Heading fontSize="30px" color="theme.100">{name}</Heading>
+                <Heading fontSize="30px" color="theme.100" data-testid="product-name">{name}</Heading>
                 <Image
                     src={image}
                     backgroundColor="white"
@@ -37,10 +37,10 @@ const Product = ({product, onAddProduct}) => {
                 />
                 <Stack justifyContent="space-between" spacing={1}>                    
                     <Stack spacing={1}>                        
-                        <Text color="theme.200" fontSize="xl" >{description}</Text>
+                        <Text color="theme.200" fontSize="xl" data-testid="product-description">{description}</Text>
                     </Stack>
                     <Stack justifyContent="space-between">
-                        <Text color="theme.500" fontSize="sm" fontWeight="700"> {parseCurrency(price)} </Text>
+                        <Text color="theme.500" fontSize="sm" fontWeight="700" data-testid="product-price"> {parseCurrency(price)} </Text>
                     </Stack>
                 </Stack>        
             </Stack>

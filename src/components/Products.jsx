@@ -3,7 +3,7 @@ import Product from './Product';
 
 const Products = ({ products, loading, onAddProduct }) => {
     return (
-        <Flex flexDirection={"column"}>
+        <Flex flexDirection={"column"} data-testid="products-loading">
 
             {!loading && products ?  
                 products.map( product =>

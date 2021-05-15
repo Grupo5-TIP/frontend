@@ -42,7 +42,7 @@ const Table = ({ table }) => {
                 marginTop={130}
             >
                 <Box d="flex" alignItems="baseline">
-                    <Badge borderRadius="full" fontSize="xl" px="2" colorScheme="gray.400" color={bgColor}>
+                    <Badge borderRadius="full" fontSize="xl" px="2" colorScheme="gray.400" color={bgColor} data-testid="table-badge">
                         {table.id}.
                         {table.state}
                     </Badge>
@@ -53,6 +53,7 @@ const Table = ({ table }) => {
                         fontSize="xs"
                         textTransform="uppercase"
                         ml="2"
+                        data-testid="table-size"
                     >
                         &bull; size: {table.size}
                     </Box>
@@ -62,6 +63,7 @@ const Table = ({ table }) => {
                     fontWeight="semibold"
                     as="h4"
                     lineHeight="tight"
+                    data-testid="table-detail"
                 >
                     {isEmpty()? null : <Text>Detalle...</Text>}
                 </Box>
@@ -81,8 +83,8 @@ const Table = ({ table }) => {
                         padding={3}
                         width="43vh"
                     >
-                        <Text color="theme.100" fontSize="lg">{table.id}</Text>
-                        <Text color="theme.100" fontSize="lg" as="em" >{table.state}</Text>
+                        <Text color="theme.100" fontSize="lg" data-testid="table-small-id">{table.id}</Text>
+                        <Text color="theme.100" fontSize="lg" as="em" data-testid="table-small-state">{table.state}</Text>
                     </Stack>
                 </Stack>
             </Stack>
