@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, Button, Text, Alert, AlertIcon } from '@chakra-ui/react';
-import { Flex } from "@chakra-ui/layout";
+import { Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, Button, Text, Image } from '@chakra-ui/react';
+import { Flex, Box } from "@chakra-ui/layout";
 import OrderService from '../services/orders-service';
 import Items from './Items';
+import AlertDisplay from './AlertDisplay';
 import { parseCurrency } from "../utils/currency";
 
 
-const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, ...props }) => {
+const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfirm, ...props }) => {
     const [total, setTotal] = useState(0)
     //Order confirmation
     const [isAdded, setIsAdded] = useState(false);
@@ -28,18 +29,14 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, ...props
             orderedItems:items
         }
         OrderService.confirmOrder(orderDTO);
-        setIsAdded(true);    
+        setIsAdded(true);
+        onConfirm();
     }
 
     function renderOrderConfirmationCheck() {
         confirmationAlert();
         setTimeout(() => onClose(), 2000)
-        return (
-            <Alert status="success" variant="solid" justifyContent="center" textAlign="center">
-                <AlertIcon />
-                El pedido fue confirmado!
-            </Alert>
-        )
+        return <AlertDisplay status={"success"} message={"El pedido fue confirmado!"}/>
     }
 
     return (
@@ -53,26 +50,38 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, ...props
             >
                 <DrawerOverlay>
                     <DrawerContent>
-                        <DrawerCloseButton />
+                        <DrawerCloseButton 
+                            color="whiteAlpha.900"
+                        />
                         <DrawerHeader
-                            bg="theme.200"
+                            h="100px"
+                            bg="gray.800"
                             color="theme.100"
                             size="xs"
                             shadow="md"
-                        >
-                            <Text
-                                fontSize="2xl"
+                        >                            
+                            <Box 
+                                w="100%"
+                                h="100%"
+                                bg="gray.200"
+                                shadow="md"
                             >
-                                Orden
-                            </Text>
+                                <Image
+                                    w="100%"
+                                    h="100%"                            
+                                    src="https://bit.ly/3y3yaIh"
+                                />
+                            </Box>
                         </DrawerHeader>
 
                         <DrawerBody >
                             <Flex height="90%">
-                                {items.length ?
-                                    <Items items={items} onDeleteProduct={onDeleteProduct}></Items>
+                                {
+                                    items.length ?
+                                        <Items items={items} onDeleteProduct={onDeleteProduct}></Items>
                                     :
-                                    <p>No items...</p>}
+                                        <Text color="gray.400" data-testid="drawer-cart-error">No hay elementos en tu carrito</Text>
+                                }
                             </Flex>
                         </DrawerBody>
                         
@@ -81,12 +90,13 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, ...props
                             as="samp"
                             fontSize="lg"
                             align="center"
+                            data-testid="drawer-cart-total"
                             >
                                 Total: {parseCurrency(total)}
                         </Text>
                         <DrawerFooter>                               
-                            <Button mr={2} bg="gray.100" color="theme.100" variant="outline" onClick={onClose}>Cancel</Button>
-                            <Button onClick= {() => dispatchCreateCart()} bg="theme.300" color="theme.100">Confirmar</Button>
+                            <Button mr={2} bg="gray.100" color="theme.100" variant="outline" onClick={onClose} data-testid="drawer-cart-cancel-button">Cancel</Button>
+                            <Button onClick= {() => dispatchCreateCart()} bg="theme.300" color="theme.100" data-testid="drawer-cart-confirm-button">Confirmar</Button>
                         </DrawerFooter>
                         {isAdded ? renderOrderConfirmationCheck() : null}
                     </DrawerContent>

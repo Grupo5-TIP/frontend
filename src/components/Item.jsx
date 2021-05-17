@@ -16,27 +16,20 @@ const Item = ({ item, onDeleteProduct }) => {
                     spacing={"10"}
                 >
                     <Text fontSize="lg">{product.name}</Text>
-                    <Text as="samp">{parseCurrency(product.price * amount)}</Text>
+                    <Text as="samp" data-testid="total">{parseCurrency(product.price * amount)}</Text>
                     <Button
                         borderRadius={5}
                         color="theme.100"
                         size="xs"
                         onClick={() => onDeleteProduct(product)}
+                        data-testid="button-delete"
                     >
                         x
                     </Button>
                 </Stack>
                 <Stack direction="row">
-                    {/*<Button
-                        borderRadius={5}
-                        color="theme.100"
-                        size="xs"
-                        onClick={() => console.log("agregando...")}//onClick={() => onDecrement(product)}
-                    >
-                        -
-                    </Button>*/}
-                    <Text fontWeight="500">
-                        Cant: {amount}
+                    <Text fontWeight="500" data-testid="amount">
+                        Cantidad: {amount}
                     </Text>
                 </Stack>
             </Stack>
