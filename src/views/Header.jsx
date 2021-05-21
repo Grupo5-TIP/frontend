@@ -1,40 +1,66 @@
-import { Box, Flex, Image} from "@chakra-ui/react";
+import React from "react";
+import {
+    Box,
+    Stack,
+    Flex,
+    Image,
+    Text,
+    Button,
+    useDisclosure
+} from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons";
+import Logo from '../components/Logo';
 
-const Header = () => {
-    return(
-        <Flex>
-            <Box 
-                w="20%"
-                h="100px"
-                bg="gray.900"
-                marginBottom={4}
-                shadow="md"
-                alignItems="end"
-            >
-                <Image
-                   
-                    w="100%"
-                    objectFit="cover"
-                    src="https://bit.ly/3eErw3N"
-                />
-            </Box>
-            <Box 
-                w="80%"
-                h="100px"
-                bg="gray.200"
-                marginBottom={4}
-                shadow="md"
-                alignItems="end"
-            >
-                <Image
-                    float="right"
-                    w="100%"
-                    h="100px"
-                    objectFit="cover"
-                    src="https://bit.ly/3wcGMuL"
-                />
-                
-            </Box>
+const Menu = (isOpen, ...props) => {
+    return (
+        <Stack
+            direction={{ base: "column", md: "row" }}
+            display={{ base: isOpen ? "block" : "none", md: "flex" }}
+            width={{ base: "full", md: "auto" }}
+            alignItems="center"
+            flexGrow={1}
+            mt={{ base: 4, md: 0 }}
+        >{/*
+                <Text>Link1</Text>
+                <Text>Link2</Text>
+                <Text>Link3</Text> */}
+        </Stack>
+    )
+}
+
+const BackgroundHeader = () => {
+    return (
+        <Box >
+            <Image  
+                src="https://bit.ly/3wcGMuL"
+            />
+        </Box>
+    )
+}
+
+const Header = (props) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const handleToggle = () => (isOpen ? onClose() : onOpen());
+
+    return (
+        <Flex
+            as="nav"
+            align="center"
+            bg="gray.900"
+
+        >
+            <Flex align="center">
+                <Logo />
+                <BackgroundHeader />
+                <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
+                    <HamburgerIcon />
+                </Box>
+
+            </Flex>
+
+
+            <Menu isOpen={isOpen} />
+        
         </Flex>
     )
 }
