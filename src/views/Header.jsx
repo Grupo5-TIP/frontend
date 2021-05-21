@@ -12,8 +12,8 @@ const Header = () => {
                 alignItems="end"
             >
                 <Image
-                    borderRadius="full"
-                    boxSize="100px" 
+                   
+                    w="100%"
                     objectFit="cover"
                     src="https://bit.ly/3eErw3N"
                 />
@@ -27,11 +27,13 @@ const Header = () => {
                 alignItems="end"
             >
                 <Image
+                    float="right"
                     w="100%"
                     h="100px"
                     objectFit="cover"
                     src="https://bit.ly/3wcGMuL"
                 />
+                
             </Box>
         </Flex>
     )

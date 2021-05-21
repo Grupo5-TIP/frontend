@@ -99,7 +99,7 @@ const MenuQr = ({ ...props }) => {
 
     return (
 
-        <Flex minHeight="80vh" justifyContent="center" width="100%" >
+        <Flex  flexGrow={1} justifyContent="center" width="100%" >
             <Flex flexDir="column">
                 {isAdded ?
                     <Box height="100px" width="250px">

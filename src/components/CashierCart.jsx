@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter } from "@chakra-ui/react";
-import { ModalBody, ModalCloseButton, Button, Box } from "@chakra-ui/react";
-import { Table, Thead, Tbody, Tfoot, Tr, Th, Td } from "@chakra-ui/react";
-import { Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from "@chakra-ui/react";
+import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, HStack, 
+    Button, Box, StackDivider, Stack, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel
+} from "@chakra-ui/react";
 import tablesService from '../services/tables-service';
 import productService from '../services/products-service';
 
-const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpen, onOpen, ...props }) => {
+const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, ...props }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [actualTableId, setTableId] = useState(tableId);
@@ -17,7 +16,7 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpen, onOpen, ...pro
         let tempItem = items.find(item => (item.product.name === product.name));
         if (tempItem !== undefined) {
             tempItem.amount = tempItem.amount + 1;
-            setItemsFromTable(items.map((item)=> (item)))
+            setItemsFromTable(items.map((item) => (item)))
         } else {
             product['new'] = 1;
             const item = {
@@ -26,7 +25,7 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpen, onOpen, ...pro
                 product: product
             }
             items.push(item);
-            setItemsFromTable(items.map((item)=> (item)));
+            setItemsFromTable(items.map((item) => (item)));
         }
     }
 
@@ -35,22 +34,24 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpen, onOpen, ...pro
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            if (actualTableId !==0) {
+            if (actualTableId !== 0) {
 
                 productService.getAllProducts()
                     .then(resp => {
-                        setProducts(resp.data);
+
+                        tablesService.getItemsFromTable(actualTableId)
+                            .then(respTableService => {
+                                setProducts(resp.data);
+                                setItemsFromTable(respTableService.data);
+                            })
+                            .catch(err => {
+                                setError(err);
+                                //setLoading(false);
+                            });
                     })
                     .catch(err => {
                         setError(err);
-                    });
-    
-                tablesService.getItemsFromTable(actualTableId)
-                    .then(resp => {
-                        setItemsFromTable(resp.data);
-                    })
-                    .catch(err => {
-                        setError(err);
+                        //setLoading(false);
                     });
             }
             setLoading(false);
@@ -58,98 +59,122 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpen, onOpen, ...pro
         fetchData();
     }, [actualTableId]);
 
-    return (
 
-        <Modal onClose={onClose} size="full" isOpen={isOpen}>
-            <ModalOverlay />
-            <ModalContent>
-                <ModalHeader>Table {tableId} </ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                    <Box p="2" flexWrap>
-                        <Table variant="striped" colorScheme="teal" size="lg">
-                            <Thead>
-                                <Tr>
-                                    <Td>Product</Td>
-                                    <Td>Amount</Td>
-                                    <Td>Unit Price</Td>
-                                    <Td>Total</Td>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                                {
-                                    items.map(
-                                        (item) => (
-                                            <Tr>
-                                                <Td>{item.product.name}</Td>
-                                                <Td>{item.amount}</Td>
-                                                <Td>{item.product.price}</Td>
-                                                <Td>{item.amount * item.product.price}</Td>
-                                            </Tr>
-                                        )
-                                    )
-                                }
-                            </Tbody>
-                            <Tfoot>
-                                <Tr>
-                                    <Th data-testid="cashier-cart-total">
-                                        TOTAL PRICE: {items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}
-                                    </Th>
-                                </Tr>
-                            </Tfoot>
-                        </Table>
+
+    const RenderCategories = () => {
+        return (
+
+            <Accordion allowToggle >
+                <AccordionItem>
+                    <Box>
+                        <AccordionButton>
+                            <Box flex="1" textAlign="center" data-testid="cashier-cart-available">
+                                Available products
+                                        </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
                     </Box>
-                    <Accordion allowToggle >
-                        <AccordionItem>
-                            <h2>
-                                <AccordionButton>
-                                    <Box flex="1" textAlign="center" data-testid="cashier-cart-available">
-                                        Available products
-                                    </Box>
-                                    <AccordionIcon />
-                                </AccordionButton>
-                            </h2>
-                            <AccordionPanel>
-                                {   
-                                    categories.map((category) =>
-                                        <Accordion allowToggle >
-                                            <AccordionItem key={category}>
-                                                <h2>
-                                                    <AccordionButton
-                                                        justifyContent="space-between"
-                                                        alignItems="center"
-                                                        maxWidth="100%"
-                                                        _expanded={{ bg: "theme.100", color: "white" }}>
+                    <AccordionPanel>
+                        {
+                            categories.map((category) =>
+                                <Accordion allowToggle key={category}>
+                                    <AccordionItem key={category}>
+                                            <AccordionButton
+                                                justifyContent="space-between"
+                                                alignItems="center"
+                                                maxWidth="100%"
+                                                _expanded={{ bg: "theme.100", color: "white" }}
+                                                key={category}>
+                                                    
+                                                <Box flex="1">
+                                                    {category}
+                                                </Box>
+                                                <AccordionIcon />
+                                            </AccordionButton>
+                                        <AccordionPanel width="100%">
+                                            {
+                                                products[category].map((product) => (
+                                                    <Button key={product.id} margin={2} colorScheme="teal" variant="outline" onClick={() => addItem(product)}>
+                                                        {product.name}
+                                                    </Button>
+                                                ))
+                                            }
+                                        </AccordionPanel>
+                                    </AccordionItem>
+                                </Accordion>
 
-                                                        <Box flex="1">
-                                                            {category}
-                                                        </Box>
-                                                        <AccordionIcon />
-                                                    </AccordionButton>
-                                                </h2>
-                                                <AccordionPanel width="100%">
-                                                    {
-                                                        products[category].map((product) => (
-                                                            <Button margin={2} colorScheme="teal" variant="outline" onClick={() => addItem(product)}>
-                                                                {product.name}
-                                                            </Button>
-                                                        ))
-                                                    }
-                                                </AccordionPanel>
-                                            </AccordionItem>
-                                        </Accordion>
+                            )
+                        }
+                    </AccordionPanel>
+                </AccordionItem>
+            </Accordion>
 
-                                    )
-                                }
-                            </AccordionPanel>
-                        </AccordionItem>
-                    </Accordion>
-                </ModalBody>
-                <ModalFooter>
-                    <Button onClick={onClose} data-testid="cashier-cart-button-close">Close</Button>
-                </ModalFooter>
-            </ModalContent>
-        </Modal>
+        )
+    }
+
+    const RenderItemsList = () => {
+        return (
+            <Box p="2" flexWrap>
+                <Stack direction={["column", "row"]} spacing="5%">
+                    <Box w="25%" h="40px">Product</Box >
+                    <Box w="25%x" h="40px">Amount</Box >
+                    <Box w="25%" h="40px">Unit price</Box >
+                    <Box w="25%" h="40px">Total</Box >
+                </Stack>
+                <VStack
+                    divider={<StackDivider borderColor="gray.200" />}
+                    spacing={4}
+                    align="stretch"
+                >
+                    {
+                        items.map(
+                            (item) => (
+                                //<Box key={item.product.id}></Box>
+                                <HStack key={item.product.id} spacing="5%">
+                                    <Box w="30%" h="40px">{item.product.name}</Box >
+                                    <Box w="5%" h="40px">{item.amount}</Box >
+                                    <Box w="15%" h="40px">{item.product.price}</Box >
+                                    <Box w="50%" h="40px">{item.amount * item.product.price}</Box >                              
+                                </HStack>
+                            )
+                        )
+                    }
+                </VStack>
+
+                
+                <Stack direction={["column", "row"]} spacing="24px">
+                    <Box w="100%" h="40px">
+                        TOTAL PRICE: <Text data-testid="cashier-cart-total">{items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}</Text>
+                    </Box >
+                </Stack>
+            </Box>
+        )
+    }
+
+    return (
+        <>
+            {
+                loading ?
+                    <Box>Buscando...</Box>
+                    :
+                    !error ?
+                        <Modal onClose={onClose} size="full" isOpen={isOpenModal}>
+                            <ModalOverlay />
+                            <ModalContent>
+                                <ModalHeader>Table: {tableId} </ModalHeader>
+                                <ModalCloseButton />
+                                <ModalBody>
+                                    <RenderItemsList />
+                                    <RenderCategories />
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button onClick={onClose} data-testid="cashier-cart-button-close">Close</Button>
+                                </ModalFooter>
+                            </ModalContent>
+                        </Modal>
+                        : null
+            }
+        </>
     )
 }
 
