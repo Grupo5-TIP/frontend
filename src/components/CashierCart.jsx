@@ -4,6 +4,7 @@ import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHe
 } from "@chakra-ui/react";
 import tablesService from '../services/tables-service';
 import productService from '../services/products-service';
+import Items from '../components/Items'
 
 const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, ...props }) => {
     const [loading, setLoading] = useState(false);
@@ -125,20 +126,9 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
                     divider={<StackDivider borderColor="gray.200" />}
                     spacing={4}
                     align="stretch"
+
                 >
-                    {
-                        items.map(
-                            (item) => (
-                                //<Box key={item.product.id}></Box>
-                                <HStack key={item.product.id} spacing="5%">
-                                    <Box w="30%" h="40px">{item.product.name}</Box >
-                                    <Box w="5%" h="40px">{item.amount}</Box >
-                                    <Box w="15%" h="40px">{item.product.price}</Box >
-                                    <Box w="50%" h="40px">{item.amount * item.product.price}</Box >                              
-                                </HStack>
-                            )
-                        )
-                    }
+                   <Items items={items}></Items>
                 </VStack>
 
                 

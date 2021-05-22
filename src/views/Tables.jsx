@@ -44,7 +44,6 @@ const Tables = () => {
             <Flex
                 flexWrap="wrap"
                 justifyContent="center"
-
             >
                 {error !== '' ? <Text color="gray.400">Error al traer mesas del server...</Text>
                     :

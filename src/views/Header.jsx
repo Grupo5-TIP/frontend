@@ -8,7 +8,6 @@ import {
     Button,
     useDisclosure
 } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
 import Logo from '../components/Logo';
 
 const Menu = (isOpen, ...props) => {
@@ -20,8 +19,8 @@ const Menu = (isOpen, ...props) => {
             alignItems="center"
             flexGrow={1}
             mt={{ base: 4, md: 0 }}
-        >{/*
-                <Text>Link1</Text>
+        >
+            {/* <Text>Link1</Text>
                 <Text>Link2</Text>
                 <Text>Link3</Text> */}
         </Stack>
@@ -30,8 +29,13 @@ const Menu = (isOpen, ...props) => {
 
 const BackgroundHeader = () => {
     return (
-        <Box >
-            <Image  
+        <Box w="80%">
+            <Image
+
+                w="100%"
+                h="125px"
+                objectFit="cover"
+
                 src="https://bit.ly/3wcGMuL"
             />
         </Box>
@@ -39,28 +43,18 @@ const BackgroundHeader = () => {
 }
 
 const Header = (props) => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const handleToggle = () => (isOpen ? onClose() : onOpen());
 
     return (
         <Flex
             as="nav"
             align="center"
             bg="gray.900"
-
+            h="150px"
+            justifyContent="center"
         >
-            <Flex align="center">
-                <Logo />
-                <BackgroundHeader />
-                <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
-                    <HamburgerIcon />
-                </Box>
+            <Logo />
+            <BackgroundHeader />
 
-            </Flex>
-
-
-            <Menu isOpen={isOpen} />
-        
         </Flex>
     )
 }

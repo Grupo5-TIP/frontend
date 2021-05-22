@@ -39,7 +39,7 @@ const Table = ({ table }) => {
                 position="absolute"
                 top={positionY}
                 left={positionX}
-                marginTop={130}
+                marginTop={150}
             >
                 <Box d="flex" alignItems="baseline">
                     <Badge borderRadius="full" fontSize="xl" px="2" colorScheme="gray.400" color={bgColor} data-testid="table-badge">
