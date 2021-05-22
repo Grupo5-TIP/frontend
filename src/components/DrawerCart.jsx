@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, Button, Text, Image } from '@chakra-ui/react';
 import { Flex, Box } from "@chakra-ui/layout";
-import OrderService from '../services/orders-service';
+import orderService from '../services/orders-service';
 import Items from './Items';
 import AlertDisplay from './AlertDisplay';
 import { parseCurrency } from "../utils/currency";
@@ -28,9 +28,15 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfir
             tableId:tableId,
             orderedItems:items
         }
-        OrderService.confirmOrder(orderDTO);
-        setIsAdded(true);
-        onConfirm();
+        orderService.confirmOrder(orderDTO)
+            .then(resp => {
+                setIsAdded(true);
+                onConfirm();
+            })
+            .catch(err => {
+                setIsAdded(false);
+            });
+        
     }
 
     function renderOrderConfirmationCheck() {

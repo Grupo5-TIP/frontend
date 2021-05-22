@@ -9,10 +9,10 @@ import Tables from './views/Tables'
 
 function App() {
   return (
-    <div>
+    <div className="app">
       <Header/>
 
-      <BrowserRouter>
+      <BrowserRouter >
           <Switch>     
             <Route path="/menu/:tableid" component={MenuQr} />
             <Route path="/tables" component={Tables} />
