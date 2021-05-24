@@ -7,7 +7,7 @@ import AlertDisplay from './AlertDisplay';
 import { parseCurrency } from "../utils/currency";
 
 
-const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfirm, onAddProduct, onDeleteAllProduct, ...props }) => {
+const DrawerCart = ({ items, onClose, isOpen, onDecreaseProduct, tableId, onConfirm, onAddProduct, onDeleteProduct, ...props }) => {
     const [total, setTotal] = useState(0)
     //Order confirmation
     const [isAdded, setIsAdded] = useState(false);
@@ -61,8 +61,7 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfir
                         />
                         <DrawerHeader
                             h="100px"
-                            bg="gray.800"
-                            color="theme.100"
+                            bg="theme.100"
                             size="xs"
                             shadow="md"
                         >                            
@@ -86,9 +85,9 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfir
                                     items.length ?
                                         <Items 
                                             items={items} 
-                                            onDeleteProduct={onDeleteProduct} 
+                                            onDecreaseProduct={onDecreaseProduct} 
                                             onAddProduct={onAddProduct}
-                                            onDeleteAllProduct={onDeleteAllProduct}
+                                            onDeleteProduct={onDeleteProduct}
                                         ></Items>
                                     :
                                         <Text color="gray.400" data-testid="drawer-cart-error">No hay elementos en tu carrito</Text>
@@ -98,16 +97,16 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfir
                         
                         <Text
                             color="theme.100"
-                            as="samp"
                             fontSize="lg"
                             align="center"
+                            padding={3}
                             data-testid="drawer-cart-total"
                             >
                                 Total: {parseCurrency(total)}
                         </Text>
-                        <DrawerFooter>                               
-                            <Button mr={2} bg="gray.100" color="theme.100" variant="outline" onClick={onClose} data-testid="drawer-cart-cancel-button">Cancel</Button>
-                            <Button onClick= {() => dispatchCreateCart()} bg="theme.300" color="theme.100" data-testid="drawer-cart-confirm-button">Confirmar</Button>
+                        <DrawerFooter >                               
+                            <Button mr={2} bg="gray.100" color="theme.100" variant="outline" onClick={onClose} data-testid="drawer-cart-cancel-button">Cancelar</Button>
+                            <Button onClick= {() => dispatchCreateCart()} bg="theme.100" color="gray.100" data-testid="drawer-cart-confirm-button">Confirmar</Button>
                         </DrawerFooter>
                         {isAdded ? renderOrderConfirmationCheck() : null}
                     </DrawerContent>

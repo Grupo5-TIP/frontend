@@ -11,7 +11,7 @@ import {
     AccordionButton,
     AccordionPanel,
     AccordionIcon,
-    Box, IconButton,
+    Box
 } from '@chakra-ui/react';
 import { editCart } from '../utils/editCart';
 import { GrCart } from 'react-icons/gr'
@@ -141,11 +141,11 @@ const MenuQr = ({ ...props }) => {
                                     items={cartItems}
                                     onClose={() => setDrawerOpen(false)}
                                     isOpen={isDrawerOpen}
-                                    onDeleteProduct={(product) => handleEditCart(product, "delete")}
+                                    onDecreaseProduct={(product) => handleEditCart(product, "decrease")}
                                     tableId={props.match.url.substring(props.match.url.lastIndexOf('/') + 1)}
                                     onConfirm={() => handleEditCart({}, "deleteAll")}
                                     onAddProduct={(product) => handleEditCart(product, "add")}
-                                    onDeleteAllProduct={(product) => handleEditCart(product, "deleteAll")}
+                                    onDeleteProduct={(product) => handleEditCart(product, "delete")}
                                 />
                             </Flex>
                         </Stack>

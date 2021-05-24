@@ -1,63 +1,67 @@
 import { CloseIcon, AddIcon, MinusIcon } from '@chakra-ui/icons';
-import { Stack, Button, Text, IconButton } from '@chakra-ui/react';
-import {parseCurrency} from "../utils/currency";
+import { Stack, Text } from '@chakra-ui/react';
+import { parseCurrency } from "../utils/currency";
 
-const Item = ({ item, onDeleteProduct, onAddProduct, onDeleteAllProduct }) => {
+const Item = ({ item, onDecreaseProduct, onAddProduct, onDeleteProduct }) => {
     const product = item.product;
     const amount = item.amount;
 
     return (
-        <Stack key={product.id} direction="row">
+        <Stack
+            key={product.id}
+            direction="row"
+            borderColor="theme.300"
+            borderRadius="md"
+            justifyContent="center"
+            padding={3}
+            alignItems="center"
+            spacing={1}
+            h="100px"
+            w="280px"
+            sm="30em"
+            shadow="lg"
+            color="theme.100"
+        >
             <Stack width="100%">
                 <Stack
-                    alignItems="center"
                     direction="row"
                     fontWeight="500"
-                    justifyContent="space-between"
-                    spacing={"10"}
+                    alignSelf="center"
+                    spacing={10}
                 >
-                    <Text fontSize="lg">{product.name}</Text>
-                    <Text as="samp" data-testid="total">{parseCurrency(product.price * amount)}</Text>
-                    {/*<IconButton
-                        bg="theme.100"
-                        boxSize="20px"
-                        aria-label="Delete item"
-                        icon={<CloseIcon color="white"/>}
-                        onClick={() => console.log("gggg product")}
-                    >
-                    </IconButton>*/}
-                    <AddIcon
-                        color="theme.100"
-                        aria-label="Add one item"
-                        onClick={() => onAddProduct(product)}
-                    >
-                    </AddIcon>
-                    <MinusIcon
-                        color="theme.100"
-                        aria-label="Delete one item"
-                        onClick={() => onDeleteProduct(product)}
-                    >
-                    </MinusIcon>
-                    <CloseIcon
-                        color="theme.100"
-                        aria-label="Delete all"
-                        onClick={() => onDeleteAllProduct(product)}
-                    >
-                    </CloseIcon>
-                    {/*<Button
-                        borderRadius={5}
-                        color="theme.100"
-                        size="xs"
-                        onClick={() => onDeleteProduct(product)}
-                        data-testid="button-delete"
-                    >
-                        x
-                    </Button>*/}
+                    <Text paddingTop={2} fontSize="md" data-testid="amount"> {amount}x </Text><Text fontSize="25px">{product.name.toUpperCase()}</Text>
                 </Stack>
-                <Stack direction="row">
-                    <Text fontWeight="500" data-testid="amount">
-                        Cantidad: {amount}
-                    </Text>
+                <Stack direction="column">
+                    <Stack direction="row" justifyContent="space-between">
+                        <Text data-testid="total">{parseCurrency(product.price * amount)}</Text>
+
+                        <Stack direction="row" justifyContent="center" spacing={3}>
+
+                            <AddIcon
+                                color="theme.100"
+                                aria-label="Add one item"
+                                boxSize={2.5}
+                                onClick={() => onAddProduct(product)}
+                            >
+                            </AddIcon>
+                            <MinusIcon
+                                color="theme.100"
+                                aria-label="Delete one item"
+                                boxSize={2.5}
+                                onClick={() => onDecreaseProduct(product)}
+                            >
+                            </MinusIcon>
+                            <CloseIcon
+                                color="theme.100"
+                                aria-label="Delete all"
+                                boxSize={2.5}
+                                onClick={() => onDeleteProduct(product)}
+                            >
+                            </CloseIcon>
+
+                        </Stack>
+
+                    </Stack>
                 </Stack>
             </Stack>
         </Stack>

@@ -3,10 +3,7 @@ import {
     Box,
     Stack,
     Flex,
-    Image,
-    Text,
-    Button,
-    useDisclosure
+    Image
 } from "@chakra-ui/react";
 import Logo from '../components/Logo';
 

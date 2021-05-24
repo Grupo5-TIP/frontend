@@ -1,7 +1,7 @@
 import { Stack, Divider, Text } from '@chakra-ui/react';
 import Item from './Item';
 
-const Items = ({items, onDeleteProduct, onAddProduct, onDeleteAllProduct}) =>{
+const Items = ({items, onDecreaseProduct, onAddProduct, onDeleteProduct}) =>{
     return(
         <Stack data-testid='test-items' divider={<Divider />} spacing={4}>
             {
@@ -10,9 +10,9 @@ const Items = ({items, onDeleteProduct, onAddProduct, onDeleteAllProduct}) =>{
                   (item) => (
                       <Item key = {item.product.id}
                         item = {item}
-                        onDeleteProduct = {onDeleteProduct}
+                        onDecreaseProduct = {onDecreaseProduct}
                         onAddProduct={onAddProduct}
-                        onDeleteAllProduct = {onDeleteAllProduct}
+                        onDeleteProduct = {onDeleteProduct}
                       />
                     )
               )
