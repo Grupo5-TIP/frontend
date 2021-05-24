@@ -7,7 +7,7 @@ import AlertDisplay from './AlertDisplay';
 import { parseCurrency } from "../utils/currency";
 
 
-const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfirm, ...props }) => {
+const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfirm, onAddProduct, onDeleteAllProduct, ...props }) => {
     const [total, setTotal] = useState(0)
     //Order confirmation
     const [isAdded, setIsAdded] = useState(false);
@@ -51,7 +51,7 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfir
                 isOpen={isOpen}
                 placement="right"
                 onClose={onClose}
-                size="xs"
+                size="sm"
                 {...props}
             >
                 <DrawerOverlay>
@@ -80,11 +80,16 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfir
                             </Box>
                         </DrawerHeader>
 
-                        <DrawerBody >
+                        <DrawerBody>
                             <Flex height="90%">
                                 {
                                     items.length ?
-                                        <Items items={items} onDeleteProduct={onDeleteProduct}></Items>
+                                        <Items 
+                                            items={items} 
+                                            onDeleteProduct={onDeleteProduct} 
+                                            onAddProduct={onAddProduct}
+                                            onDeleteAllProduct={onDeleteAllProduct}
+                                        ></Items>
                                     :
                                         <Text color="gray.400" data-testid="drawer-cart-error">No hay elementos en tu carrito</Text>
                                 }

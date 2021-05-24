@@ -17,7 +17,10 @@ export const editCart = (product, action) => {
                 return cart.map((item) => item);
             
             case "delete": 
-                return cart.filter( _item => _item.product.id !== item.product.id);
+                //return cart.filter( _item => _item.product.id !== item.product.id);
+                if(item.amount === 0) return cart;
+                item.amount = item.amount - 1;
+                return cart.map((item) => item);
             
             case "deleteAll": 
                 return [];                

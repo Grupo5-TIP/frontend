@@ -11,7 +11,7 @@ import {
     AccordionButton,
     AccordionPanel,
     AccordionIcon,
-    Box,
+    Box, IconButton,
 } from '@chakra-ui/react';
 import { editCart } from '../utils/editCart';
 import { GrCart } from 'react-icons/gr'
@@ -43,7 +43,9 @@ const MenuQr = ({ ...props }) => {
 
     const handleEditCart = (product, action) => {
         setCartItems(editCart(product, action));
-        setIsAdded(true);
+        if (action === "add"){
+            setIsAdded(true)
+        }       
     }
 
     function renderProductAddedCheck() {
@@ -97,9 +99,26 @@ const MenuQr = ({ ...props }) => {
         )
     }
 
+    const DrawerIcon = () => {
+        return (
+            <Flex justifyContent="flex-end" position="fixed" right="2%">
+                <Button
+                    bg="theme.200"
+                    boxShadow="lg"
+                    size="lg"
+                    padding={2}
+                    margin={1}
+                    color="white"
+                    onClick={() => setDrawerOpen(true)}
+                >
+                    <GrCart/>
+                </Button>
+            </Flex>
+        )
+    }
     return (
 
-        <Flex  flexGrow={1} justifyContent="center" width="100%" >
+        <Flex flexGrow={1} justifyContent="center" width="100%" >
             <Flex flexDir="column">
                 {isAdded ?
                     <Box height="100px" width="250px">
@@ -112,21 +131,9 @@ const MenuQr = ({ ...props }) => {
                     :
                     loading ? <Text color="gray.400"> Cargando... </Text> :
                         <Stack>
-                            <Flex justifyContent="flex-end" position="fixed" right="2%">
-
-                                <Button as={GrCart}
-                                    boxSize="50px"
-                                    bg="theme.200"
-                                    padding={2}
-                                    margin={1}
-                                    onClick={() => setDrawerOpen(true)}
-                                >
-
-                                </Button>
-                            </Flex>
+                            <DrawerIcon/>
                             <Flex>
                                 <DisplayProducts
-
                                     productsByCategory={products}
                                 />
 
@@ -137,6 +144,8 @@ const MenuQr = ({ ...props }) => {
                                     onDeleteProduct={(product) => handleEditCart(product, "delete")}
                                     tableId={props.match.url.substring(props.match.url.lastIndexOf('/') + 1)}
                                     onConfirm={() => handleEditCart({}, "deleteAll")}
+                                    onAddProduct={(product) => handleEditCart(product, "add")}
+                                    onDeleteAllProduct={(product) => handleEditCart(product, "deleteAll")}
                                 />
                             </Flex>
                         </Stack>

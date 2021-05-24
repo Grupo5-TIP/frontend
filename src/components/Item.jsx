@@ -1,7 +1,8 @@
-import { Stack, Button, Text } from '@chakra-ui/react';
+import { CloseIcon, AddIcon, MinusIcon } from '@chakra-ui/icons';
+import { Stack, Button, Text, IconButton } from '@chakra-ui/react';
 import {parseCurrency} from "../utils/currency";
 
-const Item = ({ item, onDeleteProduct }) => {
+const Item = ({ item, onDeleteProduct, onAddProduct, onDeleteAllProduct }) => {
     const product = item.product;
     const amount = item.amount;
 
@@ -17,7 +18,33 @@ const Item = ({ item, onDeleteProduct }) => {
                 >
                     <Text fontSize="lg">{product.name}</Text>
                     <Text as="samp" data-testid="total">{parseCurrency(product.price * amount)}</Text>
-                    <Button
+                    {/*<IconButton
+                        bg="theme.100"
+                        boxSize="20px"
+                        aria-label="Delete item"
+                        icon={<CloseIcon color="white"/>}
+                        onClick={() => console.log("gggg product")}
+                    >
+                    </IconButton>*/}
+                    <AddIcon
+                        color="theme.100"
+                        aria-label="Add one item"
+                        onClick={() => onAddProduct(product)}
+                    >
+                    </AddIcon>
+                    <MinusIcon
+                        color="theme.100"
+                        aria-label="Delete one item"
+                        onClick={() => onDeleteProduct(product)}
+                    >
+                    </MinusIcon>
+                    <CloseIcon
+                        color="theme.100"
+                        aria-label="Delete all"
+                        onClick={() => onDeleteAllProduct(product)}
+                    >
+                    </CloseIcon>
+                    {/*<Button
                         borderRadius={5}
                         color="theme.100"
                         size="xs"
@@ -25,7 +52,7 @@ const Item = ({ item, onDeleteProduct }) => {
                         data-testid="button-delete"
                     >
                         x
-                    </Button>
+                    </Button>*/}
                 </Stack>
                 <Stack direction="row">
                     <Text fontWeight="500" data-testid="amount">
