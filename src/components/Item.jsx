@@ -11,18 +11,17 @@ const Item = ({ item, onDecreaseProduct, onAddProduct, onDeleteProduct }) => {
             key={product.id}
             direction="row"
             borderColor="theme.300"
-            borderRadius="md"
-            justifyContent="center"
+            borderRadius="10px"
             padding={3}
             alignItems="center"
             spacing={1}
-            h="100px"
-            w="280px"
+            h="120px"
+            w="270px"
             sm="30em"
-            shadow="lg"
+            boxShadow="0 8px 6px -8px black"
             color="theme.100"
         >
-            <Stack width="100%">
+            <Stack width="100%" >
                 <Stack
                     direction="row"
                     fontWeight="500"
@@ -35,7 +34,7 @@ const Item = ({ item, onDecreaseProduct, onAddProduct, onDeleteProduct }) => {
                     <Stack direction="row" justifyContent="space-between">
                         <Text data-testid="total">{parseCurrency(product.price * amount)}</Text>
 
-                        <Stack direction="row" justifyContent="center" spacing={3}>
+                        <Stack direction="row" justifyContent="center" spacing={2} marginBottom={5}>
 
                             <AddIcon
                                 color="theme.100"

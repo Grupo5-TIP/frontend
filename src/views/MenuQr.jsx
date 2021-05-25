@@ -55,14 +55,16 @@ const MenuQr = ({ ...props }) => {
 
     const DisplayCategory = ({ categoryName, productCategory }) => {
         return (
-            <Accordion >
+            <Accordion allowToggle width="300px" paddingBottom="20px" >
                 <AccordionItem>
                     <h2>
                         <AccordionButton
+                            bg="theme.100"
+                            color="white"
                             justifyContent="space-between"
                             alignItems="center"
                             maxWidth="100%"
-                            _expanded={{ bg: "theme.100", color: "white" }}>
+                            _expanded={{ bg: "theme.300", color: "white" }}>
 
                             <Box flex="1" width={200} padding={3}>
                                 {categoryName}

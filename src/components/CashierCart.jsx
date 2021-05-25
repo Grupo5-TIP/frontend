@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, HStack, 
+import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, 
     Button, Box, StackDivider, Stack, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel
 } from "@chakra-ui/react";
 import tablesService from '../services/tables-service';

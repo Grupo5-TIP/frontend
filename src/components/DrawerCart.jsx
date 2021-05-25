@@ -95,10 +95,12 @@ const DrawerCart = ({ items, onClose, isOpen, onDecreaseProduct, tableId, onConf
                             </Flex>
                         </DrawerBody>
                         
+                        
                         <Text
-                            color="theme.100"
+                            color="theme.500"
+                            fontWeight="900"                     
                             fontSize="lg"
-                            align="center"
+
                             padding={3}
                             data-testid="drawer-cart-total"
                             >
