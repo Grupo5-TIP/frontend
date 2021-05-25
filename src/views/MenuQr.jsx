@@ -15,6 +15,9 @@ import {
 } from '@chakra-ui/react';
 import { editCart } from '../utils/editCart';
 import { GrCart } from 'react-icons/gr'
+import { MdPayment } from 'react-icons/md'
+import { CgShoppingCart } from 'react-icons/cg'
+
 
 const MenuQr = ({ ...props }) => {
     const [error, setError] = useState('');
@@ -43,9 +46,9 @@ const MenuQr = ({ ...props }) => {
 
     const handleEditCart = (product, action) => {
         setCartItems(editCart(product, action));
-        if (action === "add"){
+        if (action === "add") {
             setIsAdded(true)
-        }       
+        }
     }
 
     function renderProductAddedCheck() {
@@ -103,21 +106,47 @@ const MenuQr = ({ ...props }) => {
 
     const DrawerIcon = () => {
         return (
-            <Flex justifyContent="flex-end" position="fixed" right="2%">
-                <Button
-                    bg="theme.200"
-                    boxShadow="lg"
-                    size="lg"
-                    padding={2}
-                    margin={1}
-                    color="white"
-                    onClick={() => setDrawerOpen(true)}
-                >
-                    <GrCart/>
-                </Button>
+            <Button
+                bg="theme.200"
+                boxShadow="lg"
+                size="lg"
+                padding={2}
+                margin={1}
+                color="white"
+                onClick={() => setDrawerOpen(true)}
+            >
+                <CgShoppingCart color="white" />
+            </Button>
+        )
+    }
+
+    const PaymentIcon = () => {
+        return (
+            <Button
+                bg="theme.500"
+                boxShadow="lg"
+                size="lg"
+                padding={2}
+                margin={1}
+                top="50px"
+                color="white"
+                onClick={() => console.log("payment icon")}
+            >
+                <MdPayment color="white" />
+            </Button>
+        )
+
+    }
+
+    const SidebarIcons = () => {
+        return (
+            <Flex flexDir="column" position="absolute" right="2%">
+               <DrawerIcon/>
+               <PaymentIcon/>
             </Flex>
         )
     }
+
     return (
 
         <Flex flexGrow={1} justifyContent="center" width="100%" >
@@ -133,7 +162,7 @@ const MenuQr = ({ ...props }) => {
                     :
                     loading ? <Text color="gray.400"> Cargando... </Text> :
                         <Stack>
-                            <DrawerIcon/>
+                            <SidebarIcons />
                             <Flex>
                                 <DisplayProducts
                                     productsByCategory={products}
@@ -149,6 +178,8 @@ const MenuQr = ({ ...props }) => {
                                     onAddProduct={(product) => handleEditCart(product, "add")}
                                     onDeleteProduct={(product) => handleEditCart(product, "delete")}
                                 />
+
+
                             </Flex>
                         </Stack>
 
