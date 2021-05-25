@@ -18,7 +18,7 @@ export const editCart = (product, action) => {
             
             case "decrease": 
                 //return cart.filter( _item => _item.product.id !== item.product.id);
-                if(item.amount === 0) return cart;
+                if(item.amount === 1) return cart;
                 item.amount = item.amount - 1;
                 return cart.map((item) => item);
 
