@@ -16,14 +16,15 @@ const DrawerIcon = ({setDrawerOpen}) => {
     )
 }
 
-const PaymentIcon = () => {
+const PaymentIcon = ({setPaymentOpen}) => {
     return (
         <Button
             bg="theme.500"
             boxShadow="lg"
             size="lg"
+            margin={1}
             top="10px"
-            onClick={() => console.log("payment icon")}
+            onClick={() => setPaymentOpen(true)}
         >
             <MdPayment color="white" />
         </Button>
@@ -31,11 +32,11 @@ const PaymentIcon = () => {
 
 }
 
-const SidebarIcons = ({setDrawerOpen}) => {
+const SidebarIcons = ({setDrawerOpen, setPaymentOpen}) => {
     return (
         <Flex flexDir="column" position="absolute" right="2%">
-           <DrawerIcon setDrawerOpen={setDrawerOpen}/>
-           <PaymentIcon/>
+            <DrawerIcon setDrawerOpen={setDrawerOpen}/>
+            <PaymentIcon setPaymentOpen={setPaymentOpen}/>
         </Flex>
     )
 }

@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { editCart } from '../utils/editCart';
 import SidebarIcons from '../components/SidebarIcons'
+import Orders from '../components/Orders';
 
 
 const MenuQr = ({ ...props }) => {
@@ -22,6 +23,7 @@ const MenuQr = ({ ...props }) => {
     const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState({});
     const [isDrawerOpen, setDrawerOpen] = useState(false);
+    const [isPaymentOpen, setPaymentOpen] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [isAdded, setIsAdded] = useState(false)
     const onClose = () => setTimeout(() => setIsAdded(false), 2000);
@@ -118,7 +120,7 @@ const MenuQr = ({ ...props }) => {
                     :
                     loading ? <Text color="gray.400"> Cargando... </Text> :
                         <Stack>
-                            <SidebarIcons setDrawerOpen={setDrawerOpen} />
+                            <SidebarIcons setDrawerOpen={setDrawerOpen} setPaymentOpen={setPaymentOpen} />
                             <Flex>
                                 <DisplayProducts
                                     productsByCategory={products}
@@ -135,6 +137,12 @@ const MenuQr = ({ ...props }) => {
                                     onDeleteProduct={(product) => handleEditCart(product, "delete")}
                                 />
 
+
+                                <Orders
+                                    onClose={() => setPaymentOpen(false)}
+                                    isOpen={isPaymentOpen}
+                                    tableId={props.match.url.substring(props.match.url.lastIndexOf('/') + 1)}
+                                />
 
                             </Flex>
                         </Stack>

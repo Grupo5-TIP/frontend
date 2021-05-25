@@ -8,9 +8,9 @@ class OrderService{
         return axios.post(API_URL, token);
     }
 
-    /*async getOrderByTableId(tableId){
+    async getOrderByTableId(tableId){
         return axios.get(API_URL+"/"+tableId);
-    }*/
+    }
 }
 
 export default new OrderService();
