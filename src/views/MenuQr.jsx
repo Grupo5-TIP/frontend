@@ -5,7 +5,7 @@ import productService from '../services/products-service';
 import AlertDisplay from '../components/AlertDisplay';
 
 import {
-    Flex, Button, Stack, Text,
+    Flex, Stack, Text,
     Accordion,
     AccordionItem,
     AccordionButton,
@@ -14,7 +14,6 @@ import {
     Box
 } from '@chakra-ui/react';
 import { editCart } from '../utils/editCart';
-import { GrCart } from 'react-icons/gr'
 import SidebarIcons from '../components/SidebarIcons'
 
 
