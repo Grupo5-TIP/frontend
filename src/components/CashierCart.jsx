@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import React from "react"
 import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, HStack, 
-    Button, Box, StackDivider, Stack, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel
+    Button, Box, StackDivider, Stack, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Flex
 } from "@chakra-ui/react";
 import tablesService from '../services/tables-service';
 import productService from '../services/products-service';
@@ -12,6 +13,7 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
     const [actualTableId, setTableId] = useState(tableId);
     const [products, setProducts] = useState({});
     const [items, setItemsFromTable] = useState([]);
+    const [scrollBehavior, setScrollBehavior] = React.useState("inside");
 
     const addItem = (product) => {
         let tempItem = items.find(item => (item.product.name === product.name));
@@ -46,13 +48,12 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
                                 setItemsFromTable(respTableService.data);
                             })
                             .catch(err => {
-                                setError(err);
-                                //setLoading(false);
+                                setProducts(resp.data);
+                                setItemsFromTable([]);
                             });
                     })
                     .catch(err => {
                         setError(err);
-                        //setLoading(false);
                     });
             }
             setLoading(false);
@@ -70,8 +71,8 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
                     <Box>
                         <AccordionButton>
                             <Box flex="1" textAlign="center" data-testid="cashier-cart-available">
-                                Available products
-                                        </Box>
+                                Productos disponibles
+                            </Box>
                             <AccordionIcon />
                         </AccordionButton>
                     </Box>
@@ -109,34 +110,57 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
                     </AccordionPanel>
                 </AccordionItem>
             </Accordion>
+        )
+    }
+    const RenderTableTotal = () => {
+        return (
+            <Box p="2" flexWrap>
+                <Stack direction={["column", "row"]} spacing="24px">
+                    <Box w="100%" h="40px">
+                        TOTAL: <Text data-testid="cashier-cart-total">{items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}</Text>
+                    </Box >
+                </Stack>
+            </Box>
+        )
+    }
 
+    const RenderActionButtons = () => {
+        return (
+            <Box p="2" flexWrap maxWidth="100%">
+            {
+                [1,2,3,4,5].map((product) => (
+                    <Box as="button" borderRadius="md" bg="tomato" color="white" px={4} h={8} p={6} margin={2}>
+                        prueba
+                    </Box>
+                ))
+            }
+            </Box>
         )
     }
 
     const RenderItemsList = () => {
         return (
             <Box p="2" flexWrap>
-                <Stack direction={["column", "row"]} spacing="5%">
-                    <Box w="25%" h="40px">Product</Box >
-                    <Box w="25%x" h="40px">Amount</Box >
-                    <Box w="25%" h="40px">Unit price</Box >
-                    <Box w="25%" h="40px">Total</Box >
-                </Stack>
-                <VStack
-                    divider={<StackDivider borderColor="gray.200" />}
-                    spacing={4}
-                    align="stretch"
+                <Box p="2" flexWrap>
+                    <Stack direction={["column", "row"]} spacing="5%">
+                        <Box w="25%" h="40px">Producto</Box >
+                        <Box w="25%" h="40px">Cantidad</Box >
+                        <Box w="25%" h="40px">Precio unitario</Box >
+                        <Box w="25%" h="40px">Total</Box >
+                    </Stack>
+                    <VStack
+                        divider={<StackDivider borderColor="gray.200" />}
+                        spacing={4}
+                        align="stretch"
 
-                >
-                   <Items items={items}></Items>
-                </VStack>
+                    >
+                        <Box w="100%" h="40px">
+                            <Items items={items}></Items>
+                        </Box>
+                    </VStack>
 
+                </Box>    
                 
-                <Stack direction={["column", "row"]} spacing="24px">
-                    <Box w="100%" h="40px">
-                        TOTAL PRICE: <Text data-testid="cashier-cart-total">{items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}</Text>
-                    </Box >
-                </Stack>
             </Box>
         )
     }
@@ -148,14 +172,18 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
                     <Box>Buscando...</Box>
                     :
                     !error ?
-                        <Modal onClose={onClose} size="full" isOpen={isOpenModal}>
+                        <Modal onClose={onClose} size="full" isOpen={isOpenModal} scrollBehavior={scrollBehavior}>
                             <ModalOverlay />
                             <ModalContent>
-                                <ModalHeader>Table: {tableId} </ModalHeader>
+                                <ModalHeader>Mesa: {tableId} </ModalHeader>
                                 <ModalCloseButton />
                                 <ModalBody>
-                                    <RenderItemsList />
-                                    <RenderCategories />
+                                    <RenderItemsList/>
+                                </ModalBody>
+                                <ModalBody>
+                                    <RenderTableTotal/>
+                                    <RenderCategories/>
+                                    <RenderActionButtons/>
                                 </ModalBody>
                                 <ModalFooter>
                                     <Button onClick={onClose} data-testid="cashier-cart-button-close">Close</Button>
