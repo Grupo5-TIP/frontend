@@ -3,6 +3,7 @@ import React from "react"
 import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, HStack, 
     Button, Box, StackDivider, Stack, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Flex
 } from "@chakra-ui/react";
+import { editCart } from '../utils/editCart';
 import tablesService from '../services/tables-service';
 import productService from '../services/products-service';
 import Items from '../components/Items'
@@ -30,6 +31,10 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
             items.push(item);
             setItemsFromTable(items.map((item) => (item)));
         }
+    }
+
+    const handleEditCart = (product, action) => {
+        setItemsFromTable(editCart(product, action));
     }
 
     const categories = Object.getOwnPropertyNames(products);
@@ -143,10 +148,10 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
             <Box p="2" flexWrap>
                 <Box p="2" flexWrap>
                     <Stack direction={["column", "row"]} spacing="5%">
-                        <Box w="25%" h="40px">Producto</Box >
-                        <Box w="25%" h="40px">Cantidad</Box >
-                        <Box w="25%" h="40px">Precio unitario</Box >
-                        <Box w="25%" h="40px">Total</Box >
+                        <Box w="30%" h="40px">Producto</Box >
+                        <Box w="15%" h="40px">Cantidad</Box >
+                        <Box w="15%" h="40px">Precio unitario</Box >
+                        <Box w="15%" h="40px">Total</Box >
                     </Stack>
                     <VStack
                         divider={<StackDivider borderColor="gray.200" />}
@@ -155,7 +160,12 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
 
                     >
                         <Box w="100%" h="40px">
-                            <Items items={items}></Items>
+                            <Items 
+                                items={items} 
+                                onDecreaseProduct={(product) => handleEditCart(product, "decrease")}
+                                onAddProduct={(product) => handleEditCart(product, "add")}
+                                onDeleteProduct={(product) => handleEditCart(product, "delete")}
+                            />
                         </Box>
                     </VStack>
 
