@@ -1,14 +1,44 @@
-import { Stack, Text, Heading, Image } from "@chakra-ui/react"
-import {parseCurrency} from "../utils/currency";
+import { Stack, Text, Heading, Image, Flex } from "@chakra-ui/react"
+import { parseCurrency } from "../utils/currency";
 
-const Product = ({product, onAddProduct}) => {
-    const {id, name, description, price, image} = product;
+const Product = ({ product, onAddProduct }) => {
+    const { id, name, description, price, image } = product;
 
-    const addProduct = (product) =>{
+    const addProduct = (product) => {
         onAddProduct(product);
     }
 
     return (
+        <Flex
+            bg="white"
+            w="280px"
+            margin="30px 0"
+            min-height="180px"
+            boxShadow="0 8px 6px -8px black"
+            direction="column"
+            onClick= {() => addProduct(product)}
+        >
+            <Image
+                src={image}
+                alt={name}
+                width="250px"
+                height="100px"
+                marginLeft="-10px"
+                marginTop="-20px"
+                boxShadow="0px 15px 10px -5px #000000"
+            />
+            <Stack padding={2}>
+                <Heading fontSize="25px" color="theme.100" data-testid="product-name">{name}</Heading>
+                <Stack justifyContent="space-between" >                 
+                        <Text color="theme.200" fontSize="md" fontWeight="400" data-testid="product-description">{description}</Text>   
+                        <Text color="theme.200" fontSize="sm" fontWeight="900" data-testid="product-price"> {parseCurrency(price)} </Text>
+                </Stack>
+            </Stack>
+
+
+        </Flex>
+
+        /*
         <Stack
             key={id}
             borderColor="theme.300"
@@ -45,6 +75,7 @@ const Product = ({product, onAddProduct}) => {
                 </Stack>        
             </Stack>
         </Stack>
+        */
     );
 }
 

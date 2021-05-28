@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@chakra-ui/icons": "^1.0.10",
-    "@chakra-ui/react": "^1.4.2",
+    "@chakra-ui/icons": "^1.0.13",
+    "@chakra-ui/react": "^1.6.2",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@fontsource/open-sans": "^4.2.2",

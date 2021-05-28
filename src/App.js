@@ -6,6 +6,7 @@ import Header from './views/Header';
 import Footer from './views/Footer';
 import Home from './views/Home';
 import Tables from './views/Tables'
+import Checkout from './views/Checkout'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Switch>     
             <Route path="/menu/:tableid" component={MenuQr} />
             <Route path="/tables" component={Tables} />
+            <Route path="/checkout/:tableid" component={Checkout} />
             <Route path="/" component={Home} />
           </Switch>
       </BrowserRouter>

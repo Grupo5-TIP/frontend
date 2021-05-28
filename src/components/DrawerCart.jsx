@@ -7,7 +7,7 @@ import AlertDisplay from './AlertDisplay';
 import { parseCurrency } from "../utils/currency";
 
 
-const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfirm, ...props }) => {
+const DrawerCart = ({ items, onClose, isOpen, onDecreaseProduct, tableId, onConfirm, onAddProduct, onDeleteProduct, ...props }) => {
     const [total, setTotal] = useState(0)
     //Order confirmation
     const [isAdded, setIsAdded] = useState(false);
@@ -51,7 +51,7 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfir
                 isOpen={isOpen}
                 placement="right"
                 onClose={onClose}
-                size="xs"
+                size="sm"
                 {...props}
             >
                 <DrawerOverlay>
@@ -61,8 +61,7 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfir
                         />
                         <DrawerHeader
                             h="100px"
-                            bg="gray.800"
-                            color="theme.100"
+                            bg="theme.100"
                             size="xs"
                             shadow="md"
                         >                            
@@ -80,29 +79,36 @@ const DrawerCart = ({ items, onClose, isOpen, onDeleteProduct, tableId, onConfir
                             </Box>
                         </DrawerHeader>
 
-                        <DrawerBody >
+                        <DrawerBody>
                             <Flex height="90%">
                                 {
                                     items.length ?
-                                        <Items items={items} onDeleteProduct={onDeleteProduct}></Items>
+                                        <Items 
+                                            items={items} 
+                                            onDecreaseProduct={onDecreaseProduct} 
+                                            onAddProduct={onAddProduct}
+                                            onDeleteProduct={onDeleteProduct}
+                                        ></Items>
                                     :
                                         <Text color="gray.400" data-testid="drawer-cart-error">No hay elementos en tu carrito</Text>
                                 }
                             </Flex>
                         </DrawerBody>
                         
+                        
                         <Text
-                            color="theme.100"
-                            as="samp"
+                            color="theme.500"
+                            fontWeight="900"                     
                             fontSize="lg"
-                            align="center"
+
+                            padding={3}
                             data-testid="drawer-cart-total"
                             >
                                 Total: {parseCurrency(total)}
                         </Text>
-                        <DrawerFooter>                               
-                            <Button mr={2} bg="gray.100" color="theme.100" variant="outline" onClick={onClose} data-testid="drawer-cart-cancel-button">Cancel</Button>
-                            <Button onClick= {() => dispatchCreateCart()} bg="theme.300" color="theme.100" data-testid="drawer-cart-confirm-button">Confirmar</Button>
+                        <DrawerFooter >                               
+                            <Button mr={2} bg="gray.100" color="theme.100" variant="outline" onClick={onClose} data-testid="drawer-cart-cancel-button">Cancelar</Button>
+                            <Button onClick= {() => dispatchCreateCart()} bg="theme.100" color="gray.100" data-testid="drawer-cart-confirm-button">Confirmar</Button>
                         </DrawerFooter>
                         {isAdded ? renderOrderConfirmationCheck() : null}
                     </DrawerContent>
