@@ -7,23 +7,6 @@ import {
 } from "@chakra-ui/react";
 import Logo from '../components/Logo';
 
-const Menu = (isOpen, ...props) => {
-    return (
-        <Stack
-            direction={{ base: "column", md: "row" }}
-            display={{ base: isOpen ? "block" : "none", md: "flex" }}
-            width={{ base: "full", md: "auto" }}
-            alignItems="center"
-            flexGrow={1}
-            mt={{ base: 4, md: 0 }}
-        >
-            {/* <Text>Link1</Text>
-                <Text>Link2</Text>
-                <Text>Link3</Text> */}
-        </Stack>
-    )
-}
-
 const BackgroundHeader = () => {
     return (
         <Box w="80%">
