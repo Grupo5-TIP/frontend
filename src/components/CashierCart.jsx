@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import React from "react"
-import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, HStack, 
+import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, HStack, Image,
     Button, Box, StackDivider, Stack, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Flex
 } from "@chakra-ui/react";
 import { editCart } from '../utils/editCart';
@@ -131,14 +131,19 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
 
     const RenderActionButtons = () => {
         return (
-            <Box p="2" flexWrap maxWidth="100%">
-            {
-                [1,2,3,4,5].map((product) => (
-                    <Box as="button" borderRadius="md" bg="tomato" color="white" px={4} h={8} p={6} margin={2}>
-                        prueba
-                    </Box>
-                ))
-            }
+            <Box p="1" flexWrap maxWidth="100%" border="4px" align="center" borderRadius="md">
+                <Box as="button" borderRadius="sm" h={5} p={5} margin={1}>
+                    <Image src="https://bit.ly/3oYRMJu" boxSize="85px"/>
+                </Box>
+                <Box as="button" borderRadius="sm" h={5} p={5} margin={1} >
+                    <Image src="https://bit.ly/2R00V88" boxSize="85px"/>
+                </Box>
+                <Box as="button" borderRadius="sm" h={5} p={5} margin={1} >
+                    <Image src="https://bit.ly/3ftF8z1" boxSize="85px"/>
+                </Box>
+                <Box as="button" borderRadius="sm" h={5} p={5} margin={1}>
+                    <Image src="https://bit.ly/3c1LEed" boxSize="85px"/>
+                </Box>
             </Box>
         )
     }
