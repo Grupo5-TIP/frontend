@@ -119,13 +119,12 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
     }
     const RenderTableTotal = () => {
         return (
-            <Box p="2" flexWrap>
-                <Stack direction={["column", "row"]} spacing="24px">
-                    <Box w="100%" h="40px">
-                        TOTAL: <Text data-testid="cashier-cart-total">{items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}</Text>
-                    </Box >
-                </Stack>
-            </Box>
+            <Flex p="1" h="60px" float="right" paddingRight="20" flexDirection="row">
+                <Text>TOTAL:</Text>     
+                <Text data-testid="cashier-cart-total">
+                    {items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}
+                </Text>      
+            </Flex>
         )
     }
 
@@ -162,7 +161,6 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
                         divider={<StackDivider borderColor="gray.200" />}
                         spacing={4}
                         align="stretch"
-
                     >
                         <Box w="100%" h="40px">
                             <Items 
