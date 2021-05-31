@@ -15,6 +15,9 @@ class TablesService{
     async requestBill(tableId){
         return axios.get(API_URL+"/request/"+tableId);
     }
+    async deleteTableOrders(actualTableId){
+        return axios.delete(API_URL+"/"+actualTableId);
+    }
 }
 
 export default new TablesService();

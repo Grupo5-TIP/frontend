@@ -6,15 +6,17 @@ import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHe
 import { editCart } from '../utils/editCart';
 import tablesService from '../services/tables-service';
 import productService from '../services/products-service';
-import Items from '../components/Items'
+import Items from '../components/Items';
+import DialogDisplay from '../components/DialogDisplay';
 
 const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, ...props }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [actualTableId, setTableId] = useState(tableId);
+    const [actualTableId, ] = useState(tableId);
     const [products, setProducts] = useState({});
     const [items, setItemsFromTable] = useState([]);
-    const [scrollBehavior, setScrollBehavior] = React.useState("inside");
+    const [scrollBehavior, ] = React.useState("inside");
+    const [isOpenDialog, setDialogOpen] = useState(false);
 
     const addItem = (product) => {
         let tempItem = items.find(item => (item.product.name === product.name));
@@ -131,7 +133,7 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
     const RenderActionButtons = () => {
         return (
             <Box p="1" flexWrap maxWidth="100%" border="4px" align="center" borderRadius="md">
-                <Box as="button" borderRadius="sm" h={5} p={5} margin={1}>
+                <Box as="button" borderRadius="sm" h={5} p={5} margin={1} onClick={() => (setDialogOpen(true))}>
                     <Image src="https://bit.ly/3oYRMJu" boxSize="85px"/>
                 </Box>
                 <Box as="button" borderRadius="sm" h={5} p={5} margin={1} >
@@ -185,6 +187,7 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
                     <Box>Buscando...</Box>
                     :
                     !error ?
+                        <>
                         <Modal onClose={onClose} size="full" isOpen={isOpenModal} scrollBehavior={scrollBehavior}>
                             <ModalOverlay />
                             <ModalContent>
@@ -203,6 +206,18 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
                                 </ModalFooter>
                             </ModalContent>
                         </Modal>
+                        {console.log(isOpenDialog)}
+                        {
+                            isOpenDialog && <DialogDisplay
+                                header="Anulación del pedido"
+                                firstOption="Cancelar"
+                                secondOption="Anular"
+                                message="¿ Desea anular definitivamente el pedido ?"
+                                onClose={onClose}
+                                action= {()=>(tablesService.deleteTableOrders(actualTableId))}
+                            />
+                        }
+                        </>
                         : null
             }
         </>
