@@ -8,6 +8,7 @@ import tablesService from '../services/tables-service';
 import productService from '../services/products-service';
 import Items from '../components/Items';
 import DialogDisplay from '../components/DialogDisplay';
+import { hover, expanded } from '../utils/buttonDesign';
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { ImCancelCircle } from 'react-icons/im'
 import { BiSave } from 'react-icons/bi'
@@ -89,7 +90,8 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
                             justifyContent="space-between"
                             alignItems="center"
                             maxWidth="100%"
-                            _expanded={{ bg: "theme.300", color: "white" }}>
+                            _expanded={expanded}
+                            _hover={hover}>
                                 <Box flex="1" textAlign="center" data-testid="cashier-cart-available">
                                     Productos disponibles
                                 </Box>
@@ -105,8 +107,9 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
                                                 justifyContent="space-between"
                                                 alignItems="center"
                                                 maxWidth="100%"
-                                                _expanded={{ bg: "theme.100", color: "white" }}
-                                                key={category}>
+                                                key={category}
+                                                _expanded={expanded}                                                
+                                                _hover={hover}>
                                                     
                                                 <Box flex="1">
                                                     {category}
@@ -146,16 +149,33 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
     const RenderActionButtons = () => {
         return (
             <Box p="1" flexWrap maxWidth="100%" border="1px" align="center" borderRadius="none">
-                <Button bg="theme.100" color="white" margin="3px" leftIcon={<RiDeleteBin5Line />} onClick={() => (setIsOpen(true))}>
+                <Button bg="theme.100" 
+                    color="white" 
+                    margin="3px" 
+                    leftIcon={<RiDeleteBin5Line />} 
+                    onClick={() => (setIsOpen(true))}
+                    _hover={hover}>
                     Anular
                 </Button>
-                <Button bg="theme.100" color="white" margin="3px" leftIcon={<ImCancelCircle />}>
+                <Button bg="theme.100" 
+                    color="white" 
+                    margin="3px" 
+                    leftIcon={<ImCancelCircle />}
+                    _hover={hover}>
                     Cancelar
                 </Button>
-                <Button bg="theme.100" color="white" margin="3px" leftIcon={<BiSave />}>
+                <Button bg="theme.100" 
+                color="white" 
+                margin="3px" 
+                leftIcon={<BiSave />}
+                _hover={hover}>
                     Guardar
                 </Button>
-                <Button bg="theme.100" color="white" margin="3px" leftIcon={<FaMoneyBillWave />}>
+                <Button bg="theme.100" 
+                    color="white" 
+                    margin="3px" 
+                    leftIcon={<FaMoneyBillWave />}
+                    _hover={hover}>
                     Facturar
                 </Button>
             </Box>
