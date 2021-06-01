@@ -1,22 +1,23 @@
 import { useEffect, useState } from 'react';
 import React from "react"
-import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, HStack, Image,
-    Button, Box, StackDivider, Stack, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Flex
-} from "@chakra-ui/react";
+import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, Image,
+    Button, Box, StackDivider, Stack, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Flex,
+    useDisclosure } from "@chakra-ui/react";
 import { editCart } from '../utils/editCart';
 import tablesService from '../services/tables-service';
 import productService from '../services/products-service';
 import Items from '../components/Items';
 import DialogDisplay from '../components/DialogDisplay';
 
-const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, ...props }) => {
+const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [actualTableId, ] = useState(tableId);
     const [products, setProducts] = useState({});
     const [items, setItemsFromTable] = useState([]);
     const [scrollBehavior, ] = React.useState("inside");
-    const [isOpenDialog, setDialogOpen] = useState(false);
+    const [isOpen, setIsOpen] = React.useState(false)
+    const onClose = () => setIsOpen(false)
 
     const addItem = (product) => {
         let tempItem = items.find(item => (item.product.name === product.name));
@@ -52,7 +53,7 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
                         tablesService.getItemsFromTable(actualTableId)
                             .then(respTableService => {
                                 setProducts(resp.data);
-                                setItemsFromTable(respTableService.data);
+                                setItemsFromTable(respTableService.data.map((item)=>(item)));
                             })
                             .catch(err => {
                                 setProducts(resp.data);
@@ -74,13 +75,19 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
         return (
 
             <Accordion allowToggle >
-                <AccordionItem>
-                    <Box>
-                        <AccordionButton>
-                            <Box flex="1" textAlign="center" data-testid="cashier-cart-available">
-                                Productos disponibles
-                            </Box>
-                            <AccordionIcon />
+                <AccordionItem >
+                    <Box >
+                        <AccordionButton 
+                            bg="theme.100"
+                            color="white"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            maxWidth="100%"
+                            _expanded={{ bg: "theme.300", color: "white" }}>
+                                <Box flex="1" textAlign="center" data-testid="cashier-cart-available">
+                                    Productos disponibles
+                                </Box>
+                                <AccordionIcon />
                         </AccordionButton>
                     </Box>
                     <AccordionPanel>
@@ -122,8 +129,8 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
     const RenderTableTotal = () => {
         return (
             <Flex p="1" h="60px" float="right" paddingRight="20" flexDirection="row">
-                <Text>TOTAL:</Text>     
-                <Text data-testid="cashier-cart-total">
+                <Text fontWeight="semibold">TOTAL: </Text>     
+                <Text fontWeight="semibold" data-testid="cashier-cart-total">
                     {items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}
                 </Text>      
             </Flex>
@@ -132,9 +139,14 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
 
     const RenderActionButtons = () => {
         return (
-            <Box p="1" flexWrap maxWidth="100%" border="4px" align="center" borderRadius="md">
-                <Box as="button" borderRadius="sm" h={5} p={5} margin={1} onClick={() => (setDialogOpen(true))}>
-                    <Image src="https://bit.ly/3oYRMJu" boxSize="85px"/>
+            <Box p="1" flexWrap maxWidth="100%" border="1px" align="center" borderRadius="none">
+                <Box as="button" borderRadius="sm" h={5} p={5} margin={1} onClick={() => (setIsOpen(true))}>
+                    <Image 
+                        src="https://bit.ly/3oYRMJu"
+                        boxSize="85px"
+                        onMouseOut={(src) => src.currentTarget.src="https://bit.ly/3oYRMJu"}
+                        onMouseOver={(src) => src.currentTarget.src="https://bit.ly/2R00V88"}
+                    />
                 </Box>
                 <Box as="button" borderRadius="sm" h={5} p={5} margin={1} >
                     <Image src="https://bit.ly/2R00V88" boxSize="85px"/>
@@ -154,10 +166,10 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
             <Box p="2" flexWrap>
                 <Box p="2" flexWrap>
                     <Stack direction={["column", "row"]} spacing="5%">
-                        <Box w="30%" h="40px">Producto</Box >
-                        <Box w="15%" h="40px">Cantidad</Box >
-                        <Box w="15%" h="40px">Precio unitario</Box >
-                        <Box w="15%" h="40px">Total</Box >
+                        <Box w="30%" h="40px" fontWeight="semibold">Producto</Box >
+                        <Box w="15%" h="40px" fontWeight="semibold">Cantidad</Box >
+                        <Box w="15%" h="40px" fontWeight="semibold">Precio unitario</Box >
+                        <Box w="15%" h="40px" fontWeight="semibold">Total</Box >
                     </Stack>
                     <VStack
                         divider={<StackDivider borderColor="gray.200" />}
@@ -173,9 +185,7 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
                             />
                         </Box>
                     </VStack>
-
-                </Box>    
-                
+                </Box>                    
             </Box>
         )
     }
@@ -188,7 +198,7 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
                     :
                     !error ?
                         <>
-                        <Modal onClose={onClose} size="full" isOpen={isOpenModal} scrollBehavior={scrollBehavior}>
+                        <Modal onClose={onCloseModal} size="full" isOpen={isOpenModal} scrollBehavior={scrollBehavior}>
                             <ModalOverlay />
                             <ModalContent>
                                 <ModalHeader>Mesa: {tableId} </ModalHeader>
@@ -202,19 +212,21 @@ const CashierCart = ({ onDeleteProduct, tableId, onClose, isOpenModal, onOpen, .
                                     <RenderActionButtons/>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button onClick={onClose} data-testid="cashier-cart-button-close">Close</Button>
+                                    <Button onClick={onCloseModal} data-testid="cashier-cart-button-close">Close</Button>
                                 </ModalFooter>
                             </ModalContent>
                         </Modal>
-                        {console.log(isOpenDialog)}
+                        
                         {
-                            isOpenDialog && <DialogDisplay
+                            <DialogDisplay
                                 header="Anulación del pedido"
                                 firstOption="Cancelar"
                                 secondOption="Anular"
                                 message="¿ Desea anular definitivamente el pedido ?"
+                                onCloseAll={onCloseModal}
                                 onClose={onClose}
-                                action= {()=>(tablesService.deleteTableOrders(actualTableId))}
+                                isOpen={isOpen}
+                                action={()=>(tablesService.deleteTableOrders(actualTableId))}
                             />
                         }
                         </>

@@ -3,21 +3,19 @@ import React from "react"
 import { AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogBody,
     AlertDialogHeader, AlertDialogFooter , AlertDialogCloseButton, Button } from '@chakra-ui/react';
 
-const DialogDisplay = ({ header, firstOption, secondOption, message, action }) => {
-    const [isOpen, setIsOpen] = useState(true);
-    const onCloseDialog = () => setIsOpen(false);
+const DialogDisplay = ({ header, firstOption, secondOption, message, action, isOpen, onClose, onCloseAll }) => {
     const cancelRef = React.useRef();
 
     const onClick = () => {
-        action;
-        onCloseDialog;
+        action();
+        onCloseAll();
     }
 
     return (
         <AlertDialog
             leastDestructiveRef={cancelRef}
             motionPreset="slideInBottom"
-            onClose={onCloseDialog}
+            onClose={onClose}
             isOpen={isOpen}
             isCentered
             closeOnEsc
@@ -32,7 +30,7 @@ const DialogDisplay = ({ header, firstOption, secondOption, message, action }) =
                 {message}
             </AlertDialogBody>
             <AlertDialogFooter>
-                <Button ref={cancelRef} onClick={onCloseDialog}>
+                <Button ref={cancelRef} onClick={onClose}>
                     {firstOption}
                 </Button>
                 <Button colorScheme="blackAlpha" ml={3} onClick={onClick}>
