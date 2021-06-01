@@ -8,6 +8,12 @@ import tablesService from '../services/tables-service';
 import productService from '../services/products-service';
 import Items from '../components/Items';
 import DialogDisplay from '../components/DialogDisplay';
+import { RiDeleteBin5Line } from 'react-icons/ri'
+import { ImCancelCircle } from 'react-icons/im'
+import { BiSave } from 'react-icons/bi'
+import { FaMoneyBillWave } from 'react-icons/fa'
+
+
 
 const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props }) => {
     const [loading, setLoading] = useState(false);
@@ -140,23 +146,18 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
     const RenderActionButtons = () => {
         return (
             <Box p="1" flexWrap maxWidth="100%" border="1px" align="center" borderRadius="none">
-                <Box as="button" borderRadius="sm" h={5} p={5} margin={1} onClick={() => (setIsOpen(true))}>
-                    <Image 
-                        src="https://bit.ly/3oYRMJu"
-                        boxSize="85px"
-                        onMouseOut={(src) => src.currentTarget.src="https://bit.ly/3oYRMJu"}
-                        onMouseOver={(src) => src.currentTarget.src="https://bit.ly/2R00V88"}
-                    />
-                </Box>
-                <Box as="button" borderRadius="sm" h={5} p={5} margin={1} >
-                    <Image src="https://bit.ly/2R00V88" boxSize="85px"/>
-                </Box>
-                <Box as="button" borderRadius="sm" h={5} p={5} margin={1} >
-                    <Image src="https://bit.ly/3ftF8z1" boxSize="85px"/>
-                </Box>
-                <Box as="button" borderRadius="sm" h={5} p={5} margin={1}>
-                    <Image src="https://bit.ly/3c1LEed" boxSize="85px"/>
-                </Box>
+                <Button bg="theme.100" color="white" margin="3px" leftIcon={<RiDeleteBin5Line />}>
+                    Anular
+                </Button>
+                <Button bg="theme.100" color="white" margin="3px" leftIcon={<ImCancelCircle />}>
+                    Cancelar
+                </Button>
+                <Button bg="theme.100" color="white" margin="3px" leftIcon={<BiSave />}>
+                    Guardar
+                </Button>
+                <Button bg="theme.100" color="white" margin="3px" leftIcon={<FaMoneyBillWave />}>
+                    Facturar
+                </Button>
             </Box>
         )
     }
