@@ -1,4 +1,4 @@
-import { Box, Text, Divider, Flex, Stack } from "@chakra-ui/react";
+import { Box, Text, Divider, Flex, Stack, Heading} from "@chakra-ui/react";
 import { parseCurrency } from '../utils/currency';
 
 const BillItem = ({ item }) => {
@@ -10,43 +10,29 @@ const BillItem = ({ item }) => {
             direction="row"
             borderColor="theme.300"
             borderRadius="10px"
-            padding={3}
             alignItems="center"
             spacing={1}
-            h="120px"
-            w="270px"
+            h="50px"
+            w="340px"
             sm="30em"
-            boxShadow="0 8px 6px -8px black"
+            padding={2}
             color="theme.100"
         >
             <Stack width="100%" >
-                <Stack
+                <Flex
                     direction="row"
                     fontWeight="500"
-                    alignSelf="center"
-                    spacing={10}
+                    spacing={5}
+                    justifyContent="space-between"
                 >
-                    <Text paddingTop={2} fontSize="md" data-testid="amount"> {amount}x </Text><Text fontSize="25px">{product.name.toUpperCase()}</Text>
-                </Stack>
-                <Stack direction="column">
-                    <Stack direction="row" justifyContent="space-between">
-                        <Text data-testid="total">{parseCurrency(product.price * amount)}</Text>
-                    </Stack>
-                </Stack>
+                    <Text paddingTop={0} fontSize="md" data-testid="amount"> {amount}x </Text><Heading fontSize="19px">{product.name}</Heading>
+                    <Text data-testid="total">{parseCurrency(product.price * amount)}</Text>
+                </Flex>
+                <Divider />
             </Stack>
+            
         </Stack>
     )
 }
 
 export default BillItem;
-
-        {/*<Box>
-            <Flex margin={5} width="100%" flexDir="row">
-                <Flex flexDir="column">
-                    <Text> {item.amount}x</Text>
-                    <Text> { item.product.name}</Text>
-                    <Text> {item.product.price * item.amount}</Text>
-                </Flex>
-            </Flex>
-            <Divider paddingTop={2} />
-        </Box>*/}

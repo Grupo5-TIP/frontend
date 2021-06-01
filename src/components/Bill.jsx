@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import tableService from '../services/tables-service';
 import BillItem from './BillItem';
-import { Flex, Button, Stack, Box, Text} from "@chakra-ui/react";
+import { Flex, Button, Stack, Box, Text, Icon } from "@chakra-ui/react";
 import AlertDisplay from '../components/AlertDisplay';
-
+import { AiOutlinePaperClip } from 'react-icons/ai'
+import { GiPaperClip } from 'react-icons/gi'
+import { parseCurrency } from '../utils/currency'
 
 const Bill = ({ tableId }) => {
     const [loading, setLoading] = useState(false);
@@ -33,46 +35,86 @@ const Bill = ({ tableId }) => {
     }, [tableId]);
 
     const handleCheckPlease = () => {
-        setIsAdded(true);
-        onClose();
-        console.log("pedir cuenta...")
+        tableService.requestBill(tableId)
+            .then(resp => {
+                setIsAdded(true);
+                onClose();
+            })
+            .catch(err => {
+                setError(err);
+            });
     }
 
-    const renderStatusError = (status, message) => {
+    const renderStatusAlertDisplay = (status, message) => {
         return <AlertDisplay status={status} message={message} />
     }
 
-    return (
-        <Flex flexGrow={1}>
-            <Flex flexDir="column">
+    const StatusAlertDisplay = ({ }) => {
+        return (
+            <Flex flexDir="row" alignSelf="center">
                 {isAdded ?
                     <Flex height="100px" width="250px" >
-                        {renderStatusError("success", "Se solicitó correctamente el cierre de caja!")}
+                        {renderStatusAlertDisplay("success", "Se solicitó correctamente el cierre de caja!")}
                     </Flex>
                     :
                     null
                 }
-
-                {
-                    error !== '' ? renderStatusError("error", "Error al traer del server...")
-                        :
-                        loading ? <Text color="gray.400"> Cargando... </Text> :
-                            <Stack>
-                                <Flex flexWrap="wrap" padding={2}  justifyContent="center">
-                                    {
-                                        itemsFromTable && itemsFromTable.length > 0 ?
-                                            itemsFromTable.map(item =>
-                                                <BillItem key={item.id} item={item} />
-                                            ) : null
-                                    }
-                                </Flex>
-                                <Flex justifyContent="center" padding={2} >
-                                    <Button onClick={() => history.push("/menu/" + tableId)} mr={2} bg="gray.100" color="theme.100" variant="outline" data-testid="orders-cancel-button">Volver</Button>
-                                    <Button onClick={() => handleCheckPlease()} bg="theme.100" color="gray.100" data-testid="orders-confirm-button">Pedir cuenta</Button>
-                                </Flex>
-                            </Stack>
-                }
             </Flex>
+        )
+    }
+
+    const DisplayBill = ({ items }) => {
+        return (
+            <Flex
+                flexGrow={1}
+                direction="column"
+                spacing={5}
+                padding={3}
+            >
+                <Icon as={AiOutlinePaperClip} color="gray.300" w={10} h={10} position="absolute" left="5%" marginTop={-1} />
+                {/*<Icon as={GiPaperClip} color="gray.300" w={10} h={10} position="absolute" /> */}
+                <Flex
+                    h="20px"
+                    w="360px"
+                    boxShadow="0 8px 6px -8px black"
+                    bg="theme.100"
+                >
+                </Flex>
+                {
+                    items.map(item =>
+                        <BillItem key={item.id} item={item} />
+                    )
+                }
+
+            </Flex>
+        )
+    }
+
+    return (
+        <Flex flexGrow={1} flexDir="column" minH="300px" >
+            <StatusAlertDisplay />
+            {
+                error !== '' ? renderStatusAlertDisplay("error", "Error al traer del server...")
+                    :
+                    loading ? <Text color="gray.400"> Cargando... </Text> :
+                        <Flex flexDir="column">
+                            <Flex padding={5} flexDir="column">
+                                {
+                                    itemsFromTable && itemsFromTable.length > 0 ?
+                                        <DisplayBill items={itemsFromTable} />
+                                        : <Text color="gray.400"> Todavia no realizaste ningún pedido. Volvé y encargate algo para disfrutar!</Text>
+                                }
+
+                                <Flex spacing="24px" color="theme.500" fontWeight="900">
+                                    <Text>Total:</Text> <Text data-testid="cashier-cart-total">{parseCurrency(itemsFromTable.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0))}</Text>
+                                </Flex>
+                            </Flex>
+                            <Flex justifyContent="center" padding={2} >
+                                <Button onClick={() => history.push("/menu/" + tableId)} mr={2} bg="gray.100" color="theme.100" variant="outline" data-testid="orders-cancel-button">Volver</Button>
+                                <Button onClick={() => handleCheckPlease()} bg="theme.100" color="gray.100" data-testid="orders-confirm-button">Pedir cuenta</Button>
+                            </Flex>
+                        </Flex>
+            }
 
         </Flex>
     )
