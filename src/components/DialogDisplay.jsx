@@ -33,7 +33,7 @@ const DialogDisplay = ({ header, firstOption, secondOption, message, action, isO
                 <Button ref={cancelRef} onClick={onClose}>
                     {firstOption}
                 </Button>
-                <Button colorScheme="blackAlpha" ml={3} onClick={onClick}>
+                <Button bg="theme.100" color="white" ml={3} onClick={onClick}>
                     {secondOption}
                 </Button>
             </AlertDialogFooter>

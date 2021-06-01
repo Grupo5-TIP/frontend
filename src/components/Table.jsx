@@ -37,9 +37,9 @@ const Table = ({ table }) => {
         return (
             <Box 
                 width={width} 
-                height="20vh"
+                height="10vh"
                 margin={"10"} 
-                borderWidth="1px" 
+                borderWidth="2px" 
                 borderRadius="lg" 
                 position="absolute"
                 top={positionY}
@@ -47,7 +47,8 @@ const Table = ({ table }) => {
                 marginTop={150}
             >
                 <Box d="flex" alignItems="baseline">
-                    <Badge borderRadius="full" fontSize="xl" px="2" colorScheme="gray.400" color={bgColor} data-testid="table-badge">
+                    <Badge borderRadius="full" fontSize="large" 
+                        fontWeight="extrabold" px="2" colorScheme="gray.400" color={bgColor} data-testid="table-badge">
                         {table.id}.
                         {table.state}
                     </Badge>

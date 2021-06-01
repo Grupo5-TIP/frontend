@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import React from "react"
-import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, Image,
-    Button, Box, StackDivider, Stack, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Flex,
-    useDisclosure } from "@chakra-ui/react";
+import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, Button, Box,
+     StackDivider, Stack, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Flex 
+} from "@chakra-ui/react";
 import { editCart } from '../utils/editCart';
 import tablesService from '../services/tables-service';
 import productService from '../services/products-service';
@@ -146,7 +146,7 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
     const RenderActionButtons = () => {
         return (
             <Box p="1" flexWrap maxWidth="100%" border="1px" align="center" borderRadius="none">
-                <Button bg="theme.100" color="white" margin="3px" leftIcon={<RiDeleteBin5Line />}>
+                <Button bg="theme.100" color="white" margin="3px" leftIcon={<RiDeleteBin5Line />} onClick={() => (setIsOpen(true))}>
                     Anular
                 </Button>
                 <Button bg="theme.100" color="white" margin="3px" leftIcon={<ImCancelCircle />}>
