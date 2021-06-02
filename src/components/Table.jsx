@@ -1,18 +1,39 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Flex } from "@chakra-ui/layout";
-import { Stack, Box, Text, Badge, useMediaQuery } from "@chakra-ui/react"
+import { Stack, Box, Text, Badge, useMediaQuery, Tag, TagLeftIcon } from "@chakra-ui/react"
+import { BsHouseDoor, BsHouseDoorFill } from 'react-icons/bs'
+import { FiPhoneCall } from 'react-icons/fi'
 
 const Table = ({ table }) => {
     const [isLarger] = useMediaQuery("(min-width: 380px)");
-    const [bgColor, setBgColor] = useState("theme.200");
+    const [bgColor,] = useState("theme.200");
     const [positionX, setPositionX] = useState("");
     const [positionY, setPositionY] = useState("");
     const [width, setWidth] = useState("");
-
-    const isEmpty = useCallback(() => {
-        //i need do this way because useEffect Hook change on every render.
-        return table.state === 'empty';
-    }, [table]);
+    
+    const tableConfiguration = (tableState) => {
+        const config = {bgColor:"", icon:""};
+        switch (tableState) {
+            case "empty":
+                config.bgColor = "green.400"
+                config.icon = <BsHouseDoor />
+                break;
+            case "inUse":
+                config.bgColor = "red.500"
+                config.icon = <BsHouseDoorFill />
+                break;
+            case "bill":
+                config.bgColor = "orange"
+                config.icon = <FiPhoneCall />
+                break;
+            default:
+                config.bgColor = "theme.300"
+                config.icon = <BsHouseDoor />
+                break;
+          }
+        console.log(config.bgColor);
+        return config;
+    }
 
     const isInUse = useCallback(() => {
         //i need do this way because useEffect Hook change on every render.
@@ -21,16 +42,12 @@ const Table = ({ table }) => {
 
 
     useEffect(() => {
-        const calculateBgColor = () => {
-            isEmpty() ? setBgColor("theme.300") : isInUse() ? setBgColor("theme.500") : setBgColor("blue")
-        }
-        calculateBgColor();
         const x = `${table.x}px` ;
         const y = `${table.y}px` ;
         setWidth(`${ (1+table.size * 10 /100) * 150}px` )
         setPositionX(x);
         setPositionY(y);
-    }, [isEmpty, table]);
+    }, [table]);
 
 
     const viewLargerDevices = () => {
@@ -45,23 +62,25 @@ const Table = ({ table }) => {
                 top={positionY}
                 left={positionX}
                 marginTop={150}
-            >
+                bg={tableConfiguration(table.state).bgColor}
+            >                
                 <Box d="flex" alignItems="baseline">
+                    {tableConfiguration(table.state).icon}
                     <Badge borderRadius="full" fontSize="large" 
-                        fontWeight="extrabold" px="2" colorScheme="gray.400" color={bgColor} data-testid="table-badge">
-                        {table.id}.
-                        {table.state}
+                        fontWeight="extrabold" px="1" colorScheme="" color="gray.700" data-testid="table-badge">                        
+                        {table.id}
                     </Badge>
                     <Box
-                        color="gray.500"
+                        color="gray.700"
                         fontWeight="semibold"
                         letterSpacing="wide"
                         fontSize="xs"
                         textTransform="uppercase"
                         ml="2"
                         data-testid="table-size"
+                        fontSize="md"
                     >
-                        &bull; size: {table.size}
+                        &bull; tamaño: {table.size}
                     </Box>
                 </Box>
                 <Box
@@ -71,7 +90,6 @@ const Table = ({ table }) => {
                     lineHeight="tight"
                     data-testid="table-detail"
                 >
-                    {isEmpty()? null : <Text>Detalle...</Text>}
                 </Box>
             </Box>
         )
