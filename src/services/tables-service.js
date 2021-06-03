@@ -12,11 +12,20 @@ class TablesService{
         return axios.get(API_URL+"/"+tableId);
     }
 
+    async updateTableOrder(tableId, items ){
+        console.log(items);
+        return axios.put(API_URL+"/"+tableId, items);
+    }
     async requestBill(tableId){
         return axios.get(API_URL+"/request/"+tableId);
     }
-    async deleteTableOrders(actualTableId){
-        return axios.delete(API_URL+"/"+actualTableId);
+
+    async checkBill(tableId){
+        return axios.get(API_URL+"/check/"+tableId);
+    }
+
+    async deleteTableOrders(tableId){
+        return axios.delete(API_URL+"/"+tableId);
     }
 }
 

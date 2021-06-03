@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { Flex } from "@chakra-ui/layout";
 import { Stack, Box, Text, Badge, useMediaQuery, Tag, TagLeftIcon } from "@chakra-ui/react"
 import { BsHouseDoor, BsHouseDoorFill } from 'react-icons/bs'
@@ -31,15 +31,8 @@ const Table = ({ table }) => {
                 config.icon = <BsHouseDoor />
                 break;
           }
-        console.log(config.bgColor);
         return config;
     }
-
-    const isInUse = useCallback(() => {
-        //i need do this way because useEffect Hook change on every render.
-        return table.state === 'inUse';
-    }, [table]);
-
 
     useEffect(() => {
         const x = `${table.x}px` ;

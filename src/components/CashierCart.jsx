@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import React from "react"
-import { Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, Button, Box,
-     StackDivider, Stack, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Flex 
+import {
+    Modal, ModalBody, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalFooter, VStack, Button, Box,
+    StackDivider, Stack, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Flex
 } from "@chakra-ui/react";
 import { editCart } from '../utils/editCart';
 import tablesService from '../services/tables-service';
@@ -19,12 +20,21 @@ import { FaMoneyBillWave } from 'react-icons/fa'
 const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [actualTableId, ] = useState(tableId);
+    const [actualTableId,] = useState(tableId);
     const [products, setProducts] = useState({});
     const [items, setItemsFromTable] = useState([]);
-    const [scrollBehavior, ] = React.useState("inside");
-    const [isOpen, setIsOpen] = React.useState(false)
-    const onClose = () => setIsOpen(false)
+    const [scrollBehavior,] = React.useState("inside");
+    const [isOpenVoid, setIsOpenVoid] = React.useState(false)
+    const [isOpenCancel, setIsOpenCancel] = React.useState(false)
+    const [isOpenSave, setIsOpenSave] = React.useState(false)
+    const [isOpenBill, setIsOpenBill] = React.useState(false)
+
+    const onClose = () => {
+        setIsOpenVoid(false);
+        setIsOpenCancel(false);
+        setIsOpenSave(false);
+        setIsOpenBill(false);
+    }
 
     const addItem = (product) => {
         let tempItem = items.find(item => (item.product.name === product.name));
@@ -60,7 +70,7 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
                         tablesService.getItemsFromTable(actualTableId)
                             .then(respTableService => {
                                 setProducts(resp.data);
-                                setItemsFromTable(respTableService.data.map((item)=>(item)));
+                                setItemsFromTable(respTableService.data.map((item) => (item)));
                             })
                             .catch(err => {
                                 setProducts(resp.data);
@@ -84,7 +94,7 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
             <Accordion allowToggle >
                 <AccordionItem >
                     <Box >
-                        <AccordionButton 
+                        <AccordionButton
                             bg="theme.100"
                             color="white"
                             justifyContent="space-between"
@@ -92,10 +102,10 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
                             maxWidth="100%"
                             _expanded={expanded}
                             _hover={hover}>
-                                <Box flex="1" textAlign="center" data-testid="cashier-cart-available">
-                                    Productos disponibles
+                            <Box flex="1" textAlign="center" data-testid="cashier-cart-available">
+                                Productos disponibles
                                 </Box>
-                                <AccordionIcon />
+                            <AccordionIcon />
                         </AccordionButton>
                     </Box>
                     <AccordionPanel>
@@ -103,19 +113,19 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
                             categories.map((category) =>
                                 <Accordion allowToggle key={category}>
                                     <AccordionItem key={category}>
-                                            <AccordionButton
-                                                justifyContent="space-between"
-                                                alignItems="center"
-                                                maxWidth="100%"
-                                                key={category}
-                                                _expanded={expanded}                                                
-                                                _hover={hover}>
-                                                    
-                                                <Box flex="1">
-                                                    {category}
-                                                </Box>
-                                                <AccordionIcon />
-                                            </AccordionButton>
+                                        <AccordionButton
+                                            justifyContent="space-between"
+                                            alignItems="center"
+                                            maxWidth="100%"
+                                            key={category}
+                                            _expanded={expanded}
+                                            _hover={hover}>
+
+                                            <Box flex="1">
+                                                {category}
+                                            </Box>
+                                            <AccordionIcon />
+                                        </AccordionButton>
                                         <AccordionPanel width="100%">
                                             {
                                                 products[category].map((product) => (
@@ -138,10 +148,10 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
     const RenderTableTotal = () => {
         return (
             <Flex p="1" h="60px" float="right" paddingRight="20" flexDirection="row">
-                <Text fontWeight="semibold">TOTAL: </Text>     
+                <Text fontWeight="semibold">TOTAL: </Text>
                 <Text fontWeight="semibold" data-testid="cashier-cart-total">
                     {items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}
-                </Text>      
+                </Text>
             </Flex>
         )
     }
@@ -149,33 +159,39 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
     const RenderActionButtons = () => {
         return (
             <Box p="1" flexWrap maxWidth="100%" border="1px" align="center" borderRadius="none">
-                <Button bg="theme.100" 
-                    color="white" 
-                    margin="3px" 
-                    leftIcon={<RiDeleteBin5Line />} 
-                    onClick={() => (setIsOpen(true))}
+                <Button bg="theme.100"
+                    color="white"
+                    margin="3px"
+                    leftIcon={<RiDeleteBin5Line />}
+                    onClick={() => (setIsOpenVoid(true))}
                     _hover={hover}>
                     Anular
                 </Button>
-                <Button bg="theme.100" 
-                    color="white" 
-                    margin="3px" 
+                <Button bg="theme.100"
+                    color="white"
+                    margin="3px"
                     leftIcon={<ImCancelCircle />}
-                    _hover={hover}>
+                    _hover={hover}
+                    onClick={() => (setIsOpenCancel(true))}
+                >
                     Cancelar
                 </Button>
-                <Button bg="theme.100" 
-                color="white" 
-                margin="3px" 
-                leftIcon={<BiSave />}
-                _hover={hover}>
+                <Button bg="theme.100"
+                    color="white"
+                    margin="3px"
+                    leftIcon={<BiSave />}
+                    _hover={hover}
+                    onClick={() => (setIsOpenSave(true))}
+                >
                     Guardar
                 </Button>
-                <Button bg="theme.100" 
-                    color="white" 
-                    margin="3px" 
+                <Button bg="theme.100"
+                    color="white"
+                    margin="3px"
                     leftIcon={<FaMoneyBillWave />}
-                    _hover={hover}>
+                    _hover={hover}
+                    onClick={() => (setIsOpenBill(true))}
+                >
                     Facturar
                 </Button>
             </Box>
@@ -198,15 +214,15 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
                         align="stretch"
                     >
                         <Box w="100%" h="40px">
-                            <Items 
-                                items={items} 
+                            <Items
+                                items={items}
                                 onDecreaseProduct={(product) => handleEditCart(product, "decrease")}
                                 onAddProduct={(product) => handleEditCart(product, "add")}
                                 onDeleteProduct={(product) => handleEditCart(product, "delete")}
                             />
                         </Box>
                     </VStack>
-                </Box>                    
+                </Box>
             </Box>
         )
     }
@@ -219,37 +235,72 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
                     :
                     !error ?
                         <>
-                        <Modal onClose={onCloseModal} size="full" isOpen={isOpenModal} scrollBehavior={scrollBehavior}>
-                            <ModalOverlay />
-                            <ModalContent>
-                                <ModalHeader>Mesa: {tableId} </ModalHeader>
-                                <ModalCloseButton />
-                                <ModalBody>
-                                    <RenderItemsList/>
-                                </ModalBody>
-                                <ModalBody>
-                                    <RenderTableTotal/>
-                                    <RenderCategories/>
-                                    <RenderActionButtons/>
-                                </ModalBody>
-                                <ModalFooter>
-                                    <Button onClick={onCloseModal} data-testid="cashier-cart-button-close">Close</Button>
-                                </ModalFooter>
-                            </ModalContent>
-                        </Modal>
-                        
-                        {
-                            <DialogDisplay
-                                header="Anulación del pedido"
-                                firstOption="Cancelar"
-                                secondOption="Anular"
-                                message="¿ Desea anular definitivamente el pedido ?"
-                                onCloseAll={onCloseModal}
-                                onClose={onClose}
-                                isOpen={isOpen}
-                                action={()=>(tablesService.deleteTableOrders(actualTableId))}
-                            />
-                        }
+                            <Modal onClose={onCloseModal} size="full" isOpen={isOpenModal} scrollBehavior={scrollBehavior}>
+                                <ModalOverlay />
+                                <ModalContent>
+                                    <ModalHeader>Mesa: {tableId} </ModalHeader>
+                                    <ModalCloseButton />
+                                    <ModalBody>
+                                        <RenderItemsList />
+                                    </ModalBody>
+                                    <ModalBody>
+                                        <RenderTableTotal />
+                                        <RenderCategories />
+                                        <RenderActionButtons />
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button onClick={onCloseModal} data-testid="cashier-cart-button-close">Close</Button>
+                                    </ModalFooter>
+                                </ModalContent>
+                            </Modal>
+
+                            {
+                                <Box>
+                                    <DialogDisplay
+                                        header="Anulación del pedido"
+                                        firstOption="Cancelar"
+                                        secondOption="Anular"
+                                        message="¿ Desea anular definitivamente el pedido ?"
+                                        onCloseAll={onCloseModal}
+                                        onClose={onClose}
+                                        isOpen={isOpenVoid}
+                                        action={() => (tablesService.deleteTableOrders(actualTableId))}
+                                    />
+
+                                    <DialogDisplay
+                                        header="Cancelación del pedido"
+                                        firstOption="Cancelar"
+                                        secondOption="Aceptar"
+                                        message="¿ Desea cancelar el pedido ?"
+                                        onCloseAll={onCloseModal}
+                                        onClose={onClose}
+                                        isOpen={isOpenCancel}
+                                        action={() => onClose()}
+                                    />
+
+                                    <DialogDisplay
+                                        header="Guardar pedido"
+                                        firstOption="Cancelar"
+                                        secondOption="Aceptar"
+                                        message="¿ Desea guardar el pedido ?"
+                                        onCloseAll={onCloseModal}
+                                        onClose={onClose}
+                                        isOpen={isOpenSave}
+                                        action={() => (tablesService.updateTableOrder(actualTableId, items))}
+                                    />
+
+                                    <DialogDisplay
+                                        header="Facturar pedido"
+                                        firstOption="Cancelar"
+                                        secondOption="Aceptar"
+                                        message="¿ Desea facturar el pedido ?"
+                                        onCloseAll={onCloseModal}
+                                        onClose={onClose}
+                                        isOpen={isOpenBill}
+                                        action={() => (tablesService.checkBill(actualTableId))}
+                                    />
+                                </Box>
+                            }
                         </>
                         : null
             }
