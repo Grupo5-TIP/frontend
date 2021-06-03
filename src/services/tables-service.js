@@ -8,8 +8,12 @@ class TablesService{
         return axios.get(API_URL);       
     }
     
-    async getItemsFromTable(actualTableId){
-        return axios.get(API_URL+"/"+actualTableId);
+    async getItemsFromTable(tableId){
+        return axios.get(API_URL+"/"+tableId);
+    }
+
+    async requestBill(tableId){
+        return axios.get(API_URL+"/request/"+tableId);
     }
 }
 

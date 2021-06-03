@@ -14,10 +14,15 @@ const Table = ({ table }) => {
         return table.state === 'empty';
     }, [table]);
 
+    const isInUse = useCallback(() => {
+        //i need do this way because useEffect Hook change on every render.
+        return table.state === 'inUse';
+    }, [table]);
+
 
     useEffect(() => {
         const calculateBgColor = () => {
-            isEmpty() ? setBgColor("theme.300") : setBgColor("theme.500");
+            isEmpty() ? setBgColor("theme.300") : isInUse() ? setBgColor("theme.500") : setBgColor("blue")
         }
         calculateBgColor();
         const x = `${table.x}px` ;
