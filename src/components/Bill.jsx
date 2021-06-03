@@ -49,7 +49,7 @@ const Bill = ({ tableId }) => {
         return <AlertDisplay status={status} message={message} />
     }
 
-    const StatusAlertDisplay = ({ }) => {
+    const StatusAlertDisplay = () => {
         return (
             <Flex flexDir="row" alignSelf="center">
                 {isAdded ?
@@ -98,16 +98,18 @@ const Bill = ({ tableId }) => {
                     :
                     loading ? <Text color="gray.400"> Cargando... </Text> :
                         <Flex flexDir="column">
-                            <Flex padding={5} flexDir="column">
+                            <Flex >
                                 {
                                     itemsFromTable && itemsFromTable.length > 0 ?
-                                        <DisplayBill items={itemsFromTable} />
+                                        <Flex padding={5} flexDir="column">
+                                            <DisplayBill items={itemsFromTable} />
+                                            <Flex spacing="24px" color="theme.500" fontWeight="900">
+                                                <Text>Total:</Text> <Text data-testid="cashier-cart-total">{parseCurrency(itemsFromTable.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0))}</Text>
+                                            </Flex>
+                                        </Flex>
                                         : <Text color="gray.400"> Todavia no realizaste ningún pedido. Volvé y encargate algo para disfrutar!</Text>
                                 }
 
-                                <Flex spacing="24px" color="theme.500" fontWeight="900">
-                                    <Text>Total:</Text> <Text data-testid="cashier-cart-total">{parseCurrency(itemsFromTable.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0))}</Text>
-                                </Flex>
                             </Flex>
                             <Flex justifyContent="center" padding={2} >
                                 <Button onClick={() => history.push("/menu/" + tableId)} mr={2} bg="gray.100" color="theme.100" variant="outline" data-testid="orders-cancel-button">Volver</Button>
