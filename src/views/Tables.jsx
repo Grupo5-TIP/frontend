@@ -38,6 +38,11 @@ const Tables = () => {
         onOpen();
     }
 
+    const onCloseCashierCart = () => {
+        setTableId(0);
+        onClose();
+    }
+
 
     return (
         <Flex flexGrow={1}>
@@ -68,10 +73,9 @@ const Tables = () => {
             </Flex>
             <CashierCart
                 key={actualTableId}
-                onClose={onClose}
+                onCloseModal={onCloseCashierCart}
                 isOpenModal={isOpen}
-                onOpen={onOpen}
-                onDeleteProduct={() => (console.log())}
+                onOpenModal={onOpen}
                 tableId={actualTableId}
             />
         </Flex>

@@ -3,7 +3,7 @@ import Products from '../components/Products';
 import DrawerCart from '../components/DrawerCart'
 import productService from '../services/products-service';
 import AlertDisplay from '../components/AlertDisplay';
-
+import { hover, expanded } from '../utils/buttonDesign';
 import {
     Flex, Stack, Text,
     Accordion,
@@ -64,7 +64,8 @@ const MenuQr = ({ ...props }) => {
                             justifyContent="space-between"
                             alignItems="center"
                             maxWidth="100%"
-                            _expanded={{ bg: "theme.300", color: "white" }}>
+                            _expanded={expanded}
+                            _hover={hover}>
 
                             <Box flex="1" width={200} padding={3}>
                                 {categoryName}
@@ -133,13 +134,6 @@ const MenuQr = ({ ...props }) => {
                                     onAddProduct={(product) => handleEditCart(product, "add")}
                                     onDeleteProduct={(product) => handleEditCart(product, "delete")}
                                 />
-
-
-                                {/*<Orders
-                                    onClose={() => setPaymentOpen(false)}
-                                    isOpen={isPaymentOpen}
-                                    tableId={props.match.url.substring(props.match.url.lastIndexOf('/') + 1)}
-                                />*/}
 
                             </Flex>
                         </Stack>

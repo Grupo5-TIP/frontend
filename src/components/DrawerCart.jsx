@@ -5,7 +5,7 @@ import orderService from '../services/orders-service';
 import Items from './Items';
 import AlertDisplay from './AlertDisplay';
 import { parseCurrency } from "../utils/currency";
-
+import { hover } from '../utils/buttonDesign';
 
 const DrawerCart = ({ items, onClose, isOpen, onDecreaseProduct, tableId, onConfirm, onAddProduct, onDeleteProduct, ...props }) => {
     const [total, setTotal] = useState(0)
@@ -108,7 +108,7 @@ const DrawerCart = ({ items, onClose, isOpen, onDecreaseProduct, tableId, onConf
                         </Text>
                         <DrawerFooter >                               
                             <Button mr={2} bg="gray.100" color="theme.100" variant="outline" onClick={onClose} data-testid="drawer-cart-cancel-button">Cancelar</Button>
-                            <Button onClick= {() => dispatchCreateCart()} bg="theme.100" color="gray.100" data-testid="drawer-cart-confirm-button">Confirmar</Button>
+                            <Button  _hover={hover} onClick= {() => dispatchCreateCart()} bg="theme.100" color="gray.100" data-testid="drawer-cart-confirm-button">Confirmar</Button>
                         </DrawerFooter>
                         {isAdded ? renderOrderConfirmationCheck() : null}
                     </DrawerContent>

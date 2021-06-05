@@ -71,7 +71,8 @@ const Bill = ({ tableId }) => {
                 spacing={5}
                 padding={3}
             >
-                <Icon as={AiOutlinePaperClip} color="gray.300" w={10} h={10} position="absolute" left="5%" marginTop={-1} />
+                
+                {/*<Icon as={AiOutlinePaperClip} color="gray.300" w={10} h={10} position="absolute" left="5%" marginTop={-1} /> */}
                 {/*<Icon as={GiPaperClip} color="gray.300" w={10} h={10} position="absolute" /> */}
                 <Flex
                     h="20px"
@@ -79,6 +80,7 @@ const Bill = ({ tableId }) => {
                     boxShadow="0 8px 6px -8px black"
                     bg="theme.100"
                 >
+                    <Icon as={AiOutlinePaperClip} color="gray.300" w={10} h={10} left="5%" />
                 </Flex>
                 {
                     items.map(item =>
@@ -98,16 +100,16 @@ const Bill = ({ tableId }) => {
                     :
                     loading ? <Text color="gray.400"> Cargando... </Text> :
                         <Flex flexDir="column">
-                            <Flex >
+                            <Flex justifyContent="center">
                                 {
                                     itemsFromTable && itemsFromTable.length > 0 ?
                                         <Flex padding={5} flexDir="column">
                                             <DisplayBill items={itemsFromTable} />
-                                            <Flex spacing="24px" color="theme.500" fontWeight="900">
+                                            <Flex justifyContent="flex-end" paddingRight={5} color="theme.500" fontWeight="900">
                                                 <Text>Total:</Text> <Text data-testid="cashier-cart-total">{parseCurrency(itemsFromTable.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0))}</Text>
                                             </Flex>
                                         </Flex>
-                                        : <Text color="gray.400"> Todavia no realizaste ningún pedido. Volvé y encargate algo para disfrutar!</Text>
+                                        : <Text padding={3} align="center" color="gray.400"> Todavia no realizaste ningún pedido. Volvé y encargate algo para disfrutar!</Text>
                                 }
 
                             </Flex>
