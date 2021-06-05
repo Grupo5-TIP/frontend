@@ -1,38 +1,40 @@
-import { Box, Flex, Image} from "@chakra-ui/react";
+import React from "react";
+import {
+    Box,
+    Stack,
+    Flex,
+    Image
+} from "@chakra-ui/react";
+import Logo from '../components/Logo';
 
-const Header = () => {
-    return(
-        <Flex>
-            <Box 
-                w="20%"
-                h="100px"
-                bg="gray.900"
-                marginBottom={4}
-                shadow="md"
-                alignItems="end"
-            >
-                <Image
-                    borderRadius="full"
-                    boxSize="100px" 
-                    objectFit="cover"
-                    src="https://bit.ly/3eErw3N"
-                />
-            </Box>
-            <Box 
-                w="80%"
-                h="100px"
-                bg="gray.200"
-                marginBottom={4}
-                shadow="md"
-                alignItems="end"
-            >
-                <Image
-                    w="100%"
-                    h="100px"
-                    objectFit="cover"
-                    src="https://bit.ly/3wcGMuL"
-                />
-            </Box>
+const BackgroundHeader = () => {
+    return (
+        <Box w="80%">
+            <Image
+
+                w="100%"
+                h="125px"
+                objectFit="cover"
+
+                src="https://bit.ly/3wcGMuL"
+            />
+        </Box>
+    )
+}
+
+const Header = (props) => {
+
+    return (
+        <Flex
+            as="nav"
+            align="center"
+            bg="gray.900"
+            h="150px"
+            justifyContent="center"
+        >
+            <Logo />
+            <BackgroundHeader />
+
         </Flex>
     )
 }

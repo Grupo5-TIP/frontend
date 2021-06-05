@@ -1,39 +1,144 @@
-import { Stack, Button, Text } from '@chakra-ui/react';
-import {parseCurrency} from "../utils/currency";
+import { CloseIcon, AddIcon, MinusIcon } from '@chakra-ui/icons';
+import { Stack, Text, useMediaQuery, Flex, Icon, IconButton, HStack } from '@chakra-ui/react';
+import { parseCurrency } from "../utils/currency";
+import { IoMdAddCircle, IoMdCloseCircle, IoMdRemoveCircle } from 'react-icons/io'
 
-const Item = ({ item, onDeleteProduct }) => {
+const Item = ({ item, onDecreaseProduct, onAddProduct, onDeleteProduct }) => {
+    const [isLarger] = useMediaQuery("(min-width: 500px)");
     const product = item.product;
     const amount = item.amount;
 
-    return (
-        <Stack key={product.id} direction="row">
-            <Stack width="100%">
-                <Stack
-                    alignItems="center"
-                    direction="row"
-                    fontWeight="500"
-                    justifyContent="space-between"
-                    spacing={"10"}
-                >
-                    <Text fontSize="lg">{product.name}</Text>
-                    <Text as="samp" data-testid="total">{parseCurrency(product.price * amount)}</Text>
-                    <Button
-                        borderRadius={5}
-                        color="theme.100"
-                        size="xs"
-                        onClick={() => onDeleteProduct(product)}
-                        data-testid="button-delete"
+    const viewLargerDevices = () => {
+        return (
+            <Stack
+                key={product.id}
+                direction="row"
+                borderColor="theme.300"
+                borderRadius="10px"
+                padding={0}
+                alignItems="center"
+                spacing={1}
+                h="50px"
+                w="100%"
+                sm="30em"
+                boxShadow="0 8px 6px -8px black"
+                color="theme.100"
+            >
+                <Stack width="100%" >
+                    <Stack
+                        direction="row"
+                        fontWeight="100"
+                        alignSelf="left"
+                        spacing={0}
                     >
-                        x
-                    </Button>
-                </Stack>
-                <Stack direction="row">
-                    <Text fontWeight="500" data-testid="amount">
-                        Cantidad: {amount}
-                    </Text>
+                        <Text fontWeight="400" fontSize="20px" w="35%">{product.name.toUpperCase()}</Text>
+                        <HStack w="20%" >
+                            <IconButton
+                                as={IoMdAddCircle}
+                                aria-label="Add one item"
+                                boxSize={6}
+                                color="theme.100"
+                                onClick={() => onAddProduct(product)}
+                            >
+                            </IconButton>
+                            <Text fontWeight="400" fontSize="md" data-testid="amount">{amount} </Text>
+                            <IconButton
+                                as={IoMdRemoveCircle}
+                                aria-label="Add one item"
+                                boxSize={6}
+                                color="theme.100"
+                                onClick={() => onDecreaseProduct(product)}
+                            >
+                            </IconButton>
+
+                        </HStack>
+
+                        <Text fontWeight="400" data-testid="unit" w="20%">{parseCurrency(product.price)}</Text>
+                        <Text fontWeight="400" data-testid="total" w="15%">{parseCurrency(product.price * amount)}</Text>
+                        <Stack direction="row" justifyContent="center" spacing={2} marginBottom={5}>
+                            <IconButton
+                                as={IoMdCloseCircle}
+                                aria-label="Add one item"
+                                boxSize={6}
+                                color="theme.100"
+                                onClick={() => onDeleteProduct(product)}
+                            >
+                            </IconButton>
+                        </Stack>
+                    </Stack>
                 </Stack>
             </Stack>
-        </Stack>
+        )
+    }
+
+    const viewSmallDevices = () => {
+        return (
+            <Stack
+                key={product.id}
+                direction="row"
+                borderColor="theme.300"
+                borderRadius="10px"
+                padding={3}
+                alignItems="center"
+                h="120px"
+                w="300px"
+                sm="30em"
+                boxShadow="0 8px 6px -8px black"
+                color="theme.100"
+            >
+                <Stack width="100%" >
+                    <Stack
+                        direction="row"
+                        fontWeight="500"
+                        alignSelf="center"
+                        spacing={10}
+                    >
+                        <Text paddingTop={2} fontSize="md" data-testid="amount"> {amount}x </Text><Text fontSize="25px">{product.name.toUpperCase()}</Text>
+                    </Stack>
+                    <Stack direction="column">
+                        <Stack direction="row" justifyContent="space-between">
+                            <Text data-testid="total">{parseCurrency(product.price * amount)}</Text>
+
+                            <Stack direction="row" justifyContent="center" spacing={1} marginBottom={5}>
+                                <IconButton
+                                    as={IoMdAddCircle}
+                                    aria-label="Add one item"
+                                    boxSize={6}
+                                    color="theme.100"
+                                    onClick={() => onAddProduct(product)}
+                                >
+                                </IconButton>
+                                <IconButton
+                                    as={IoMdRemoveCircle}
+                                    aria-label="Add one item"
+                                    boxSize={6}
+                                    color="theme.100"
+                                    onClick={() => onDecreaseProduct(product)}
+                                >
+                                </IconButton>
+
+                                <IconButton
+                                    as={IoMdCloseCircle}
+                                    aria-label="Add one item"
+                                    boxSize={6}
+                                    color="theme.100"
+                                    onClick={() => onDeleteProduct(product)}
+                                >
+                                </IconButton>
+                            </Stack>
+                        </Stack>
+                    </Stack>
+                </Stack>
+            </Stack>
+        )
+    }
+
+    return (
+        <Flex>
+            {
+                isLarger ? viewLargerDevices() : viewSmallDevices()
+            }
+        </Flex>
     )
 }
 

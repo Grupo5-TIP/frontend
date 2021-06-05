@@ -9,8 +9,8 @@ const Footer = () => {
                 bg="theme.100"
                 color="white"
             >
-                <Text >Made with ♥</Text>
-                <Link color="theme.300"  href="https://github.com/Grupo5-TIP" isExternal>About us</Link>
+                <Text >Hecho con ♥</Text>
+                <Link color="theme.300"  href="https://github.com/Grupo5-TIP" isExternal>Acerca de</Link>
             </Box>
         </Flex>
     )

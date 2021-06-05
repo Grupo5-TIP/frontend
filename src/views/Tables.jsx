@@ -12,6 +12,7 @@ const Tables = () => {
     const [error, setError] = useState('');
     const [actualTableId, setTableId] = useState(0);
     const { isOpen, onOpen, onClose } = useDisclosure();
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,50 +33,52 @@ const Tables = () => {
     }, [actualTableId]);
 
     const openTable = (tableId) => {
-        setTableId(tableId);        
-        setError("")        
+        setTableId(tableId);
+        setError("")
         onOpen();
     }
 
+    const onCloseCashierCart = () => {
+        setTableId(0);
+        onClose();
+    }
+
+
     return (
-        <>
-            <Flex>
-                <Flex
-                    flexWrap="wrap"
-                    justifyContent="center"
-                    minHeight="90vh"
-                >
-                    {error !== '' ? <Text color="gray.400">Error al traer mesas del server...</Text>
+        <Flex flexGrow={1}>
+            <Flex
+                flexWrap="wrap"
+                justifyContent="center"
+            >
+                {error !== '' ? <Text color="gray.400">Error al traer mesas del server...</Text>
+                    :
+                    loading ? <Text color="gray.400"> Cargando... </Text>
                         :
-                        loading ? <Text color="gray.400"> Cargando... </Text>
-                            :
-                            tables.map(table => {
-                                return (
-                                    <Stack
+                        tables.map(table => {
+                            return (
+                                <Stack
+                                    key={table.id}
+                                    onClick={() => openTable(table.id)}
+                                    as="button"
+                                >
+                                    <Table
                                         key={table.id}
-                                        onClick={() => openTable(table.id)}
-                                        as="button"
-                                    >
-                                        <Table
-                                            key={table.id}
-                                            table={table}
-                                        />
-                                    </Stack>
-                                )
-                            })
-                    }
-                </Flex>
+                                        table={table}
+                                    />
+                                </Stack>
+                            )
+                        })
+                }
 
             </Flex>
             <CashierCart
                 key={actualTableId}
-                onClose={onClose}
-                isOpen={isOpen}
-                onOpen={onOpen}
-                onDeleteProduct={() => (console.log())}
+                onCloseModal={onCloseCashierCart}
+                isOpenModal={isOpen}
+                onOpenModal={onOpen}
                 tableId={actualTableId}
             />
-        </>
+        </Flex>
     )
 }
 

@@ -3,18 +3,18 @@ import Products from '../components/Products';
 import DrawerCart from '../components/DrawerCart'
 import productService from '../services/products-service';
 import AlertDisplay from '../components/AlertDisplay';
-
+import { hover, expanded } from '../utils/buttonDesign';
 import {
-    Flex, Button, Stack, Text,
+    Flex, Stack, Text,
     Accordion,
     AccordionItem,
     AccordionButton,
     AccordionPanel,
     AccordionIcon,
-    Box,
+    Box
 } from '@chakra-ui/react';
 import { editCart } from '../utils/editCart';
-import { GrCart } from 'react-icons/gr'
+import SidebarIcons from '../components/SidebarIcons'
 
 const MenuQr = ({ ...props }) => {
     const [error, setError] = useState('');
@@ -43,7 +43,9 @@ const MenuQr = ({ ...props }) => {
 
     const handleEditCart = (product, action) => {
         setCartItems(editCart(product, action));
-        setIsAdded(true);
+        if (action === "add") {
+            setIsAdded(true)
+        }
     }
 
     function renderProductAddedCheck() {
@@ -53,14 +55,17 @@ const MenuQr = ({ ...props }) => {
 
     const DisplayCategory = ({ categoryName, productCategory }) => {
         return (
-            <Accordion >
+            <Accordion allowToggle width="300px" paddingBottom="20px" >
                 <AccordionItem>
                     <h2>
                         <AccordionButton
+                            bg="theme.100"
+                            color="white"
                             justifyContent="space-between"
                             alignItems="center"
                             maxWidth="100%"
-                            _expanded={{ bg: "theme.100", color: "white" }}>
+                            _expanded={expanded}
+                            _hover={hover}>
 
                             <Box flex="1" width={200} padding={3}>
                                 {categoryName}
@@ -97,9 +102,10 @@ const MenuQr = ({ ...props }) => {
         )
     }
 
+
     return (
 
-        <Flex minHeight="80vh" justifyContent="center" width="100%" >
+        <Flex flexGrow={1} justifyContent="center" width="100%" >
             <Flex flexDir="column">
                 {isAdded ?
                     <Box height="100px" width="250px">
@@ -112,21 +118,9 @@ const MenuQr = ({ ...props }) => {
                     :
                     loading ? <Text color="gray.400"> Cargando... </Text> :
                         <Stack>
-                            <Flex justifyContent="flex-end" position="fixed" right="2%">
-
-                                <Button as={GrCart}
-                                    boxSize="50px"
-                                    bg="theme.200"
-                                    padding={2}
-                                    margin={1}
-                                    onClick={() => setDrawerOpen(true)}
-                                >
-
-                                </Button>
-                            </Flex>
+                            <SidebarIcons setDrawerOpen={setDrawerOpen} tableId={props.match.url.substring(props.match.url.lastIndexOf('/') + 1)} />
                             <Flex>
                                 <DisplayProducts
-
                                     productsByCategory={products}
                                 />
 
@@ -134,10 +128,13 @@ const MenuQr = ({ ...props }) => {
                                     items={cartItems}
                                     onClose={() => setDrawerOpen(false)}
                                     isOpen={isDrawerOpen}
-                                    onDeleteProduct={(product) => handleEditCart(product, "delete")}
+                                    onDecreaseProduct={(product) => handleEditCart(product, "decrease")}
                                     tableId={props.match.url.substring(props.match.url.lastIndexOf('/') + 1)}
                                     onConfirm={() => handleEditCart({}, "deleteAll")}
+                                    onAddProduct={(product) => handleEditCart(product, "add")}
+                                    onDeleteProduct={(product) => handleEditCart(product, "delete")}
                                 />
+
                             </Flex>
                         </Stack>
 
