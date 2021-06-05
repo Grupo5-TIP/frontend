@@ -135,13 +135,6 @@ const MenuQr = ({ ...props }) => {
                                     onDeleteProduct={(product) => handleEditCart(product, "delete")}
                                 />
 
-
-                                {/*<Orders
-                                    onClose={() => setPaymentOpen(false)}
-                                    isOpen={isPaymentOpen}
-                                    tableId={props.match.url.substring(props.match.url.lastIndexOf('/') + 1)}
-                                />*/}
-
                             </Flex>
                         </Stack>
 

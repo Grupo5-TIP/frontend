@@ -67,11 +67,10 @@ const Table = ({ table }) => {
                         color="gray.700"
                         fontWeight="semibold"
                         letterSpacing="wide"
-                        fontSize="xs"
                         textTransform="uppercase"
                         ml="2"
                         data-testid="table-size"
-                        fontSize="md"
+                        fontSize="xs"
                     >
                         &bull; tamaño: {table.size}
                     </Box>
