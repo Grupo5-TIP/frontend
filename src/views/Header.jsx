@@ -1,7 +1,6 @@
 import React from "react";
 import {
     Box,
-    Stack,
     Flex,
     Image
 } from "@chakra-ui/react";

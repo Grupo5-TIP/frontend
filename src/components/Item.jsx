@@ -1,5 +1,4 @@
-import { CloseIcon, AddIcon, MinusIcon } from '@chakra-ui/icons';
-import { Stack, Text, useMediaQuery, Flex, Icon, IconButton, HStack } from '@chakra-ui/react';
+import { Stack, Text, useMediaQuery, Flex, IconButton, HStack } from '@chakra-ui/react';
 import { parseCurrency } from "../utils/currency";
 import { IoMdAddCircle, IoMdCloseCircle, IoMdRemoveCircle } from 'react-icons/io'
 

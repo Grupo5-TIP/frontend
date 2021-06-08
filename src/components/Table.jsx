@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Flex } from "@chakra-ui/layout";
-import { Stack, Box, Text, Badge, useMediaQuery, Tag, TagLeftIcon } from "@chakra-ui/react"
+import { Stack, Box, Text, Badge, useMediaQuery } from "@chakra-ui/react"
 import { BsHouseDoor, BsHouseDoorFill } from 'react-icons/bs'
 import { FiPhoneCall } from 'react-icons/fi'
 
