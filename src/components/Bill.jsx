@@ -119,7 +119,7 @@ const Bill = ({ tableId }) => {
                     </Flex>
                     <Flex justifyContent="center" padding={2} >
                         <Button onClick={() => history.push("/menu/" + tableId)} mr={2} bg="gray.100" color="theme.100" variant="outline" data-testid="orders-cancel-button">Volver</Button>
-                        <Button onClick={() => handleCheckPlease()} bg="theme.100" color="gray.100" data-testid="orders-confirm-button">Pedir cuenta</Button>
+                        <Button disabled={itemsFromTable.length<1} onClick={() => handleCheckPlease()} bg="theme.100" color="gray.100" data-testid="orders-confirm-button">Pedir cuenta</Button>
                     </Flex>
                 </Flex>
             }
