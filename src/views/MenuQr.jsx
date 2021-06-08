@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { editCart } from '../utils/editCart';
 import SidebarIcons from '../components/SidebarIcons'
+import Loading from '../components/Loading';
 
 const MenuQr = ({ ...props }) => {
     const [error, setError] = useState('');
@@ -26,18 +27,17 @@ const MenuQr = ({ ...props }) => {
     const onClose = () => setTimeout(() => setIsAdded(false), 2000);
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
+        const fetchData = async () => {      
             productService.getAllProducts()
                 .then(resp => {
                     setProducts(resp.data);
+                    setLoading(false);
                 })
                 .catch(err => {
                     setError(err);
                 });
-            setLoading(false);
         }
-
+        setLoading(true);
         fetchData();
     }, []);
 
@@ -116,7 +116,7 @@ const MenuQr = ({ ...props }) => {
                 }
                 {error !== '' ? <Text color="gray.400">Error al traer del server...</Text>
                     :
-                    loading ? <Text color="gray.400"> Cargando... </Text> :
+                    loading ? <Box margin="0 auto" width="300px"><Loading /></Box> :
                         <Stack>
                             <SidebarIcons setDrawerOpen={setDrawerOpen} tableId={props.match.url.substring(props.match.url.lastIndexOf('/') + 1)} />
                             <Flex>
