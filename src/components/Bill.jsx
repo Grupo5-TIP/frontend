@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import tableService from '../services/tables-service';
 import BillItem from './BillItem';
-import { Flex, Box, Button, Text, Icon } from "@chakra-ui/react";
+import { Flex, Box, Button, Text, Icon, Stack } from "@chakra-ui/react";
 import AlertDisplay from '../components/AlertDisplay';
 import { AiOutlinePaperClip } from 'react-icons/ai'
 import { parseCurrency } from '../utils/currency'
@@ -64,7 +64,7 @@ const Bill = ({ tableId }) => {
 
     const DisplayBill = ({ items }) => {
         return (
-            <Flex
+            <Stack
                 flexGrow={1}
                 direction="column"
                 spacing={5}
@@ -84,7 +84,7 @@ const Bill = ({ tableId }) => {
                     )
                 }
 
-            </Flex>
+            </Stack>
         )
     }
 
