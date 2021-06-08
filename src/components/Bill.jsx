@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import tableService from '../services/tables-service';
 import BillItem from './BillItem';
-import { Flex, Box, Button, Text, Icon, Stack } from "@chakra-ui/react";
+import { Flex, Box, Button, Text, Icon, Stack, useToast } from "@chakra-ui/react";
 import AlertDisplay from '../components/AlertDisplay';
 import { AiOutlinePaperClip } from 'react-icons/ai'
 import { parseCurrency } from '../utils/currency'
@@ -15,6 +15,7 @@ const Bill = ({ tableId }) => {
     const [isAdded, setIsAdded] = useState(false);
     const onClose = () => setTimeout(() => setIsAdded(false), 2000);
     const history = useHistory();
+    const toast = useToast()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,7 +37,14 @@ const Bill = ({ tableId }) => {
     const handleCheckPlease = () => {
         tableService.requestBill(tableId)
             .then(resp => {
-                setIsAdded(true);
+                //setIsAdded(true);
+                toast({
+                    title: "Cerrado de caja.",
+                    description: "Se solicitó correctamente el cierre de caja!",
+                    status: "success",
+                    duration: 1500,
+                    isClosable: true,
+                  })
                 onClose();
             })
             .catch(err => {
@@ -90,7 +98,7 @@ const Bill = ({ tableId }) => {
 
     return (
         <Flex>
-            <StatusAlertDisplay />
+            {/*<StatusAlertDisplay />*/}
             {
                 error !== '' ? renderStatusAlertDisplay("error", "Error al traer del server...")
                     :
