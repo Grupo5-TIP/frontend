@@ -44,7 +44,7 @@ const MenuQr = ({ ...props }) => {
     const handleEditCart = (product, action) => {
         setCartItems(editCart(product, action));
         if (action === "add") {
-            setIsAdded(true)
+            //setIsAdded(true)
         }
     }
 
@@ -107,13 +107,13 @@ const MenuQr = ({ ...props }) => {
 
         <Flex flexGrow={1} justifyContent="center" width="100%" >
             <Flex flexDir="column">
-                {isAdded ?
+                {/*isAdded ?
                     <Box height="100px" width="250px">
                         {renderProductAddedCheck()}
                     </Box>
                     :
                     null
-                }
+                */}
                 {error !== '' ? <Text color="gray.400">Error al traer del server...</Text>
                     :
                     loading ? <Box margin="0 auto" width="300px"><Loading /></Box> :
