@@ -89,31 +89,31 @@ const Bill = ({ tableId }) => {
     }
 
     return (
-        <Flex flexGrow={1} flexDir="column" minH="300px" >
+        <Flex>
             <StatusAlertDisplay />
             {
                 error !== '' ? renderStatusAlertDisplay("error", "Error al traer del server...")
                     :
-                    loading ? <Box margin="0 auto" width="300px"><Loading /></Box> :
-                        <Flex flexDir="column">
-                            <Flex justifyContent="center">
-                                {
-                                    itemsFromTable && itemsFromTable.length > 0 ?
-                                        <Flex padding={5} flexDir="column">
-                                            <DisplayBill items={itemsFromTable} />
-                                            <Flex justifyContent="flex-end" paddingRight={5} color="theme.500" fontWeight="900">
-                                                <Text>Total:</Text> <Text data-testid="cashier-cart-total">{parseCurrency(itemsFromTable.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0))}</Text>
-                                            </Flex>
-                                        </Flex>
-                                        : <Text padding={3} align="center" color="gray.400"> Todavia no realizaste ningún pedido. Volvé y encargate algo para disfrutar!</Text>
-                                }
+                    loading ? <Box margin="0 auto" width="300px" padding={3}><Loading /></Box> :
+                    <Flex flexDir="column">
+                    <Flex justifyContent="center">
+                        {
+                            itemsFromTable && itemsFromTable.length > 0 ?
+                                <Flex padding={5} flexDir="column">
+                                    <DisplayBill items={itemsFromTable} />
+                                    <Flex justifyContent="flex-end" paddingRight={5} color="theme.500" fontWeight="900">
+                                        <Text>Total:</Text> <Text data-testid="cashier-cart-total">{parseCurrency(itemsFromTable.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0))}</Text>
+                                    </Flex>
+                                </Flex>
+                                : <Text padding={3} align="center" color="gray.400"> Todavia no realizaste ningún pedido. Volvé y encargate algo para disfrutar!</Text>
+                        }
 
-                            </Flex>
-                            <Flex justifyContent="center" padding={2} >
-                                <Button onClick={() => history.push("/menu/" + tableId)} mr={2} bg="gray.100" color="theme.100" variant="outline" data-testid="orders-cancel-button">Volver</Button>
-                                <Button onClick={() => handleCheckPlease()} bg="theme.100" color="gray.100" data-testid="orders-confirm-button">Pedir cuenta</Button>
-                            </Flex>
-                        </Flex>
+                    </Flex>
+                    <Flex justifyContent="center" padding={2} >
+                        <Button onClick={() => history.push("/menu/" + tableId)} mr={2} bg="gray.100" color="theme.100" variant="outline" data-testid="orders-cancel-button">Volver</Button>
+                        <Button onClick={() => handleCheckPlease()} bg="theme.100" color="gray.100" data-testid="orders-confirm-button">Pedir cuenta</Button>
+                    </Flex>
+                </Flex>
             }
 
         </Flex>
