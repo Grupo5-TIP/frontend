@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import tableService from '../services/tables-service';
 import BillItem from './BillItem';
-import { Flex, Button, Stack, Box, Text, Icon } from "@chakra-ui/react";
+import { Flex, Box, Button, Text, Icon } from "@chakra-ui/react";
 import AlertDisplay from '../components/AlertDisplay';
 import { AiOutlinePaperClip } from 'react-icons/ai'
-import { GiPaperClip } from 'react-icons/gi'
 import { parseCurrency } from '../utils/currency'
+import Loading from './Loading';
 
 const Bill = ({ tableId }) => {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [itemsFromTable, setItemsFromTable] = useState({});
     const [isAdded, setIsAdded] = useState(false);
@@ -18,19 +18,18 @@ const Bill = ({ tableId }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
             if (tableId !== 0) {
-
                 tableService.getItemsFromTable(tableId)
                     .then(respTableService => {
                         setItemsFromTable(respTableService.data);
+                        setLoading(false);
                     })
                     .catch(err => {
                         setError(err);
                     });
             }
-            setLoading(false);
         }
+        setLoading(true);
         fetchData();
     }, [tableId]);
 
@@ -71,9 +70,6 @@ const Bill = ({ tableId }) => {
                 spacing={5}
                 padding={3}
             >
-                
-                {/*<Icon as={AiOutlinePaperClip} color="gray.300" w={10} h={10} position="absolute" left="5%" marginTop={-1} /> */}
-                {/*<Icon as={GiPaperClip} color="gray.300" w={10} h={10} position="absolute" /> */}
                 <Flex
                     h="20px"
                     w="360px"
@@ -98,7 +94,7 @@ const Bill = ({ tableId }) => {
             {
                 error !== '' ? renderStatusAlertDisplay("error", "Error al traer del server...")
                     :
-                    loading ? <Text color="gray.400"> Cargando... </Text> :
+                    loading ? <Box margin="0 auto" width="300px"><Loading /></Box> :
                         <Flex flexDir="column">
                             <Flex justifyContent="center">
                                 {
