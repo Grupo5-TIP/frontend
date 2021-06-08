@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Flex } from "@chakra-ui/layout";
-import { Text, Stack } from '@chakra-ui/react';
+import { Text, Stack, Box, useDisclosure } from '@chakra-ui/react';
 import Table from '../components/Table';
 import CashierCart from '../components/CashierCart';
 import tablesService from '../services/tables-service';
-import { useDisclosure } from "@chakra-ui/react";
+import Loading from '../components/Loading';
 
 const Tables = () => {
     const [tables, setTables] = useState([]);
@@ -16,19 +16,16 @@ const Tables = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
-
             tablesService.getTables()
                 .then(resp => {
                     setTables(resp.data);
+                    setLoading(false);
                 })
                 .catch(err => {
                     setError(err);
-                });
-
-            setLoading(false);
+                });    
         }
-
+        setLoading(true);
         fetchData();
     }, [actualTableId]);
 
@@ -45,14 +42,13 @@ const Tables = () => {
 
 
     return (
-        <Flex flexGrow={1}>
+        <Flex flexGrow={1} margin="0 auto" width="1024px">
             <Flex
-                flexWrap="wrap"
-                justifyContent="center"
+                width="100%"
             >
                 {error !== '' ? <Text color="gray.400">Error al traer mesas del server...</Text>
                     :
-                    loading ? <Text color="gray.400"> Cargando... </Text>
+                    loading ? <Box width="100%"><Loading /></Box>
                         :
                         tables.map(table => {
                             return (
