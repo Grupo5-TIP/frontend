@@ -6,6 +6,7 @@ import {
 } from "@chakra-ui/react";
 import { editCart } from '../utils/editCart';
 import tablesService from '../services/tables-service';
+import invoiceService from '../services/invoice-service';
 import productService from '../services/products-service';
 import Items from '../components/Items';
 import DialogDisplay from '../components/DialogDisplay';
@@ -297,7 +298,7 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
                                         onCloseAll={onCloseModal}
                                         onClose={onClose}
                                         isOpen={isOpenBill}
-                                        action={() => (tablesService.checkBill(actualTableId))}
+                                        action={() => (invoiceService.createInvoice(actualTableId, "MP"))}
                                     />
                                 </Box>
                             }

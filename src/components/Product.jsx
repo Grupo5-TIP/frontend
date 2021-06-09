@@ -25,6 +25,7 @@ const Product = ({ product, onAddProduct }) => {
                 height="100px"
                 marginLeft="-10px"
                 marginTop="-20px"
+                fit="cover"
                 boxShadow="0px 15px 10px -5px #000000"
             />
             <Stack padding={2}>
