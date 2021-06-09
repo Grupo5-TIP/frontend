@@ -20,10 +20,6 @@ class TablesService{
         return axios.get(API_URL+"/request/"+tableId);
     }
 
-    async checkBill(tableId){
-        return axios.get(API_URL+"/check/"+tableId);
-    }
-
     async deleteTableOrders(tableId){
         return axios.delete(API_URL+"/"+tableId);
     }
