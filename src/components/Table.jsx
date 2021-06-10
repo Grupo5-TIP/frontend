@@ -3,16 +3,15 @@ import { Flex } from "@chakra-ui/layout";
 import { Stack, Box, Text, Badge, Icon, VStack, useMediaQuery, createIcon } from "@chakra-ui/react"
 import { BsHouseDoor, BsHouseDoorFill } from 'react-icons/bs'
 import { FiPhoneCall } from 'react-icons/fi'
-import { ReactComponent as FullTable } from '../icons/full-table.svg';
-import { ReactComponent as EmptyTable } from '../icons/empty-table.svg';
-import { ReactComponent as CheckBill } from '../icons/check-bill.svg';
 
 const Table = ({ table }) => {
     const [isLarger] = useMediaQuery("(min-width: 380px)");
-    const [bgColor,] = useState("theme.200");
+    const [bgColor,setBgColor] = useState("theme.200");
     const [positionX, setPositionX] = useState("");
     const [positionY, setPositionY] = useState("");
     const [width, setWidth] = useState("");
+    const [stateTable, setStateTable] = useState("Disponible");
+    const [iconTable,setIconTable] = useState();
 
     const CheckBillIcon = () => {
         return (
@@ -70,26 +69,30 @@ const Table = ({ table }) => {
 
 
     const tableConfiguration = (tableState) => {
-        const config = { bgColor: "", icon: "" };
+        //const config = { bgColor: "", icon: "" };
         switch (tableState) {
             case "empty":
-                config.bgColor = "green.400"
-                config.icon = <EmptyTableIcon />
+                setBgColor("green.400");
+                setIconTable(<EmptyTableIcon />);
+                setStateTable("Disponible")
                 break;
             case "inUse":
-                config.bgColor = "red.500"
-                config.icon = <FullTableIcon />
+                setBgColor("red.500");
+                setIconTable(<FullTableIcon />);
+                setStateTable("En uso")
                 break;
             case "bill":
-                config.bgColor = "orange"
-                config.icon = <CheckBillIcon />
+                setBgColor("orange");
+                setIconTable(<CheckBillIcon />);
+                setStateTable("En uso")
                 break;
             default:
-                config.bgColor = "theme.300"
-                config.icon = <EmptyTableIcon />
+                setBgColor("green.400");
+                setIconTable(<EmptyTableIcon />);
+                setStateTable("Disponible")
                 break;
         }
-        return config;
+        //return config;
     }
 
     useEffect(() => {
@@ -98,6 +101,7 @@ const Table = ({ table }) => {
         setWidth(`${(1 + table.size * 10 / 100) * 120}px`)
         setPositionX(x);
         setPositionY(y);
+        tableConfiguration(table.state);
     }, [table]);
 
 
@@ -113,11 +117,14 @@ const Table = ({ table }) => {
                 top={positionY}
                 left={positionX}
                 marginTop={200}
-                bg={tableConfiguration(table.state).bgColor}
+                bg={bgColor}
+                display="flex"
+                justifyContent="space-between"
+                padding={5}
             >
-                <Box d="flex" justifyContent="center" alignItems="center" h="100%">
-                    {tableConfiguration(table.state).icon}
-
+                <Text fontSize="30px" fontWeight={900}>{table.id}</Text>
+                <Box d="flex" justifyContent="center" alignItems="center" h="100%" title={stateTable}>
+                    {iconTable}
                 </Box>
             </Box>
         )

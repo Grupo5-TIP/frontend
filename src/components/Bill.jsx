@@ -53,8 +53,14 @@ const Bill = ({ tableId }) => {
     }
 
     const renderStatusAlertDisplay = (status, message) => {
-        return <AlertDisplay status={status} message={message} />
+        return (
+            <Flex top={2} padding={5} margin="0 auto" h="150px" w="300px" boxShadow="lg">
+                <AlertDisplay status={status} message={message} />
+            </Flex>
+        )
     }
+
+    
 
     const StatusAlertDisplay = () => {
         return (
