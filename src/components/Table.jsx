@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Flex } from "@chakra-ui/layout";
-import { Stack, Box, Text, Badge, Icon, VStack, useMediaQuery, createIcon } from "@chakra-ui/react"
-import { BsHouseDoor, BsHouseDoorFill } from 'react-icons/bs'
-import { FiPhoneCall } from 'react-icons/fi'
+import { Stack, Box, Text, Icon, VStack, useMediaQuery } from "@chakra-ui/react"
 
 const Table = ({ table }) => {
     const [isLarger] = useMediaQuery("(min-width: 380px)");

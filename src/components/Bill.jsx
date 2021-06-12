@@ -3,16 +3,16 @@ import { useHistory } from 'react-router-dom';
 import tableService from '../services/tables-service';
 import BillItem from './BillItem';
 import { Flex, Box, Button, Text, Icon, Stack, useToast } from "@chakra-ui/react";
-import AlertDisplay from '../components/AlertDisplay';
 import { AiOutlinePaperClip } from 'react-icons/ai'
 import { parseCurrency } from '../utils/currency'
 import Loading from './Loading';
+import StatusAlertDisplay from './StatusAlertDisplay';
 
 const Bill = ({ tableId }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [itemsFromTable, setItemsFromTable] = useState({});
-    const [isAdded, setIsAdded] = useState(false);
+    const [, setIsAdded] = useState(false);
     const onClose = () => setTimeout(() => setIsAdded(false), 2000);
     const history = useHistory();
     const toast = useToast()
@@ -52,30 +52,6 @@ const Bill = ({ tableId }) => {
             });
     }
 
-    const renderStatusAlertDisplay = (status, message) => {
-        return (
-            <Flex top={2} padding={5} margin="0 auto" h="150px" w="300px" boxShadow="lg">
-                <AlertDisplay status={status} message={message} />
-            </Flex>
-        )
-    }
-
-    
-
-    const StatusAlertDisplay = () => {
-        return (
-            <Flex flexDir="row" alignSelf="center">
-                {isAdded ?
-                    <Flex height="100px" width="250px" >
-                        {renderStatusAlertDisplay("success", "Se solicitó correctamente el cierre de caja!")}
-                    </Flex>
-                    :
-                    null
-                }
-            </Flex>
-        )
-    }
-
     const DisplayBill = ({ items }) => {
         return (
             <Stack
@@ -104,10 +80,17 @@ const Bill = ({ tableId }) => {
 
     return (
         <Flex>
-            {/*<StatusAlertDisplay />*/}
             {
-                error !== '' ? renderStatusAlertDisplay("error", "Error al traer del server...")
-                    :
+                error !== '' ?  <StatusAlertDisplay top={2} 
+                                    padding={5} 
+                                    margin="0 auto" 
+                                    h="150px" 
+                                    w="300px" 
+                                    boxShadow="lg"
+                                    status="error"
+                                    message= "Error al traer del server..."
+                                    /> 
+                    : 
                     loading ? <Box margin="0 auto" width="300px" padding={3}><Loading /></Box> :
                     <Flex flexDir="column">
                     <Flex justifyContent="center">

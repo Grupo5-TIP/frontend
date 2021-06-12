@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react'
 import Products from '../components/Products';
 import DrawerCart from '../components/DrawerCart'
 import productService from '../services/products-service';
-import AlertDisplay from '../components/AlertDisplay';
 import { hover, expanded } from '../utils/buttonDesign';
 import {
-    Flex, Stack, Text,
+    Flex, Stack,
     Accordion,
     AccordionItem,
     AccordionButton,
@@ -16,6 +15,7 @@ import {
 import { editCart } from '../utils/editCart';
 import SidebarIcons from '../components/SidebarIcons'
 import Loading from '../components/Loading';
+import StatusAlertDisplay from '../components/StatusAlertDisplay';
 
 const MenuQr = ({ ...props }) => {
     const [error, setError] = useState('');
@@ -23,8 +23,6 @@ const MenuQr = ({ ...props }) => {
     const [products, setProducts] = useState({});
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [cartItems, setCartItems] = useState([]);
-    const [isAdded, setIsAdded] = useState(false)
-    const onClose = () => setTimeout(() => setIsAdded(false), 2000);
 
     useEffect(() => {
         const fetchData = async () => {      
@@ -43,14 +41,6 @@ const MenuQr = ({ ...props }) => {
 
     const handleEditCart = (product, action) => {
         setCartItems(editCart(product, action));
-        if (action === "add") {
-            //setIsAdded(true)
-        }
-    }
-
-    function renderProductAddedCheck() {
-        onClose();
-        return <AlertDisplay status={"success"} message={"El producto se agregó correctamente al carrito!"} />
     }
 
     const DisplayCategory = ({ categoryName, productCategory }) => {
@@ -107,14 +97,15 @@ const MenuQr = ({ ...props }) => {
 
         <Flex flexGrow={1} justifyContent="center" width="100%" >
             <Flex flexDir="column">
-                {/*isAdded ?
-                    <Box height="100px" width="250px">
-                        {renderProductAddedCheck()}
-                    </Box>
-                    :
-                    null
-                */}
-                {error !== '' ? <Text color="gray.400">Error al traer del server...</Text>
+                {error !== '' ? <StatusAlertDisplay top={2} 
+                                    padding={5} 
+                                    margin="0 auto" 
+                                    h="150px" 
+                                    w="300px" 
+                                    boxShadow="lg"
+                                    status="error"
+                                    message= "Error al traer del server..."
+                                    /> 
                     :
                     loading ? <Box margin="0 auto" width="300px"><Loading /></Box> :
                         <Stack>

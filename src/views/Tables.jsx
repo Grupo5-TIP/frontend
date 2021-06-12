@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Flex } from "@chakra-ui/layout";
-import { Text, Stack, Box, useDisclosure } from '@chakra-ui/react';
+import { Stack, Box, useDisclosure } from '@chakra-ui/react';
 import Table from '../components/Table';
 import CashierCart from '../components/CashierCart';
 import tablesService from '../services/tables-service';
 import Loading from '../components/Loading';
-import AlertDisplay from '../components/AlertDisplay';
+import StatusAlertDisplay from '../components/AlertDisplay';
 
 const Tables = () => {
     const [tables, setTables] = useState([]);
@@ -41,20 +41,29 @@ const Tables = () => {
         onClose();
     }
 
-    const renderStatusAlertDisplay = (status, message) => {
+    /*const renderStatusAlertDisplay = (status, message) => {
         return (
             <Flex top={2} padding={5} margin="0 auto" h="150px" w="500px" boxShadow="lg">
                 <AlertDisplay status={status} message={message} />
             </Flex>
         )
-    }
+    }*/
+    
 
     return (
         <Flex flexGrow={1} margin="0 auto" width="1024px">
             <Flex
                 width="100%"
             >
-                {error !== '' ? renderStatusAlertDisplay("error", "Error al traer del server...")
+                {error !== '' ? <StatusAlertDisplay top={2} 
+                                    padding={5} 
+                                    margin="0 auto" 
+                                    h="150px" 
+                                    w="500px" 
+                                    boxShadow="lg"
+                                    status="error"
+                                    message= "Error al traer del server..."
+                                    /> 
                     :
                     loading ? <Box width="100%"><Loading /></Box>
                         :
