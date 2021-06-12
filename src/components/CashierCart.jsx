@@ -15,7 +15,7 @@ import { RiDeleteBin5Line } from 'react-icons/ri'
 import { ImCancelCircle } from 'react-icons/im'
 import { BiSave } from 'react-icons/bi'
 import { FaMoneyBillWave } from 'react-icons/fa'
-
+import Loading from './Loading';
 
 
 const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props }) => {
@@ -24,11 +24,15 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
     const [actualTableId,] = useState(tableId);
     const [products, setProducts] = useState({});
     const [items, setItemsFromTable] = useState([]);
-    const [scrollBehavior,] = React.useState("inside");
-    const [isOpenVoid, setIsOpenVoid] = React.useState(false)
-    const [isOpenCancel, setIsOpenCancel] = React.useState(false)
-    const [isOpenSave, setIsOpenSave] = React.useState(false)
-    const [isOpenBill, setIsOpenBill] = React.useState(false)
+    const [scrollBehavior,] = useState("inside");
+    const [isOpenVoid, setIsOpenVoid] = useState(false)
+    const [isOpenCancel, setIsOpenCancel] = useState(false)
+    const [isOpenSave, setIsOpenSave] = useState(false)
+    const [isOpenBill, setIsOpenBill] = useState(false)
+    const payment= {
+        amount: 0,
+        method: 'EF'
+    }
 
     const onClose = () => {
         setIsOpenVoid(false);
@@ -105,7 +109,7 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
                             _hover={hover}>
                             <Box flex="1" textAlign="center" data-testid="cashier-cart-available">
                                 Productos disponibles
-                                </Box>
+                            </Box>
                             <AccordionIcon />
                         </AccordionButton>
                     </Box>
@@ -232,7 +236,7 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
         <>
             {
                 loading ?
-                    <Box>Buscando...</Box>
+                    <Box margin="0 auto" width="300px" padding={3}><Loading /></Box>
                     :
                     !error ?
                         <>
@@ -294,12 +298,17 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
                                         header="Facturar pedido"
                                         firstOption="Cancelar"
                                         secondOption="Aceptar"
-                                        message="¿ Desea facturar el pedido ?"
+                                        message="¿ Desea confirmar la facturación del pedido ?"
                                         onCloseAll={onCloseModal}
                                         onClose={onClose}
                                         isOpen={isOpenBill}
-                                        action={() => (invoiceService.createInvoice(actualTableId, "MP"))}
+                                        action={() => (invoiceService.createInvoice(actualTableId, payment.method))}
+                                        //action={() => console.log(payment)}
+                                        body={true}
+                                        payment={payment}
                                     />
+
+
                                 </Box>
                             }
                         </>
