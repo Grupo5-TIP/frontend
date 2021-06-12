@@ -1,10 +1,18 @@
-import { Stack, Text, Heading, Image, Flex } from "@chakra-ui/react"
-import { parseCurrency } from "../utils/currency";
+import { Stack, Text, Heading, Image, Flex, useToast } from "@chakra-ui/react"
 
+import { parseCurrency } from "../utils/currency";
 const Product = ({ product, onAddProduct }) => {
     const { id, name, description, price, image } = product;
+    const toast = useToast()
 
     const addProduct = (product) => {
+        toast({
+            title: "Producto agregado.",
+            description: "El producto se agregó correctamente al carrito!",
+            status: "success",
+            duration: 1500,
+            isClosable: true,
+          })
         onAddProduct(product);
     }
 

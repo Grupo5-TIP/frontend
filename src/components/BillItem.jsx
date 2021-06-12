@@ -1,4 +1,4 @@
-import { Box, Text, Divider, Flex, Stack, Heading} from "@chakra-ui/react";
+import { Text, Divider, Flex, Stack, Heading} from "@chakra-ui/react";
 import { parseCurrency } from '../utils/currency';
 
 const BillItem = ({ item }) => {
