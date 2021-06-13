@@ -303,7 +303,6 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
                                         onClose={onClose}
                                         isOpen={isOpenBill}
                                         action={() => (invoiceService.createInvoice(actualTableId, payment.method))}
-                                        //action={() => console.log(payment)}
                                         body={true}
                                         payment={payment}
                                     />
