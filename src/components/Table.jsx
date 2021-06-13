@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Flex } from "@chakra-ui/layout";
 import { Stack, Box, Text, Icon, VStack, useMediaQuery } from "@chakra-ui/react"
+import './Table.css'
 
 const Table = ({ table }) => {
     const [isLarger] = useMediaQuery("(min-width: 380px)");
@@ -10,6 +11,7 @@ const Table = ({ table }) => {
     const [width, setWidth] = useState("");
     const [stateTable, setStateTable] = useState("Disponible");
     const [iconTable,setIconTable] = useState();
+    const [heartBeatClass, setHeartBeatClass] = useState('');
 
     const CheckBillIcon = () => {
         return (
@@ -67,7 +69,6 @@ const Table = ({ table }) => {
 
 
     const tableConfiguration = (tableState) => {
-        //const config = { bgColor: "", icon: "" };
         switch (tableState) {
             case "empty":
                 setBgColor("green.400");
@@ -83,6 +84,7 @@ const Table = ({ table }) => {
                 setBgColor("orange");
                 setIconTable(<CheckBillIcon />);
                 setStateTable("En uso")
+                setHeartBeatClass("heartbeat")
                 break;
             default:
                 setBgColor("green.400");
@@ -90,7 +92,6 @@ const Table = ({ table }) => {
                 setStateTable("Disponible")
                 break;
         }
-        //return config;
     }
 
     useEffect(() => {
@@ -108,17 +109,19 @@ const Table = ({ table }) => {
             <Box
                 width={width}
                 height="10vh"
-                margin={10}
+                margin={30}
                 borderWidth="2px"
                 borderRadius="lg"
                 position="absolute"
                 top={positionY}
                 left={positionX}
-                marginTop={200}
+                marginTop={250}
                 bg={bgColor}
                 display="flex"
                 justifyContent="space-between"
                 padding={5}
+                boxShadow="0px 8px 10px -5px #000000"
+                className={heartBeatClass}
             >
                 <Text fontSize="30px" fontWeight={900}>{table.id}</Text>
                 <Box d="flex" justifyContent="center" alignItems="center" h="100%" title={stateTable}>
@@ -138,6 +141,7 @@ const Table = ({ table }) => {
                     spacing={"10"}
                     padding={3}
                     width="43vh"
+                    className="animate__heartBeat"
                 >
                     <Text color="theme.100" fontSize="lg" data-testid="table-small-id">{table.id}</Text>
                     <Text color="theme.100" fontSize="lg" as="em" data-testid="table-small-state">{table.state}</Text>

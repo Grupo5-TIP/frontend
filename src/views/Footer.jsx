@@ -9,7 +9,7 @@ const Footer = () => {
                 bg="theme.100"
                 color="white"
             >
-                <Text >Hecho con ♥</Text>
+                <Text >Hecho con sudor</Text>
                 <Link color="theme.300"  href="https://github.com/Grupo5-TIP" isExternal>Acerca de</Link>
             </Box>
         </Flex>
