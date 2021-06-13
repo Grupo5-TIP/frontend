@@ -2,10 +2,9 @@ import React from "react"
 import {
     AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogBody,
     AlertDialogHeader, AlertDialogFooter, AlertDialogCloseButton, Button,
-    FormControl, FormLabel, Radio, RadioGroup, HStack, Flex, Input, Box
+    FormControl, FormLabel, Radio, RadioGroup, HStack, Flex
 } from '@chakra-ui/react';
 import { hover } from '../utils/buttonDesign';
-import { useState } from "react";
 
 const DialogDisplay = ({ header, firstOption, secondOption, message, action, isOpen, onClose, onCloseAll, body, payment }) => {
     const cancelRef = React.useRef();
