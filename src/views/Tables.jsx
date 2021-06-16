@@ -44,7 +44,7 @@ const Tables = () => {
     const BgTables = () =>{
         return (
             <Box padding={5}>
-                <Image src={bgImage} alt="" ></Image>
+                <Image src={bgImage} w="1400px" h="450px" alt="" ></Image>
             </Box>
         )
     }
