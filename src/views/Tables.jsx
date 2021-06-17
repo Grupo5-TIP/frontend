@@ -44,7 +44,7 @@ const Tables = () => {
     const BgTables = () =>{
         return (
             <Box padding={5}>
-                <Image src={bgImage} w="1400px" h="450px" alt="" ></Image>
+                <Image src={bgImage} fit="cover" w="1400px" minH="auto" maxH="100%" alt="" ></Image>
             </Box>
         )
     }
@@ -66,8 +66,7 @@ const Tables = () => {
                     loading ? <Box width="100%"><Loading /></Box>
                         :
                         <Flex>
-                            { isLarger ? <BgTables/> : null }
-                            <Box>
+                            <Flex w="auto" minW="1900px" bgImage={bgImage} bgSize="100% 100%" bgRepeat="no-repeat">
                                 {
                                     tables.map(table => {
                                         return (
@@ -84,7 +83,7 @@ const Tables = () => {
                                         )
                                     })}
 
-                            </Box>
+                            </Flex>
 
                         </Flex>
                 }

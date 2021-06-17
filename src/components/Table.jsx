@@ -83,7 +83,7 @@ const Table = ({ table }) => {
             case "bill":
                 setBgColor("orange");
                 setIconTable(<CheckBillIcon />);
-                setStateTable("En uso")
+                setStateTable("Llamada mozo")
                 setHeartBeatClass("heartbeat")
                 break;
             default:
@@ -109,12 +109,12 @@ const Table = ({ table }) => {
             <Box
                 width={width}
                 height="10vh"
-                margin={30}
                 borderWidth="2px"
                 borderRadius="lg"
                 position="absolute"
                 top={positionY}
                 left={positionX}
+                marginLeft={100}
                 marginTop={250}
                 bg={bgColor}
                 display="flex"
