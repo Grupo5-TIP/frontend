@@ -114,7 +114,7 @@ const Table = ({ table }) => {
                 position="absolute"
                 top={positionY}
                 left={positionX}
-                marginLeft={100}
+                marginLeft="25%"
                 marginTop={250}
                 bg={bgColor}
                 display="flex"

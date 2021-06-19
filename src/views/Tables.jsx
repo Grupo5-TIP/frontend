@@ -5,7 +5,7 @@ import CashierCart from '../components/CashierCart';
 import tablesService from '../services/tables-service';
 import Loading from '../components/Loading';
 import StatusAlertDisplay from '../components/AlertDisplay';
-import bgImage from '../../src/bgImage.png'
+import bgImage from '../../src/bgImage.jpg'
 
 const Tables = () => {
     const [tables, setTables] = useState([]);
@@ -50,9 +50,7 @@ const Tables = () => {
     }
 
     return (
-        <Flex flexGrow={1} margin="0 auto">
-            <Flex
-            >
+        <Flex flexGrow={1}>
                 {error !== '' ? <StatusAlertDisplay top={2}
                     padding={5}
                     margin="0 auto"
@@ -65,8 +63,7 @@ const Tables = () => {
                     :
                     loading ? <Box width="100%"><Loading /></Box>
                         :
-                        <Flex>
-                            <Flex w="auto" minW="1900px" bgImage={bgImage} bgSize="100% 100%" bgRepeat="no-repeat">
+                            <Flex w="100%" bgImage={bgImage} bgRepeat="repeat">
                                 {
                                     tables.map(table => {
                                         return (
@@ -84,11 +81,7 @@ const Tables = () => {
                                     })}
 
                             </Flex>
-
-                        </Flex>
                 }
-
-            </Flex>
             <CashierCart
                 key={actualTableId}
                 onCloseModal={onCloseCashierCart}
