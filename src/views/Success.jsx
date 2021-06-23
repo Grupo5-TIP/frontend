@@ -1,8 +1,11 @@
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { Flex, Button, Icon, Text, Stack } from "@chakra-ui/react";
 import { AiOutlinePaperClip } from 'react-icons/ai'
 import { hover } from '../utils/buttonDesign';
 
 const Success = (...props) => {
+    const history = useHistory();
+    const match = useRouteMatch();
     return(
             <Stack
                 justifyContent="center"
@@ -25,7 +28,7 @@ const Success = (...props) => {
                     <Button bg="theme.100"
                         color="white"
                         margin="3px"
-                        onClick={() => console.log()}
+                        onClick={() => history.push('/menu/'+match.url.substring(match.url.lastIndexOf('/') + 1))}
                         size="lg"
                         _hover={hover}>
                             Volver a pedir
