@@ -23,7 +23,7 @@ const Error = (...props) => {
                     <Icon as={AiOutlinePaperClip} color="gray.300" w={10} h={10} left="5%"/>
                     
                 </Flex>
-                <Text fontSize="lg" align="center"> Hubo un error en el pago</Text>
+                <Text fontSize="lg" align="center"> El pago no fue efectuado </Text>
                     
                     <Button bg="theme.100"
                         color="white"

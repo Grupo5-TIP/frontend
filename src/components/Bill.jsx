@@ -23,6 +23,12 @@ const Bill = ({ tableId }) => {
     useEffect(() => {
         const fetchData = async () => {
             if (tableId !== 0) {
+                tableService.getTableById(tableId)
+                    .then(resp => {
+                        setPedirCuenta(resp.data.state !== 'mercadoPago') })
+                    .catch(err => {
+                        setError(err);
+                    });
                 tableService.getItemsFromTable(tableId)
                     .then(respTableService => {
                         setItemsFromTable(respTableService.data);
@@ -50,7 +56,6 @@ const Bill = ({ tableId }) => {
                         duration: 1500,
                         isClosable: true,
                     })
-                    setPedirCuenta(false);
                     onClose();
                 })
                 .catch(err => {

@@ -5,11 +5,16 @@ import {
 } from '@chakra-ui/react';
 import { hover } from '../utils/buttonDesign';
 
-const DialogDisplay = ({ header, firstOption, secondOption, message, action, isOpen, onClose, onCloseAll }) => {
+const DialogPaymentDisplay = ({ header, firstOption, message, action1, action2, isOpen, onClose, onCloseAll }) => {
     const cancelRef = React.useRef();
 
-    const onClick = () => {
-        action();
+    const onClickAction1 = () => {
+        action1();
+        onCloseAll();
+    }
+
+    const onClickAction2 = () => {
+        action2();
         onCloseAll();
     }
 
@@ -32,17 +37,24 @@ const DialogDisplay = ({ header, firstOption, secondOption, message, action, isO
                     {message}
                 </AlertDialogBody>
                 <AlertDialogFooter>
-                    <Button bg="gray.100" color="theme.100" variant="outline" ref={cancelRef} onClick={onClose}>
+                    <Button bg="gray.100" margin="25px" color="theme.100" variant="outline" ref={cancelRef} onClick={onClose}>
                         {firstOption}
                     </Button>
                     <Button bg="theme.100"
-                        color="white"
-                        margin="3px"
+                        color="white"                        
                         _hover={hover}
                         ml={3}
-                        onClick={onClick}
+                        onClick={onClickAction1}
                     >
-                        {secondOption}
+                        Efectivo
+                    </Button>
+                    <Button bg="theme.100"
+                        color="white"                        
+                        _hover={hover}
+                        ml={3}
+                        onClick={onClickAction2}
+                    >
+                        Mercado Pago
                     </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>
@@ -50,4 +62,4 @@ const DialogDisplay = ({ header, firstOption, secondOption, message, action, isO
     )
 }
 
-export default DialogDisplay;
+export default DialogPaymentDisplay;
