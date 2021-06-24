@@ -6,6 +6,8 @@ import tablesService from '../services/tables-service';
 import Loading from '../components/Loading';
 import StatusAlertDisplay from '../components/AlertDisplay';
 import bgImage from '../../src/bgImage.jpg'
+import { Redirect  } from 'react-router-dom';
+import { validateLogin } from '../utils/validate-login';
 
 const Tables = () => {
     const [tables, setTables] = useState([]);
@@ -49,8 +51,14 @@ const Tables = () => {
         onClose();
     }
 
+    const TableContent = () => {
+
+    }
     return (
         <Flex flexGrow={1}>
+            {
+                !validateLogin() ? <Redirect to="/" /> : null
+            }
                 {error !== '' ? <StatusAlertDisplay top={2}
                     padding={5}
                     margin="0 auto"
