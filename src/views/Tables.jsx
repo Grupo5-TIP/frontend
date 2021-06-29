@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Stack, Flex, Box, Text, Image, useDisclosure, useMediaQuery } from '@chakra-ui/react';
+import { Stack, Flex, Box, Text, Image, useDisclosure, useMediaQuery, Button } from '@chakra-ui/react';
 import Table from '../components/Table';
 import CashierCart from '../components/CashierCart';
 import tablesService from '../services/tables-service';
@@ -14,6 +14,7 @@ const Tables = () => {
     const [actualTableId, setTableId] = useState(0);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [isLarger] = useMediaQuery("(min-width: 380px)");
+    const [timer, setTimer] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,27 +27,26 @@ const Tables = () => {
                     setError(err);
                 });
         }
+        setTimer(setTimeout(() => {
+            window.location.reload()
+        }, 5000));
         setLoading(true);
         fetchData();
     }, [actualTableId]);
 
     const openTable = (tableId) => {
         setTableId(tableId);
-        setError("")
-        onOpen();
+        setError("");
+        onOpen();        
+        return clearTimeout(timer);
     }
 
     const onCloseCashierCart = () => {
         setTableId(0);
+        setTimer(setTimeout(() => {
+            window.location.reload()
+        }, 5000));
         onClose();
-    }
-    
-    const BgTables = () =>{
-        return (
-            <Box padding={5}>
-                <Image src={bgImage} fit="cover" w="1400px" minH="auto" maxH="100%" alt="" ></Image>
-            </Box>
-        )
     }
 
     return (
@@ -64,6 +64,7 @@ const Tables = () => {
                     loading ? <Box width="100%"><Loading /></Box>
                         :
                             <Flex w="100%" bgImage={bgImage} bgRepeat="repeat">
+                                <Button onClick={() => clearTimeout(timer)}></Button>
                                 {
                                     tables.map(table => {
                                         return (

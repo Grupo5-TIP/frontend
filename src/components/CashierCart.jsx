@@ -64,8 +64,6 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
         return items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0);
     }
 
-    
-
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
