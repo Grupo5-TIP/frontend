@@ -9,19 +9,26 @@ class TablesService{
     }
     
     async getItemsFromTable(tableId){
-        return axios.get(API_URL+"/"+tableId);
+        return axios.get(API_URL+"/items/"+tableId);
     }
 
     async updateTableOrder(tableId, items ){
-        console.log(items);
         return axios.put(API_URL+"/"+tableId, items);
     }
     async requestBill(tableId){
         return axios.get(API_URL+"/request/"+tableId);
     }
 
+    async getTableById(tableId){
+        return axios.get(API_URL+"/"+tableId);
+    }
+
     async deleteTableOrders(tableId){
         return axios.delete(API_URL+"/"+tableId);
+    }
+
+    async changeToMpState(tableId) {
+        return axios.put(API_URL+"/"+tableId+"/mpstate");
     }
 }
 

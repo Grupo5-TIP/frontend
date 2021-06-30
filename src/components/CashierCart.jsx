@@ -10,13 +10,13 @@ import invoiceService from '../services/invoice-service';
 import productService from '../services/products-service';
 import Items from '../components/Items';
 import DialogDisplay from '../components/DialogDisplay';
+import DialogPaymentDisplay from '../components/DialogPaymentDisplay';
 import { hover, expanded } from '../utils/buttonDesign';
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { ImCancelCircle } from 'react-icons/im'
 import { BiSave } from 'react-icons/bi'
 import { FaMoneyBillWave } from 'react-icons/fa'
 import Loading from './Loading';
-
 
 const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props }) => {
     const [loading, setLoading] = useState(false);
@@ -29,10 +29,6 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
     const [isOpenCancel, setIsOpenCancel] = useState(false)
     const [isOpenSave, setIsOpenSave] = useState(false)
     const [isOpenBill, setIsOpenBill] = useState(false)
-    const payment= {
-        amount: 0,
-        method: 'EF'
-    }
 
     const onClose = () => {
         setIsOpenVoid(false);
@@ -63,6 +59,10 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
     }
 
     const categories = Object.getOwnPropertyNames(products);
+
+    const getPrice = () => {
+        return items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0);
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -155,7 +155,7 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
             <Flex p="1" h="60px" float="right" paddingRight="20" flexDirection="row">
                 <Text fontWeight="semibold">TOTAL: </Text>
                 <Text fontWeight="semibold" data-testid="cashier-cart-total">
-                    {items.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0)}
+                    {getPrice()}
                 </Text>
             </Flex>
         )
@@ -294,20 +294,16 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
                                         action={() => (tablesService.updateTableOrder(actualTableId, items))}
                                     />
 
-                                    <DialogDisplay
+                                    <DialogPaymentDisplay
                                         header="Facturar pedido"
                                         firstOption="Cancelar"
-                                        secondOption="Aceptar"
                                         message="¿ Desea confirmar la facturación del pedido ?"
                                         onCloseAll={onCloseModal}
                                         onClose={onClose}
                                         isOpen={isOpenBill}
-                                        action={() => (invoiceService.createInvoice(actualTableId, payment.method))}
-                                        body={true}
-                                        payment={payment}
+                                        action1={() => (invoiceService.createInvoice(actualTableId, "EF"))}
+                                        action2={() => (tablesService.changeToMpState(actualTableId))}
                                     />
-
-
                                 </Box>
                             }
                         </>

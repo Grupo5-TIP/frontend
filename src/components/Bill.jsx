@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import tableService from '../services/tables-service';
+import mercadopagoService from '../services/mercadopago-service';
 import BillItem from './BillItem';
 import { Flex, Box, Button, Text, Icon, Stack, useToast } from "@chakra-ui/react";
 import { AiOutlinePaperClip } from 'react-icons/ai'
 import { parseCurrency } from '../utils/currency'
 import Loading from './Loading';
 import StatusAlertDisplay from './StatusAlertDisplay';
+import { hover } from '../utils/buttonDesign';
 
 const Bill = ({ tableId }) => {
     const [loading, setLoading] = useState(true);
+    const [pedirCuenta, setPedirCuenta] = useState(false);
     const [error, setError] = useState('');
     const [itemsFromTable, setItemsFromTable] = useState({});
     const [, setIsAdded] = useState(false);
@@ -20,9 +23,16 @@ const Bill = ({ tableId }) => {
     useEffect(() => {
         const fetchData = async () => {
             if (tableId !== 0) {
+                tableService.getTableById(tableId)
+                    .then(resp => {
+                        setPedirCuenta(resp.data.state !== 'mercadoPago') })
+                    .catch(err => {
+                        setError(err);
+                    });
                 tableService.getItemsFromTable(tableId)
                     .then(respTableService => {
                         setItemsFromTable(respTableService.data);
+                        
                         setLoading(false);
                     })
                     .catch(err => {
@@ -35,21 +45,35 @@ const Bill = ({ tableId }) => {
     }, [tableId]);
 
     const handleCheckPlease = () => {
-        tableService.requestBill(tableId)
+        if (pedirCuenta) {
+            tableService.requestBill(tableId)
+                .then(resp => {
+                    //setIsAdded(true);
+                    toast({
+                        title: "Cerrado de caja.",
+                        description: "Se solicitó correctamente el cierre de caja!",
+                        status: "success",
+                        duration: 1500,
+                        isClosable: true,
+                    })
+                    onClose();
+                })
+                .catch(err => {
+                    setError(err);
+                });
+        } else {
+            mercadopagoService.createMPInvoice(tableId, getPrice())
             .then(resp => {
-                //setIsAdded(true);
-                toast({
-                    title: "Cerrado de caja.",
-                    description: "Se solicitó correctamente el cierre de caja!",
-                    status: "success",
-                    duration: 1500,
-                    isClosable: true,
-                  })
-                onClose();
+                window.open(resp.data.url,"_self");
             })
             .catch(err => {
                 setError(err);
             });
+        }
+    }
+
+    const getPrice = () => {
+        return itemsFromTable.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0);
     }
 
     const DisplayBill = ({ items }) => {
@@ -91,6 +115,7 @@ const Bill = ({ tableId }) => {
                                     message= "Error al traer del server..."
                                     /> 
                     : 
+                    
                     loading ? <Box margin="0 auto" width="300px" padding={3}><Loading /></Box> :
                     <Flex flexDir="column">
                     <Flex justifyContent="center">
@@ -99,7 +124,7 @@ const Bill = ({ tableId }) => {
                                 <Flex padding={5} flexDir="column">
                                     <DisplayBill items={itemsFromTable} />
                                     <Flex justifyContent="flex-end" paddingRight={5} color="theme.500" fontWeight="900">
-                                        <Text>Total:</Text> <Text data-testid="cashier-cart-total">{parseCurrency(itemsFromTable.reduce((accumulator, item) => accumulator + (item.product.price * item.amount), 0))}</Text>
+                                        <Text>Total:</Text> <Text data-testid="cashier-cart-total">{parseCurrency(getPrice())}</Text>
                                     </Flex>
                                 </Flex>
                                 : <Text padding={3} align="center" color="gray.400"> Todavia no realizaste ningún pedido. Volvé y encargate algo para disfrutar!</Text>
@@ -108,11 +133,18 @@ const Bill = ({ tableId }) => {
                     </Flex>
                     <Flex justifyContent="center" padding={2} >
                         <Button onClick={() => history.push("/menu/" + tableId)} mr={2} bg="gray.100" color="theme.100" variant="outline" data-testid="orders-cancel-button">Volver</Button>
-                        <Button disabled={itemsFromTable.length<1} onClick={() => handleCheckPlease()} bg="theme.100" color="gray.100" data-testid="orders-confirm-button">Pedir cuenta</Button>
+                        <Button 
+                            bg="theme.100"
+                            color="white"
+                            disabled={itemsFromTable.length<1} 
+                            onClick={() => handleCheckPlease()} 
+                            _hover={hover} 
+                            data-testid="orders-confirm-button">
+                                {pedirCuenta ? "Pedir cuenta" : "Pagar con Mercado Pago"}
+                        </Button>
                     </Flex>
                 </Flex>
             }
-
         </Flex>
     )
 }
