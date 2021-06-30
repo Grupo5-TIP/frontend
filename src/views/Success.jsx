@@ -50,7 +50,7 @@ const Success = (...props) => {
                     <Icon as={AiOutlinePaperClip} color="gray.300" w={10} h={10} left="5%"/>
                     
                 </Flex>
-                <Text fontSize="lg" align="center"> El pedido se cobró correctamente!</Text>
+                <Text fontWeight={800}  padding={3} align="center" color="gray.400"> El pedido se cobró correctamente!</Text>
                     
                     <Button bg="theme.100"
                         color="white"

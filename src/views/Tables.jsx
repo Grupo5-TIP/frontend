@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
-import { Stack, Flex, Box, Text, Image, useDisclosure, useMediaQuery, Button } from '@chakra-ui/react';
+import { Stack, Flex, Box, useDisclosure, useMediaQuery, Button } from '@chakra-ui/react';
 import Table from '../components/Table';
 import CashierCart from '../components/CashierCart';
 import tablesService from '../services/tables-service';
 import Loading from '../components/Loading';
 import StatusAlertDisplay from '../components/AlertDisplay';
 import bgImage from '../../src/bgImage.jpg'
+import { Redirect  } from 'react-router-dom';
+import { validateLogin } from '../utils/validate-login';
 
 const Tables = () => {
     const [tables, setTables] = useState([]);
@@ -27,9 +29,9 @@ const Tables = () => {
                     setError(err);
                 });
         }
-        setTimer(setTimeout(() => {
+        /*setTimer(setTimeout(() => {
             window.location.reload()
-        }, 5000));
+        }, 5000));*/
         setLoading(true);
         fetchData();
     }, [actualTableId]);
@@ -48,9 +50,11 @@ const Tables = () => {
         }, 5000));
         onClose();
     }
-
     return (
         <Flex flexGrow={1}>
+            {
+                !validateLogin() ? <Redirect to="/" /> : null
+            }
                 {error !== '' ? <StatusAlertDisplay top={2}
                     padding={5}
                     margin="0 auto"

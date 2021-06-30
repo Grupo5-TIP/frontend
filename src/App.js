@@ -9,11 +9,12 @@ import Tables from './views/Tables';
 import Checkout from './views/Checkout';
 import Success from './views/Success';
 import ErrorView from './views/Error';
+import Dashboard from './views/Dashboard';
 
 function App() {
   return (
     <div className="app">
-      <Header/>
+      <Header />
 
       <BrowserRouter >
           <Switch>     
@@ -21,14 +22,15 @@ function App() {
             <Route path="/tables" component={Tables} />
             <Route path="/checkout/success/:tableid" component={Success} />
             <Route path="/checkout/error/:tableid" component={ErrorView} />
-            <Route path="/checkout/:tableid" component={Checkout} />            
+            <Route path="/checkout/:tableid" component={Checkout} />   
+            <Route path="/dashboard/" component={Dashboard} />         
             <Route path="/" component={Home} />
           </Switch>
       </BrowserRouter>
 
-      <Footer/>
+      <Footer />
     </div>
-    
+
   );
 }
 
