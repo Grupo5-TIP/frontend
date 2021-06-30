@@ -68,7 +68,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState("");
     const [user, setUser] = useState("");
-    const [isLogin, setIsLogin] = useState(false);
+    const [, setIsLogin] = useState(false);
     const toast = useToast();
     const history = useHistory();
 

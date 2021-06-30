@@ -11,7 +11,7 @@ const Success = (...props) => {
     const history = useHistory();
     const match = useRouteMatch();
     const tableId = match.url.substring(match.url.lastIndexOf('/') + 1);
-    const [error, setError] = useState('');
+    const [, setError] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
