@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Stack, Flex, Box, Text, Image, useDisclosure, useMediaQuery, Button } from '@chakra-ui/react';
+import { Stack, Flex, Box, useDisclosure, useMediaQuery, Button } from '@chakra-ui/react';
 import Table from '../components/Table';
 import CashierCart from '../components/CashierCart';
 import tablesService from '../services/tables-service';
@@ -29,9 +29,9 @@ const Tables = () => {
                     setError(err);
                 });
         }
-        setTimer(setTimeout(() => {
+        /*setTimer(setTimeout(() => {
             window.location.reload()
-        }, 5000));
+        }, 5000));*/
         setLoading(true);
         fetchData();
     }, [actualTableId]);
@@ -49,10 +49,6 @@ const Tables = () => {
             window.location.reload()
         }, 5000));
         onClose();
-    }
-
-    const TableContent = () => {
-
     }
     return (
         <Flex flexGrow={1}>

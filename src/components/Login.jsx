@@ -15,7 +15,8 @@ import {
     useToast
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
-
+import { FiEyeOff, FiEye } from "react-icons/fi";
+import { hover } from '../utils/buttonDesign';
 import authService from "../services/auth-service";
 
 const CFaUserAlt = () => {
@@ -36,6 +37,28 @@ const UserFaLock = () => {
                 color="gray.300"
                 size={25}>
             </FaLock>
+        </Box>
+    )
+}
+
+const FiEyeComponent = () => {
+    return (
+        <Box >
+            <FiEye
+                color="gray.300"
+                size={25}>
+            </FiEye>
+        </Box>
+    )
+}
+
+const FiEyeOffComponent = () => {
+    return (
+        <Box >
+            <FiEyeOff
+                color="gray.300"
+                size={25}>
+            </FiEyeOff>
         </Box>
     )
 }
@@ -116,7 +139,7 @@ const Login = () => {
                 alignItems="center"
             >
                 <Avatar bg="theme.100" />
-                <Heading color="theme.100">Welcome</Heading>
+                <Heading color="theme.100">Bienvenido!</Heading>
                 <Box>
                     <form>
                         <Stack
@@ -131,7 +154,7 @@ const Login = () => {
                                         pointerEvents="none"
                                         children={<CFaUserAlt />}
                                     />
-                                    <Input type="text" placeholder="user" onChange={(e) => handleChangeUser(e)} />
+                                    <Input type="text" placeholder="Usuario" onChange={(e) => handleChangeUser(e)} />
                                 </InputGroup>
                             </FormControl>
                             <FormControl>
@@ -143,12 +166,13 @@ const Login = () => {
                                     />
                                     <Input
                                         type={showPassword ? "text" : "password"}
-                                        placeholder="Password"
+                                        placeholder="Contraseña"
                                         onChange={(e) => handleChangePassword(e)}
                                     />
                                     <InputRightElement width="4.5rem">
+                                        
                                         <Button h="1.75rem" size="sm" onClick={handleShowClick}>
-                                            {showPassword ? "Hide" : "Show"}
+                                            {showPassword ? <FiEyeOffComponent/> : <FiEyeComponent/>}
                                         </Button>
                                     </InputRightElement>
                                 </InputGroup>
@@ -159,9 +183,10 @@ const Login = () => {
                                 variant="solid"
                                 colorScheme="teal"
                                 width="full"
+                                _hover={hover}
                                 onClick={(e) => handleLogin(e)}
                             >
-                                Login
+                                Ingresar
                             </Button>
                         </Stack>
                     </form>

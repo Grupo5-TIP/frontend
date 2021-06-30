@@ -8,6 +8,8 @@ import Home from './views/Home';
 import Tables from './views/Tables';
 import Checkout from './views/Checkout';
 import Success from './views/Success';
+import ErrorView from './views/Error';
+import Dashboard from './views/Dashboard';
 
 function App() {
   return (
