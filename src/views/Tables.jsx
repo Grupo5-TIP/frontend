@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react'
-<<<<<<< HEAD
 import { Stack, Flex, Box, useDisclosure, useMediaQuery, Button } from '@chakra-ui/react';
-=======
-import { Stack, Flex, Box, Text, Image, useDisclosure, useMediaQuery, Button } from '@chakra-ui/react';
->>>>>>> 42bb3fa5f77664fcad9ceb770fe6270bb474dace
 import Table from '../components/Table';
 import CashierCart from '../components/CashierCart';
 import tablesService from '../services/tables-service';

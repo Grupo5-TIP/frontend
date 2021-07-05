@@ -5,24 +5,16 @@ import invoiceService from '../services/invoice-service';
 import { AiOutlinePaperClip } from 'react-icons/ai'
 import { hover } from '../utils/buttonDesign';
 import { useState, useEffect } from 'react';
-<<<<<<< HEAD
 import mercadopagoService from '../services/mercadopago-service';
 import StatusAlertDisplay from '../components/AlertDisplay';
-=======
-
->>>>>>> 42bb3fa5f77664fcad9ceb770fe6270bb474dace
 
 const Success = (...props) => {
     const history = useHistory();
     const match = useRouteMatch();
     const tableId = match.url.substring(match.url.lastIndexOf('/') + 1);
-<<<<<<< HEAD
     const paymentId = props[0].location.search.substring(props[0].location.search.lastIndexOf('payment_id') + 12, props[0].location.search.lastIndexOf('payment_id')+ 11) || "0";
     const [error, setError] = useState('');
     
-=======
-    const [error, setError] = useState('');
->>>>>>> 42bb3fa5f77664fcad9ceb770fe6270bb474dace
 
     useEffect(() => {
         const fetchData = async () => {
