@@ -16,7 +16,6 @@ const Tables = () => {
     const [actualTableId, setTableId] = useState(0);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [isLarger] = useMediaQuery("(min-width: 380px)");
-    const [timer, setTimer] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,25 +28,25 @@ const Tables = () => {
                     setError(err);
                 });
         }
-        /*setTimer(setTimeout(() => {
-            window.location.reload()
-        }, 5000));*/
-        setLoading(true);
         fetchData();
+        const timer = setInterval(() => {
+            fetchData(); 
+        }, 10000);
+        setLoading(true);
+
+        return () => {
+            clearInterval(timer);
+        };
     }, [actualTableId]);
 
     const openTable = (tableId) => {
         setTableId(tableId);
         setError("");
         onOpen();        
-        return clearTimeout(timer);
     }
 
     const onCloseCashierCart = () => {
         setTableId(0);
-        setTimer(setTimeout(() => {
-            window.location.reload()
-        }, 5000));
         onClose();
     }
     return (
@@ -68,7 +67,6 @@ const Tables = () => {
                     loading ? <Box width="100%"><Loading /></Box>
                         :
                             <Flex w="100%" bgImage={bgImage} bgRepeat="repeat">
-                                <Button onClick={() => clearTimeout(timer)}></Button>
                                 {
                                     tables.map(table => {
                                         return (

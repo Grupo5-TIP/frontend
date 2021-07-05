@@ -6,7 +6,7 @@ const Item = ({ item, onDecreaseProduct, onAddProduct, onDeleteProduct }) => {
     const [isLarger] = useMediaQuery("(min-width: 500px)");
     const product = item.product;
     const amount = item.amount;
-
+    
     const viewLargerDevices = () => {
         return (
             <Stack
