@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react'
+<<<<<<< HEAD
 import { Stack, Flex, Box, useDisclosure, useMediaQuery, Button } from '@chakra-ui/react';
+=======
+import { Stack, Flex, Box, Text, Image, useDisclosure, useMediaQuery, Button } from '@chakra-ui/react';
+>>>>>>> 42bb3fa5f77664fcad9ceb770fe6270bb474dace
 import Table from '../components/Table';
 import CashierCart from '../components/CashierCart';
 import tablesService from '../services/tables-service';
@@ -16,6 +20,7 @@ const Tables = () => {
     const [actualTableId, setTableId] = useState(0);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [isLarger] = useMediaQuery("(min-width: 380px)");
+    const [timer, setTimer] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,6 +52,9 @@ const Tables = () => {
 
     const onCloseCashierCart = () => {
         setTableId(0);
+        setTimer(setTimeout(() => {
+            window.location.reload()
+        }, 5000));
         onClose();
     }
     return (
@@ -67,6 +75,7 @@ const Tables = () => {
                     loading ? <Box width="100%"><Loading /></Box>
                         :
                             <Flex w="100%" bgImage={bgImage} bgRepeat="repeat">
+                                <Button onClick={() => clearTimeout(timer)}></Button>
                                 {
                                     tables.map(table => {
                                         return (
