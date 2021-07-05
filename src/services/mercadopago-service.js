@@ -13,6 +13,10 @@ class MercadoPagoService{
         return axios.post(API_URL, mpInvoice);
     }
 
+    async validatePayment(paymentId){
+        return axios.get("https://api.mercadopago.com/v1/payments/"+paymentId);
+    }
+
 }
 
 export default new MercadoPagoService();

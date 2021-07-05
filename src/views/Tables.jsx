@@ -29,18 +29,21 @@ const Tables = () => {
                     setError(err);
                 });
         }
-        /*setTimer(setTimeout(() => {
-            window.location.reload()
-        }, 5000));*/
-        setLoading(true);
         fetchData();
+        const timer = setInterval(() => {
+            fetchData(); 
+        }, 10000);
+        setLoading(true);
+
+        return () => {
+            clearInterval(timer);
+        };
     }, [actualTableId]);
 
     const openTable = (tableId) => {
         setTableId(tableId);
         setError("");
         onOpen();        
-        return clearTimeout(timer);
     }
 
     const onCloseCashierCart = () => {

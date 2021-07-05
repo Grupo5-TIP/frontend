@@ -68,14 +68,13 @@ const CashierCart = ({ tableId, onCloseModal, isOpenModal, onOpenModal, ...props
         const fetchData = async () => {
             setLoading(true);
             if (actualTableId !== 0) {
-
                 productService.getAllProducts()
                     .then(resp => {
-
                         tablesService.getItemsFromTable(actualTableId)
                             .then(respTableService => {
-                                setProducts(resp.data);
+                                setProducts(resp.data);                                
                                 setItemsFromTable(respTableService.data.map((item) => (item)));
+                                
                             })
                             .catch(err => {
                                 setProducts(resp.data);

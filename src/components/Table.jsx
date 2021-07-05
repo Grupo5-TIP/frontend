@@ -67,7 +67,6 @@ const Table = ({ table }) => {
         )
     }
 
-
     const MercadoPagoIcon = () => {
         return (
             <Icon w="4em" h="4em" viewBox="0 0 48 48"><ellipse cx="23.5" cy="23.5" fill="none" rx="21.5" ry="15.5" />
@@ -83,8 +82,6 @@ const Table = ({ table }) => {
             </Icon>
         )
     }
-
-
 
     const tableConfiguration = (tableState) => {
         switch (tableState) {
