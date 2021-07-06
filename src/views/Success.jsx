@@ -43,7 +43,7 @@ const Success = (...props) => {
                 setError(err);
             });   
              
-    }, [tableId]);
+    }, [tableId, paymentId]);
 
     return(
         <Stack flexGrow={1}>

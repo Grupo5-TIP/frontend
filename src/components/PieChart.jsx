@@ -38,7 +38,7 @@ const PieChart = ({dataTemplate}) => {
 
         setLoading(true);
         fetchData();
-    }, [dataTemplate]);
+    }, [dataTemplate, setDataToDisplay]);
 
 
 
