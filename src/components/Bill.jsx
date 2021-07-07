@@ -25,14 +25,15 @@ const Bill = ({ tableId }) => {
             if (tableId !== 0) {
                 tableService.getTableById(tableId)
                     .then(resp => {
-                        setPedirCuenta(resp.data.state !== 'mercadoPago') })
+                        setPedirCuenta(resp.data.state !== 'mercadoPago')
+                    })
                     .catch(err => {
                         setError(err);
                     });
                 tableService.getItemsFromTable(tableId)
                     .then(respTableService => {
                         setItemsFromTable(respTableService.data);
-                        
+
                         setLoading(false);
                     })
                     .catch(err => {
@@ -63,12 +64,12 @@ const Bill = ({ tableId }) => {
                 });
         } else {
             mercadopagoService.createMPInvoice(tableId, getPrice())
-            .then(resp => {
-                window.open(resp.data.url,"_self");
-            })
-            .catch(err => {
-                setError(err);
-            });
+                .then(resp => {
+                    window.open(resp.data.url, "_self");
+                })
+                .catch(err => {
+                    setError(err);
+                });
         }
     }
 
@@ -81,8 +82,7 @@ const Bill = ({ tableId }) => {
             <Stack
                 flexGrow={1}
                 direction="column"
-                spacing={5}
-                padding={3}
+                paddingTop={3}
             >
                 <Flex
                     h="20px"
@@ -101,49 +101,52 @@ const Bill = ({ tableId }) => {
             </Stack>
         )
     }
+    if (error !== '') {
+        return (
+            <StatusAlertDisplay top={2}
+                padding={5}
+                margin="0 auto"
+                h="150px"
+                w="500px"
+                boxShadow="lg"
+                status="error"
+                message="Error al traer del server..."
+            />
+        )
+    }
 
     return (
-        <Flex>
+        <Flex flexGrow={1}>
             {
-                error !== '' ?  <StatusAlertDisplay top={2} 
-                                    padding={5} 
-                                    margin="0 auto" 
-                                    h="150px" 
-                                    w="300px" 
-                                    boxShadow="lg"
-                                    status="error"
-                                    message= "Error al traer del server..."
-                                    /> 
-                    : 
-                    
-                    loading ? <Box margin="0 auto" width="300px" padding={3}><Loading /></Box> :
-                    <Flex flexDir="column">
-                    <Flex justifyContent="center">
-                        {
-                            itemsFromTable && itemsFromTable.length > 0 ?
-                                <Flex padding={5} flexDir="column">
-                                    <DisplayBill items={itemsFromTable} />
-                                    <Flex justifyContent="flex-end" paddingRight={5} color="theme.500" fontWeight="900">
-                                        <Text>Total:</Text> <Text data-testid="cashier-cart-total">{parseCurrency(getPrice())}</Text>
-                                    </Flex>
-                                </Flex>
-                                : <Text padding={3} align="center" color="gray.400"> Todavia no realizaste ningún pedido. Volvé y encargate algo para disfrutar!</Text>
-                        }
 
-                    </Flex>
-                    <Flex justifyContent="center" padding={2} >
-                        <Button onClick={() => history.push("/menu/" + tableId)} mr={2} bg="gray.100" color="theme.100" variant="outline" data-testid="orders-cancel-button">Volver</Button>
-                        <Button 
-                            bg="theme.100"
-                            color="white"
-                            disabled={itemsFromTable.length<1} 
-                            onClick={() => handleCheckPlease()} 
-                            _hover={hover} 
-                            data-testid="orders-confirm-button">
+                loading ? <Box margin="0 auto" width="300px" padding={3}><Loading /></Box> :
+                    <Flex flexDir="column">
+                        <Flex>
+                            {
+                                itemsFromTable && itemsFromTable.length > 0 ?
+                                    <Flex flexDir="column">
+                                        <DisplayBill items={itemsFromTable} />
+                                        <Flex justifyContent="flex-end" paddingRight={5} color="theme.500" fontWeight="900">
+                                            <Text>Total:</Text> <Text data-testid="cashier-cart-total">{parseCurrency(getPrice())}</Text>
+                                        </Flex>
+                                    </Flex>
+                                    : <Text padding={3} align="center" color="gray.400"> Todavia no realizaste ningún pedido. Volvé y encargate algo para disfrutar!</Text>
+                            }
+
+                        </Flex>
+                        <Flex justifyContent="center" padding={2} >
+                            <Button onClick={() => history.push("/menu/" + tableId)} mr={2} bg="gray.100" color="theme.100" variant="outline" data-testid="orders-cancel-button">Volver</Button>
+                            <Button
+                                bg="theme.100"
+                                color="white"
+                                disabled={itemsFromTable.length < 1}
+                                onClick={() => handleCheckPlease()}
+                                _hover={hover}
+                                data-testid="orders-confirm-button">
                                 {pedirCuenta ? "Pedir cuenta" : "Pagar con Mercado Pago"}
-                        </Button>
+                            </Button>
+                        </Flex>
                     </Flex>
-                </Flex>
             }
         </Flex>
     )

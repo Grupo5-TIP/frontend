@@ -12,6 +12,10 @@ class InvoiceService{
         return axios.post(API_URL+"/"+tableId, invoice);
     }
 
+    async getInvoicesByMonth(){
+        return axios.get(API_URL);
+    }
+
 }
 
 export default new InvoiceService();
