@@ -23,6 +23,7 @@ const Tables = () => {
                 .then(resp => {
                     setTables(resp.data);
                     setLoading(false);
+                    setError('');
                 })
                 .catch(err => {
                     setError(err);
