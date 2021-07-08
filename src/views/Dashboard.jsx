@@ -55,7 +55,7 @@ const Checkout = (...props) => {
     const [dataToDisplay, setDataToDisplay] = useState({});
     const dataMonths = [];
     const dataAmounts = [];
-    
+
     useEffect(() => {
         const fetchData = async () => {
             invoiceService.getInvoicesByMonth()
@@ -84,15 +84,17 @@ const Checkout = (...props) => {
 
     if (error !== '') {
         return (
-            <StatusAlertDisplay top={2}
-                padding={5}
-                margin="0 auto"
-                h="150px"
-                w="500px"
-                boxShadow="lg"
-                status="error"
-                message="Error al traer del server..."
-            />
+            <Flex margin="0 auto" flexGrow={1} width="100%">
+                <StatusAlertDisplay top={2}
+                    padding={5}
+                    margin="0 auto"
+                    h="150px"
+                    w="80%"
+                    boxShadow="lg"
+                    status="error"
+                    message="Error al traer del server..."
+                />
+            </Flex>
         )
     }
 
@@ -103,15 +105,22 @@ const Checkout = (...props) => {
     }
 
     return (
-        <Flex margin="0 auto" flexGrow={1}>
+        <Flex padding={3}>
             {
-                
-                loading ? <Box width="100%"><Loading /></Box> :
-                    <Stack>
-                        <Heading as="h2" size="3xl" paddingTop={0} fontSize="md" data-testid="" fontWeight={600}> Acumulado mensual del año en curso </Heading>
-                        <Stack direction="row" padding={5}>
+
+                loading ? <Box margin="0 auto" width="70%"><Loading /></Box> :
+                    <Stack margin="0 auto">
+                        <Heading
+                            as="h2"
+                            size="3xl"
+                            paddingTop={2}
+                            data-testid="dashboard-title"
+                            fontWeight={600}
+                        > Acumulado mensual del año en curso
+                        </Heading>
+                        <Stack direction="row" >
                             <VerticalBar data={dataToDisplay} />
-                            <PieChart data={dataToDisplay}/>
+                            <PieChart data={dataToDisplay} />
                         </Stack>
                     </Stack>
             }
