@@ -104,6 +104,7 @@ const Bill = ({ tableId }) => {
     if (error !== '') {
         return (
             <StatusAlertDisplay top={2}
+                data-testid="error"
                 padding={5}
                 margin="0 auto"
                 h="150px"
@@ -119,7 +120,7 @@ const Bill = ({ tableId }) => {
         <Flex flexGrow={1}>
             {
 
-                loading ? <Box margin="0 auto" width="300px" padding={3}><Loading /></Box> :
+                loading ? <Box margin="0 auto" width="300px" padding={3} data-testid="loading"><Loading /></Box> :
                     <Flex flexDir="column">
                         <Flex>
                             {
@@ -130,12 +131,26 @@ const Bill = ({ tableId }) => {
                                             <Text>Total:</Text> <Text data-testid="cashier-cart-total">{parseCurrency(getPrice())}</Text>
                                         </Flex>
                                     </Flex>
-                                    : <Text padding={3} align="center" color="gray.400"> Todavia no realizaste ningún pedido. Volvé y encargate algo para disfrutar!</Text>
+                                    :
+                                    <Text 
+                                        padding={3} 
+                                        align="center" 
+                                        color="gray.400"> 
+                                        Todavia no realizaste ningún pedido. Volvé y encargate algo para disfrutar!
+                                    </Text>
                             }
 
                         </Flex>
                         <Flex justifyContent="center" padding={2} >
-                            <Button onClick={() => history.push("/menu/" + tableId)} mr={2} bg="gray.100" color="theme.100" variant="outline" data-testid="orders-cancel-button">Volver</Button>
+                            <Button
+                                onClick={() => history.push("/menu/" + tableId)}
+                                mr={2} bg="gray.100" 
+                                color="theme.100" 
+                                variant="outline" 
+                                data-testid="orders-cancel-button"
+                            >
+                                Volver
+                            </Button>
                             <Button
                                 bg="theme.100"
                                 color="white"

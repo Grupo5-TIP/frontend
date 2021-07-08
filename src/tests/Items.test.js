@@ -24,16 +24,7 @@ describe('<Items />', ()=>{
     test("should render ok without childrens", ()=>{
         const { getByTestId }  = render(<Items items={[]} onDeleteProduct ={onDeleteProductMock} />)
 
-        //expect(screen.getByText("No hay elementos en tu orden")).toBeInTheDocument();
         expect(getByTestId('items-error')).toHaveTextContent('No hay elementos en tu orden')
     });
 
-    test("should render ok with one childrens", ()=>{
-        
-        const received = component.getAllByTestId('test-items').map(el => el.textContent);
-        expect(received.length).toBe(1); 
-        expect(received[0]).toContain(item.product.name);
-        expect(received[0]).toContain(item.product.price*item.amount);
-        expect(received[0]).toContain(item.amount);
-    });
 })

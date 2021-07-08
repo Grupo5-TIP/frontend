@@ -10,15 +10,14 @@ describe('<Item>', ()=>{
     const item = {
       product: {
         price: 10,
+        name: 'test'
       },
       amount: 1,
     };
   
     const { getByTestId } = render(<Item item={item} />);
   
-    //component.getByText('$ 10,00')
-    //component.getByText('Cantidad: 1')
-    expect(getByTestId('amount')).toHaveTextContent('Cantidad: 1')
+    expect(getByTestId('amount')).toHaveTextContent('1')
     expect(getByTestId('total')).toHaveTextContent('$ 10,00')
   });
   
@@ -26,15 +25,14 @@ describe('<Item>', ()=>{
     const item = {
       product: {
         price: 20,
+        name: 'test'
       },
       amount: 2,
     };
   
     const { getByTestId } = render(<Item item={item}/>);
   
-    //component.getByText('$ 40,00')
-    //component.getByText('Cant: 2')
-    expect(getByTestId('amount')).toHaveTextContent('Cantidad: 2')
+    expect(getByTestId('amount')).toHaveTextContent('2')
     expect(getByTestId('total')).toHaveTextContent('$ 40,00')
   
   });
@@ -50,26 +48,9 @@ describe('<Item>', ()=>{
   
     const { getByTestId } = render(<Item item={item} />);
   
-    expect(getByTestId('amount')).toHaveTextContent('Cantidad: 3')
+    expect(getByTestId('amount')).toHaveTextContent('3')
     expect(getByTestId('total')).toHaveTextContent('$ 45,00')
   });
-  
-  test("test the x button on item element", () =>{
-    const item = {
-      product: {
-        price: 15,
-        name: "this is an item test"
-      },
-      amount: 3,
-    };
-  
-    const mockHandler = jest.fn()
-  
-    const { getByTestId } = render(<Item item={item} onDeleteProduct={mockHandler} />);
-  
-    const button = getByTestId('button-delete');
-    fireEvent.click(button)
-    expect(mockHandler).toHaveBeenCalledTimes(1); 
-  });
+
 
 })
