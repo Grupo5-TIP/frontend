@@ -8,6 +8,7 @@ import PieChart from '../components/PieChart';
 import Loading from '../components/Loading';
 import StatusAlertDisplay from '../components/StatusAlertDisplay';
 import { translate } from "../utils/month-translator";
+import Menu from '../components/Menu'
 
 const dataTemplate = {
     labels: [],
@@ -110,6 +111,7 @@ const Checkout = (...props) => {
 
                 loading ? <Box margin="0 auto" width="70%"><Loading /></Box> :
                     <Stack margin="0 auto">
+                        <Menu></Menu>
                         <Heading
                             as="h2"
                             size="3xl"

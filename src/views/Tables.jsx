@@ -8,6 +8,7 @@ import StatusAlertDisplay from '../components/AlertDisplay';
 import bgImage from '../../src/bgImage.jpg'
 import { Redirect } from 'react-router-dom';
 import { validateLogin } from '../utils/validate-login';
+import Menu from '../components/Menu'
 
 const Tables = () => {
     const [tables, setTables] = useState([]);
@@ -16,6 +17,7 @@ const Tables = () => {
     const [actualTableId, setTableId] = useState(0);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [, setTimer] = useState(null);
+    const isAdmin = localStorage.getItem("isAdmin");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -81,24 +83,27 @@ const Tables = () => {
             {
                 loading ? <Box width="100%"><Loading /></Box>
                     :
-                    <Flex w="100%" bgImage={bgImage} bgRepeat="repeat">
-                        {
-                            tables.map(table => {
-                                return (
-                                    <Stack
-                                        key={table.id}
-                                        onClick={() => openTable(table.id)}
-                                        as="button"
-                                    >
-                                        <Table
+                    <Stack w="100%" bgImage={bgImage} bgRepeat="repeat">
+                        {isAdmin ? <Menu /> : null}
+                        <Stack >
+                            {
+                                tables.map(table => {
+                                    return (
+                                        <Stack
                                             key={table.id}
-                                            table={table}
-                                        />
-                                    </Stack>
-                                )
-                            })}
+                                            onClick={() => openTable(table.id)}
+                                            as="button"
+                                        >
+                                            <Table
+                                                key={table.id}
+                                                table={table}
+                                            />
+                                        </Stack>
+                                    )
+                                })}
 
-                    </Flex>
+                        </Stack>
+                    </Stack>
             }
             <CashierCart
                 key={actualTableId}

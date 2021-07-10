@@ -121,7 +121,7 @@ const Bill = ({ tableId }) => {
             {
 
                 loading ? <Box margin="0 auto" width="300px" padding={3} data-testid="loading"><Loading /></Box> :
-                    <Flex flexDir="column">
+                    <Flex margin="0 auto" flexDir="column">
                         <Flex>
                             {
                                 itemsFromTable && itemsFromTable.length > 0 ?

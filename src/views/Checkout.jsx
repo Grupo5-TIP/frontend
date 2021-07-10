@@ -4,7 +4,7 @@ import Bill from '../components/Bill'
 
 const Checkout = (...props) => {
     return(
-        <Flex justifyContent={"center"} flexGrow={1} width="100%">
+        <Flex flexGrow={1} width="100%">
             <Bill tableId={props[0].match.params.tableid}></Bill>
         </Flex>
     )

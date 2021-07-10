@@ -12,10 +12,9 @@ const Success = (...props) => {
     const history = useHistory();
     const match = useRouteMatch();
     const tableId = match.url.substring(match.url.lastIndexOf('/') + 1);
-    const paymentId = props[0].location.search.substring(props[0].location.search.lastIndexOf('payment_id') + 12, props[0].location.search.lastIndexOf('payment_id')+ 11) || "0";
+    const paymentId = props[0].location.search.substring(props[0].location.search.lastIndexOf('payment_id') + 11, props[0].location.search.lastIndexOf('payment_id') + 21) || "0";
     const [error, setError] = useState('');
     
-
     useEffect(() => {
         const fetchData = async () => {
             tableService.getTableById(tableId)
