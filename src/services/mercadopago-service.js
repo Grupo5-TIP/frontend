@@ -18,7 +18,6 @@ class MercadoPagoService{
             Authorization: 'Bearer ' + MP_TOKEN
         }
 
-        console.log(headers);
         return axios.get("https://api.mercadopago.com/v1/payments/"+paymentId, {headers});
     }
 
