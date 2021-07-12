@@ -17,7 +17,7 @@ const Tables = () => {
     const [actualTableId, setTableId] = useState(0);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [, setTimer] = useState(null);
-    const isAdmin = localStorage.getItem("isAdmin");
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,6 +32,7 @@ const Tables = () => {
                 });
         }
         fetchData();
+        setIsAdmin(localStorage.getItem("isAdmin"));
         const timer = setInterval(() => {
             fetchData();
         }, 10000);
@@ -50,9 +51,6 @@ const Tables = () => {
 
     const onCloseCashierCart = () => {
         setTableId(0);
-        setTimer(setTimeout(() => {
-            window.location.reload()
-        }, 5000));
         onClose();
     }
 
@@ -84,7 +82,8 @@ const Tables = () => {
                 loading ? <Box width="100%"><Loading /></Box>
                     :
                     <Stack w="100%" bgImage={bgImage} bgRepeat="repeat">
-                        {isAdmin ? <Menu /> : null}
+                        {console.log(isAdmin)}
+                        {isAdmin ? <Menu/> : null}
                         <Stack >
                             {
                                 tables.map(table => {

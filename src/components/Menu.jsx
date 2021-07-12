@@ -35,7 +35,7 @@ const MenuIcon = ({history}) => {
 
 const Menu = () => {
     const history = useHistory();
-    return (
+    return (       
         <Flex flexDir="column" position="absolute" right="2%">
             <DashboardIcon history={history}/>
             <MenuIcon history={history} />
