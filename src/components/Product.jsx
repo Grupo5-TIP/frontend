@@ -2,7 +2,7 @@ import { Stack, Text, Heading, Image, Flex, useToast } from "@chakra-ui/react"
 
 import { parseCurrency } from "../utils/currency";
 const Product = ({ product, onAddProduct }) => {
-    const { id, name, description, price, image } = product;
+    const { name, description, price, image } = product;
     const toast = useToast()
 
     const addProduct = (product) => {

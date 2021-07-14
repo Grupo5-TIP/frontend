@@ -2,7 +2,7 @@ import axios from 'axios';
 import { REST_API_URL } from './constants'
 
 const API_URL = `${REST_API_URL}/mp/createlink`;
-
+const MP_TOKEN = process.env.REACT_APP_MP_TOKEN
 class MercadoPagoService{
     
     async createMPInvoice(tableId, price){
@@ -14,7 +14,11 @@ class MercadoPagoService{
     }
 
     async validatePayment(paymentId){
-        return axios.get("https://api.mercadopago.com/v1/payments/"+paymentId);
+        const headers = {
+            Authorization: 'Bearer ' + MP_TOKEN
+        }
+
+        return axios.get("https://api.mercadopago.com/v1/payments/"+paymentId, {headers});
     }
 
 }

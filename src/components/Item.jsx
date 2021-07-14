@@ -110,6 +110,7 @@ const Item = ({ item, onDecreaseProduct, onAddProduct, onDeleteProduct }) => {
 
                                 <Box boxSize={6}>
                                     <IoMdRemoveCircle
+                                        data-testid="button-delete"
                                         aria-label="Remove one"
                                         color="theme.100"
                                         size={25}
@@ -126,30 +127,6 @@ const Item = ({ item, onDecreaseProduct, onAddProduct, onDeleteProduct }) => {
                                     </IoMdCloseCircle>
                                 </Box>
 
-                                {/* <IconButton
-                                    as={IoMdAddCircle}
-                                    aria-label="Add one item"
-                                    boxSize={6}
-                                    color="theme.100"
-                                    onClick={() => onAddProduct(product)}
-                                />
-                                <IconButton
-                                    as={IoMdRemoveCircle}
-                                    aria-label="Add one item"
-                                    boxSize={6}
-                                    color="theme.100"
-                                    onClick={() => onDecreaseProduct(product)}
-                                >
-                                </IconButton>
-
-                                <IconButton
-                                    as={IoMdCloseCircle}
-                                    aria-label="Add one item"
-                                    boxSize={6}
-                                    color="theme.100"
-                                    onClick={() => onDeleteProduct(product)}
-                                >
-                               </IconButton>*/}
                             </Stack>
                         </Stack>
                     </Stack>

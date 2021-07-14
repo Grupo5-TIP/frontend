@@ -84,6 +84,7 @@ const Table = ({ table }) => {
     }
 
     const tableConfiguration = (tableState) => {
+        setHeartBeatClass("")
         switch (tableState) {
             case "empty":
                 setBgColor("green.400");
