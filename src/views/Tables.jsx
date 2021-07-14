@@ -16,8 +16,6 @@ const Tables = () => {
     const [error, setError] = useState('');
     const [actualTableId, setTableId] = useState(0);
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [, setTimer] = useState(null);
-    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,7 +30,7 @@ const Tables = () => {
                 });
         }
         fetchData();
-        setIsAdmin(localStorage.getItem("isAdmin"));
+
         const timer = setInterval(() => {
             fetchData();
         }, 10000);
@@ -82,8 +80,7 @@ const Tables = () => {
                 loading ? <Box width="100%"><Loading /></Box>
                     :
                     <Stack w="100%" bgImage={bgImage} bgRepeat="repeat">
-                        {console.log(isAdmin)}
-                        {isAdmin ? <Menu/> : null}
+                        <Menu/>
                         <Stack >
                             {
                                 tables.map(table => {

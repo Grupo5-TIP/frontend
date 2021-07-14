@@ -75,7 +75,7 @@ const VerticalBar = ({ data }) => {
                     marginLeft={15}
                     bg="theme.100"
                     color="white"
-
+                    marginTop={5}
                     onClick={() => handleDownload()}
                     size="lg"
                     _hover={hover}>

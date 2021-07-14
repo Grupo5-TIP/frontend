@@ -1,30 +1,53 @@
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Flex, Button,  } from '@chakra-ui/react'
-import { RiDashboardLine } from 'react-icons/ri'
+import { Flex, Button, Box } from '@chakra-ui/react'
+import { RiDashboardLine, RiLogoutBoxRLine } from 'react-icons/ri'
 import { BiFoodMenu } from 'react-icons/bi'
 
-const DashboardIcon = ({history}) => {
+const LogoutIcon = ({ history }) => {
+    const handleLogout = () => {
+        localStorage.removeItem("isAdmin");
+        localStorage.removeItem("username");
+        history.push("/");
+    }
+
     return (
         <Button
-            bg="theme.200"
+            bg="theme.500"
             boxShadow="lg"
             size="lg"
             margin={1}
-            onClick={() => history.push("/dashboard/")}
+            onClick={() => handleLogout()}
         >
-            <RiDashboardLine color="white" />
+            <RiLogoutBoxRLine color="white" />
         </Button>
     )
 }
 
-const MenuIcon = ({history}) => {
+const DashboardIcon = ({ history, isAdmin }) => {
+    return (
+        <Box>
+            {isAdmin === 'true'? <Button
+                bg="theme.200"
+                boxShadow="lg"
+                size="lg"
+                margin={1}
+                onClick={() => history.push("/dashboard/")}
+            >
+                <RiDashboardLine color="white" />
+            </Button> : null}
+        </Box>
+
+    )
+}
+
+const MenuIcon = ({ history }) => {
     return (
         <Button
             bg="theme.200"
             boxShadow="lg"
             size="lg"
             margin={1}
-            top="10px"
             onClick={() => history.push("/tables/")}
         >
             <BiFoodMenu color="white" />
@@ -35,12 +58,33 @@ const MenuIcon = ({history}) => {
 
 const Menu = () => {
     const history = useHistory();
-    return (       
+    const [loading, setLoading] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        const fetchData = () => {
+            setIsAdmin(localStorage.getItem("isAdmin"));
+            setLoading(false)
+        }
+        fetchData();
+        setLoading(true)
+    }, [setIsAdmin, setLoading])
+
+    return (
         <Flex flexDir="column" position="absolute" right="2%">
-            <DashboardIcon history={history}/>
-            <MenuIcon history={history} />
+            {loading ?
+                <Flex flexDir="column" spacing={2}>
+                    <DashboardIcon history={history} isAdmin={isAdmin} />
+                    <MenuIcon history={history} />
+                    <LogoutIcon history={history} />
+                </Flex>
+
+                : null
+            }
         </Flex>
+
     )
+
 }
 
 export default Menu;
